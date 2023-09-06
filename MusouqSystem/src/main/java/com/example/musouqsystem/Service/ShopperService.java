@@ -22,13 +22,30 @@ public class ShopperService {
         return shopperRepository.findAll();
     }
 
-    public void completeShopperProfile(ShopperDTO shopperDTO){
+    public void completeShopperProfile(Shopper shopper){
+        shopperRepository.save(shopper);
     }
 
-    public void updateShopperProfile(Integer user_id, ShopperDTO shopperDTO){
-        User user = authRepository.findUserById(user_id);
-        if (user == null)
-            throw new ApiException("Sorry the shopper not found");
+    public void updateShopperProfile(Integer shopper_id, Shopper shopper){
+        Shopper oldShopper = shopperRepository.findShopperById(shopper_id);
+        if (oldShopper == null)
+            throw new ApiException("Sorry the shopper id is wrong");
 
+
+        oldShopper.setName(shopper.getName());
+        oldShopper.setPhone(shopper.getPhone());
+        oldShopper.setAddress(shopper.getAddress());
+
+        shopperRepository.save(oldShopper);
+    }
+
+    // TODO: 9/6/2023 add additional condition to check orders status
+
+    public void deleteShopperAccount(Integer shopper_id){
+        Shopper deleteShopper = shopperRepository.findShopperById(shopper_id);
+        if (deleteShopper == null)
+            throw new ApiException("Sorry the shopper id is wrong");
+
+        shopperRepository.delete(deleteShopper);
     }
 }
