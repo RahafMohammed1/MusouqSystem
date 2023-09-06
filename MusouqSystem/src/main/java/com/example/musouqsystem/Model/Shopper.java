@@ -45,10 +45,6 @@ public class Shopper {
 //    @JsonIgnore
 //    private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "marketer_id", referencedColumnName = "id")
-    private Marketer marketer;
-
     @OneToMany(cascade = CascadeType.ALL , mappedBy = "shopper")
     @JsonIgnore
     private Set<ReviewMarketer> reviewMarketers;
@@ -65,4 +61,14 @@ public class Shopper {
     @JoinColumn(name = "supplier_id", referencedColumnName = "id")
     @JsonIgnore
     private Supplier supplier;
+
+    @ManyToOne
+    @JoinColumn(name = "marketer_id", referencedColumnName = "id")
+    @JsonIgnore
+    private Marketer marketer;
+
+
+
+
+
 }

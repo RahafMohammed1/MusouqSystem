@@ -39,6 +39,9 @@ public class Supplier {
 //    private User user;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "supplier")
+    private Set<Product> marketers;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "supplier")
     private Set<Product> products;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "supplier")
@@ -49,4 +52,11 @@ public class Supplier {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "supplier")
     private Set<Shopper> shoppers;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "supplier")
+    private Set<Request> requests;
+
+    @ManyToMany
+    private Set<ShippingCompany> shippingCompanies;
+
 }

@@ -36,4 +36,6 @@ public class ReviewMarketer {
     @ManyToOne
     @JoinColumn(name = "marketer_id" , referencedColumnName = "id")
     private Marketer marketer;
+
+
 }

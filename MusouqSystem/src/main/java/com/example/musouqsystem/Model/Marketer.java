@@ -38,16 +38,27 @@ public class Marketer {
     @Column(columnDefinition = "double default 0")
     private Double dues = 0.0 ;
 
-//    @OneToOne
-//    @MapsId
-//    @JsonIgnore
-//    private User user;
-
-    @OneToMany(cascade = CascadeType.ALL , mappedBy = "marketer")
+    @ManyToOne
+    @JoinColumn(name = "supplier_id", referencedColumnName = "id")
     @JsonIgnore
+    private Supplier supplier;
+
+    @ManyToMany
+    private Set<Product> products;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "marketer")
     private Set<Shopper> shoppers;
 
-    @OneToMany(cascade = CascadeType.ALL , mappedBy = "marketer")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "marketer")
+    private Set<Request> requests;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "marketer")
+    private Set<Coupons> coupons;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "marketer")
     private Set<ReviewMarketer> reviewMarketers;
+
+
+
 
 }

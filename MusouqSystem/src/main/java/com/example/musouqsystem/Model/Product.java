@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
+import java.util.Set;
+
 @Entity
 @Setter
 @Getter
@@ -55,5 +57,11 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Orders orders;
+
+    @ManyToMany
+    @JsonIgnore
+    private Set<Marketer> marketers;
+
+
 
 }

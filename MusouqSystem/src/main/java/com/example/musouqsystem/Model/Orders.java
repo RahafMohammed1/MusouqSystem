@@ -49,4 +49,9 @@ public class Orders {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "orders")
     private Set<Product> products;
+
+    @ManyToOne
+    @JoinColumn(name = "shipping_company_id", referencedColumnName = "id")
+    @JsonIgnore
+    private ShippingCompany shippingCompany;
 }
