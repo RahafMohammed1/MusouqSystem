@@ -52,4 +52,8 @@ public class Product {
     @JsonIgnore
     private Category category;
 
+    @ManyToOne
+    @JoinColumn(name = "order_id", referencedColumnName = "id")
+    private Orders orders;
+
 }

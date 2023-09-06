@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.Set;
+
 @Entity
 @Setter
 @Getter
@@ -44,4 +46,7 @@ public class Orders {
     @JoinColumn(name = "supplier_id", referencedColumnName = "user_id")
     @JsonIgnore
     private Supplier supplier;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "orders")
+    private Set<Product> products;
 }
