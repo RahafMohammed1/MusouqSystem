@@ -31,10 +31,12 @@ public class SupplierService {
 
         supplier.setName(supplierDTO.getName());
         supplier.setPhone(supplierDTO.getPhone());
+
+        supplierRepository.save(supplier);
     }
+//comment
 
-
-    // TODO: 9/6/2023   add conditional on delete function about order status & req status.
+    // TODO: 9/6/2023   add conditional  about order status & req status.
     public void deleteAccount(Integer supplier_id) {
         Supplier supplier = supplierRepository.findSupplierById(supplier_id);
 
