@@ -18,7 +18,7 @@ import org.hibernate.validator.constraints.Length;
 public class Shopper {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer shopper_id;
 
     @NotEmpty(message = "The shopper name must not empty")
     @Length(min = 3, message = "shopper name length should be more than 3 characters")
