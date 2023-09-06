@@ -8,28 +8,26 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.Date;
-
 @Entity
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Order {
+public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer order_id;
+    private Integer id;
 
-    //@Column(columnDefinition = "date")
+    @Column(columnDefinition = "datetime")
     private LocalDate order_date;
 
     @Pattern(regexp = "(processing)|(delivered)|(shipped)")
-    //@Column(columnDefinition = "varchar(30)")
+    @Column(columnDefinition = "varchar(30)")
     private String order_status;
 
-    //@Column(columnDefinition = "double default 0")
+    @Column(columnDefinition = "double default 0")
     private Double total_amount ;
 
-    //@Column(columnDefinition = "boolean")
+    @Column(columnDefinition = "boolean")
     private Boolean review_status;
 }
