@@ -1,5 +1,6 @@
 package com.example.musouqsystem.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -35,6 +36,7 @@ public class ReviewMarketer {
 
     @ManyToOne
     @JoinColumn(name = "marketer_id" , referencedColumnName = "id")
+    @JsonIgnore
     private Marketer marketer;
 
 

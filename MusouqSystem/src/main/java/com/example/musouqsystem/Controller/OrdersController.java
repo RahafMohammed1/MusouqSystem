@@ -1,6 +1,7 @@
 package com.example.musouqsystem.Controller;
 
 import com.example.musouqsystem.Api.ApiResponse;
+import com.example.musouqsystem.DTO.ProductListDto;
 import com.example.musouqsystem.Model.Orders;
 import com.example.musouqsystem.Service.OrdersService;
 import jakarta.validation.Valid;
@@ -14,9 +15,14 @@ import org.springframework.web.bind.annotation.*;
 public class OrdersController {
     private final OrdersService ordersService;
 
-//    @PostMapping("/addOrder/{shopper_id}/{product_1}/{product_2}")
-//    public ResponseEntity shopperAddOrderController(@PathVariable Integer shopper_id, @PathVariable Integer product_1 , @PathVariable Integer product_2 , @RequestBody @Valid Orders orders){
-//        ordersService.ShopperAddOrder(shopper_id, product_1, product_2, orders);
-//        return ResponseEntity.status(200).body(new ApiResponse("The ordered created successfully"));
-//    }
+    @GetMapping("/get")
+    public ResponseEntity getAllOrders(){
+        return ResponseEntity.status(200).body(ordersService.getMyOrders());
+    }
+
+    @PostMapping("/addOrder/{shopper_id}/{shippingCompany_id}")
+    public ResponseEntity shopperAddOrderController(@PathVariable Integer shopper_id, @PathVariable Integer shippingCompany_id ,@RequestBody @Valid ProductListDto productListDto){
+        ordersService.ShopperAddOrder(shopper_id, shippingCompany_id,productListDto);
+        return ResponseEntity.status(200).body(new ApiResponse("The ordered created successfully"));
+    }
 }
