@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface MarketerRepository extends JpaRepository<Marketer, Integer> {
     Marketer findMarketerById(Integer marketer_id);
-
+    
 }
