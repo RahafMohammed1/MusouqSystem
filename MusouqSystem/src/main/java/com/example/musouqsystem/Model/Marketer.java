@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
+import java.util.Set;
+
 @Entity
 @Setter
 @Getter
@@ -40,6 +42,11 @@ public class Marketer {
     @JsonIgnore
     private User user;
 
-//    @OneToMany(cascade = CascadeType.ALL , mappedBy = "marketer")
+    @OneToMany(cascade = CascadeType.ALL , mappedBy = "marketer")
+    @JsonIgnore
+    private Set<Shopper> shoppers;
+
+    @OneToMany(cascade = CascadeType.ALL , mappedBy = "marketer")
+    private Set<ReviewMarketer> reviewMarketers;
 
 }

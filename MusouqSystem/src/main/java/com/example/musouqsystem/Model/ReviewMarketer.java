@@ -28,4 +28,12 @@ public class ReviewMarketer {
     @Max(5)
     @Column(columnDefinition = "int(5) not null")
     private Integer rate_order;
+
+    @ManyToOne
+    @JoinColumn(name = "shopper_id", referencedColumnName = "user_id")
+    private Shopper shopper;
+
+    @ManyToOne
+    @JoinColumn(name = "marketer_id" , referencedColumnName = "user_id")
+    private Marketer marketer;
 }

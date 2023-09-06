@@ -1,5 +1,6 @@
 package com.example.musouqsystem.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -17,7 +18,6 @@ import lombok.Setter;
 
 public class ReviewOrder {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotEmpty(message = "review content must not null")
@@ -28,4 +28,13 @@ public class ReviewOrder {
     @Max(5)
     @Column(columnDefinition = "int(5) not null")
     private Integer rate_order;
+
+    @ManyToOne
+    @JoinColumn(name = "shopper_id", referencedColumnName = "user_id")
+    private Shopper shopper;
+
+    @OneToOne
+    @MapsId
+    @JsonIgnore
+    private Orders orders;
 }

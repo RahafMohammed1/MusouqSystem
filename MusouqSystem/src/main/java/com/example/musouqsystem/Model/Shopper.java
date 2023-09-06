@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
+import java.util.Set;
+
 @Entity
 @Setter
 @Getter
@@ -17,7 +19,6 @@ import org.hibernate.validator.constraints.Length;
 @NoArgsConstructor
 public class Shopper {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotEmpty(message = "The shopper name must not empty")
@@ -42,4 +43,20 @@ public class Shopper {
     @MapsId
     @JsonIgnore
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "marketer_id", referencedColumnName = "user_id")
+    private Marketer marketer;
+
+    @OneToMany(cascade = CascadeType.ALL , mappedBy = "shopper")
+    @JsonIgnore
+    private Set<ReviewMarketer> reviewMarketers;
+
+    @OneToMany(cascade = CascadeType.ALL , mappedBy = "shopper")
+    @JsonIgnore
+    private Set<Orders> orders;
+
+    @OneToMany(cascade = CascadeType.ALL , mappedBy = "shopper")
+    @JsonIgnore
+    private Set<ReviewOrder> reviewOrders;
 }

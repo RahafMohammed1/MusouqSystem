@@ -30,4 +30,12 @@ public class Orders {
 
     @Column(columnDefinition = "boolean")
     private Boolean review_status;
+
+    @ManyToOne
+    @JoinColumn(name = "shopper_id" , referencedColumnName = "user_id")
+    private Shopper shopper;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "orders")
+    @PrimaryKeyJoinColumn
+    private ReviewOrder reviewOrder;
 }
