@@ -46,18 +46,19 @@ public class ProductService {
 
         if (marketer == null || product == null || supplier == null) throw new ApiException("cannot add product to marketer");
 
+
     }
 
-    public void shopperAddProductToOrder(Integer shopper_id,Integer product_id, Integer order_id) {
-        Shopper shopper = shopperRepository.findShopperById(shopper_id);
-        Product product = productRepository.findProductById(product_id);
-        Orders order = ordersRepository.findOrdersById(order_id);
-
-        if (shopper == null || product == null || order == null) throw new ApiException("cannot add product to order");
-
-        product.setOrders(order);
-        productRepository.save(product);
-    }
+//    public void shopperAddProductToOrder(Integer shopper_id,Integer product_id, Integer order_id) {
+//        Shopper shopper = shopperRepository.findShopperById(shopper_id);
+//        Product product = productRepository.findProductById(product_id);
+//        Orders order = ordersRepository.findOrdersById(order_id);
+//
+//        if (shopper == null || product == null || order == null) throw new ApiException("cannot add product to order");
+//
+//        product.setOrders(order);
+//        productRepository.save(product);
+//    }
 
 
     public void supplierUpdateProduct(Integer supplier_id, Integer product_id, Product product) {
@@ -103,17 +104,17 @@ public class ProductService {
         productRepository.save(product);
     }
 
-    public void shopperRemoveProductFromOrder(Integer shopper_id, Integer product_id) {
-        Shopper shopper = shopperRepository.findShopperById(shopper_id);
-        Product product = productRepository.findProductById(product_id);
-
-        if (shopper == null || product == null) throw new ApiException("marketer or product not exist");
-
-        if (product.getOrders().getOrder_status().equalsIgnoreCase("processing")){
-            product.setOrders(null);
-            productRepository.save(product);
-        }else throw new ApiException("you cannot delete product after shipping");
-    }
+//    public void shopperRemoveProductFromOrder(Integer shopper_id, Integer product_id) {
+//        Shopper shopper = shopperRepository.findShopperById(shopper_id);
+//        Product product = productRepository.findProductById(product_id);
+//
+//        if (shopper == null || product == null) throw new ApiException("marketer or product not exist");
+//
+//        if (product.getOrders().getOrder_status().equalsIgnoreCase("processing")){
+//            product.setOrders(null);
+//            productRepository.save(product);
+//        }else throw new ApiException("you cannot delete product after shipping");
+//    }
 
 
     public void assignSupplierToProduct(Integer supplier_id, Integer product_id){
