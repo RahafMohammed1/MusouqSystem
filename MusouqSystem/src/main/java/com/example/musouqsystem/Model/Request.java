@@ -21,9 +21,11 @@ public class Request {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(columnDefinition = "varchar(200) not null")
     private String req_description;
 
-    @Pattern(regexp = "(pendding)|(accept)|(reject)")
+
+    @Column(columnDefinition = "varchar(20)")
     private String status;
 
     @Column(columnDefinition = "datetime")

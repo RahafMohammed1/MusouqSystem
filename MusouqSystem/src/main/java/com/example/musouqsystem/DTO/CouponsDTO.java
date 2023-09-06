@@ -1,26 +1,15 @@
-package com.example.musouqsystem.Model;
+package com.example.musouqsystem.DTO;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
-@Entity
-@Setter
-@Getter
+@Data
 @AllArgsConstructor
-@NoArgsConstructor
-public class Coupons {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
+public class CouponsDTO {
 
     @Pattern(regexp = "^(?=[A-Z])([a-zA-Z0-9]+)$",message = "the code must be start with capital letter")
     @Size(min=3,max = 12,message ="the code must have 3-12 character" )
@@ -31,12 +20,5 @@ public class Coupons {
     @Column(columnDefinition = "double not null")
     private Double percentage;
 
-    @Column(columnDefinition = "boolean")
-    private Boolean status;
-
-    @ManyToOne
-    @JoinColumn(name = "marketer_id", referencedColumnName = "id")
-    @JsonIgnore
-    private Marketer marketer;
-
+    private Integer marketer_id;
 }

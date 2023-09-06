@@ -8,6 +8,8 @@ import com.example.musouqsystem.Model.*;
 import com.example.musouqsystem.Repository.AuthRepository;
 import com.example.musouqsystem.Repository.MarketerRepository;
 import com.example.musouqsystem.Repository.ProductRepository;
+import com.example.musouqsystem.Repository.SupplierRepository;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +21,7 @@ public class MarketerService {
     private final MarketerRepository marketerRepository;
     private final AuthRepository authRepository;
     private final ProductRepository productRepository;
-
+    private final SupplierRepository supplierRepository;
     public List<Marketer> shopperGetAllMarketer()
     {
         return marketerRepository.findAll();
@@ -57,5 +59,23 @@ public class MarketerService {
         marketerRepository.save(marketer);
     }
 
+    public void MarketerSelectSupplier(Integer marketer_id, Integer supplier_id)
+    {
+        Marketer marketer=marketerRepository.findMarketerById(marketer_id);
+        if (marketer==null) throw new ApiException("marketer not found");
+        Supplier supplier=supplierRepository.findSupplierById(supplier_id);
+        if (supplier==null) throw new ApiException("please select supplier");
 
+        marketer.setSupplier(supplier);
+        marketerRepository.save(marketer);
+    }
+
+
+    //public void MarketerSelectSupplier(Integer supplier_id)
+    //{
+      //  Supplier supplier=supplierRepository.findSupplierById(supplier_id);
+       // if(supplier==null) throw new ApiException("please select a supplier");
+      //  if(supplier)
+    //}
+    //public void MarketerAddRequest()
 }

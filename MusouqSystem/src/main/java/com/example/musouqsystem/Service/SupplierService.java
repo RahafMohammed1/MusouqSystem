@@ -46,6 +46,4 @@ public class SupplierService {
         else throw new ApiException("you cannot delete your account while there are marketing request & orders");
     }
 
-
-
 }
