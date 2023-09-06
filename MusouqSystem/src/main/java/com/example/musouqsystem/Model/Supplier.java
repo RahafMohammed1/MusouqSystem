@@ -42,4 +42,10 @@ public class Supplier {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "supplier")
     private Set<Category> categories;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "supplier")
+    private Set<Orders> orders;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "supplier")
+    private Set<Shopper> shoppers;
 }

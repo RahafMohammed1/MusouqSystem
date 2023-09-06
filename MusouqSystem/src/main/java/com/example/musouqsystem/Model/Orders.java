@@ -1,5 +1,6 @@
 package com.example.musouqsystem.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
@@ -38,4 +39,9 @@ public class Orders {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "orders")
     @PrimaryKeyJoinColumn
     private ReviewOrder reviewOrder;
+
+    @ManyToOne
+    @JoinColumn(name = "supplier_id", referencedColumnName = "user_id")
+    @JsonIgnore
+    private Supplier supplier;
 }
