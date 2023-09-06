@@ -24,6 +24,8 @@ public class Category {
     @Column(columnDefinition = "varchar(50) not null")
     private String title;
 
+    private Double marketer_percent;
+
 
     @ManyToOne
     @JoinColumn(name = "supplier_id", referencedColumnName = "id")
