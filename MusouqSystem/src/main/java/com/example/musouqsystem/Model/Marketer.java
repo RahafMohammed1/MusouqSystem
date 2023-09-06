@@ -61,5 +61,4 @@ public class Marketer {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "marketer")
     private Set<ReviewMarketer> reviewMarketers;
 
-    
 }

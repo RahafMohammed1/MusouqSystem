@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +22,8 @@ public class Coupons {
     private Integer id;
 
 
-
+    @Pattern(regexp = "^(?=[A-Z])([a-zA-Z0-9]+)$",message = "the code must be start with capital letter")
+    @Size(min=3,max = 12,message ="the code must have 3-12 character" )
     @Column(columnDefinition = "varchar(30)")
     private String code;
 
