@@ -35,7 +35,7 @@ public class Marketer {
 
     @Column(columnDefinition = "double default 0")
     private Double dues = 0.0 ;
-    
+
     @OneToOne
     @MapsId
     @JsonIgnore
