@@ -40,4 +40,7 @@ public class Marketer {
     @MapsId
     @JsonIgnore
     private User user;
+
+//    @OneToMany(cascade = CascadeType.ALL , mappedBy = "marketer")
+
 }
