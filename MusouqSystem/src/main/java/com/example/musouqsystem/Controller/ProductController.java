@@ -1,12 +1,17 @@
 package com.example.musouqsystem.Controller;
 
+import com.example.musouqsystem.Api.ApiException;
 import com.example.musouqsystem.Api.ApiResponse;
+import com.example.musouqsystem.Model.Category;
+import com.example.musouqsystem.Model.Marketer;
 import com.example.musouqsystem.Model.Product;
 import com.example.musouqsystem.Service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,9 +24,20 @@ public class ProductController {
         return ResponseEntity.status(200).body(productService.getAllProductsOfSupplier(supplier_id));
     }
 
+    @GetMapping("/getAllProductsOfMarketer/{marketer_id}")
+    public ResponseEntity getAllProductsOfMarketer(Integer marketer_id) {
+        return ResponseEntity.status(200).body(productService.getAllProductsOfMarketer(marketer_id));
+    }
+
+
+    @GetMapping("/getAllProductsByCategory/{category_id}")
+    public ResponseEntity getAllProductsByCategory(Integer category_id) {
+        return ResponseEntity.status(200).body(productService.getAllProductsByCategory(category_id));
+    }
+
     @PostMapping("/supplierAddProduct/{supplier_id}")
-    public ResponseEntity supplierAddProduct(@PathVariable Integer supplier_id, @RequestBody @Valid Product product) {
-        productService.supplierAddProduct(supplier_id, product);
+    public ResponseEntity supplierAddProduct(@PathVariable Integer supplier_id, @PathVariable Integer img_id, @RequestBody @Valid Product product) {
+        productService.supplierAddProduct(supplier_id, img_id, product);
         return ResponseEntity.status(200).body(new ApiResponse("product added successfully"));
     }
 

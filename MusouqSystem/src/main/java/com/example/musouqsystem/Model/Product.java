@@ -63,5 +63,8 @@ public class Product {
     private Set<Marketer> marketers;
 
 
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "product")
+    @PrimaryKeyJoinColumn
+    private Image image;
 
 }

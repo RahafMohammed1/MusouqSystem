@@ -13,59 +13,60 @@ import java.util.List;
 public class ProductService {
     private final ProductRepository productRepository;
     private final SupplierRepository supplierRepository;
-    private final ShopperRepository shopperRepository;
-    private final OrdersRepository ordersRepository;
     private final MarketerRepository marketerRepository;
+    private final ImageRepository imageRepository;
+    private final CategoryRepository categoryRepository;
 
 
-//    marketer & supplier
+//    marketer & supplier get all
     public List<Product> getAllProductsOfSupplier(Integer supplier_id) {
         return productRepository.findProductsBySupplierId(supplier_id);
     }
 
+
 //    shopper
-//    public List<Product> getAllProductsOfMarketer(Integer marketer_id) {
-//        return productRepository.findProductsByMarketerId(marketer_id);
-//    }
+    public List<Product> getAllProductsOfMarketer(Integer marketer_id) {
+        Marketer marketer = marketerRepository.findMarketerById(marketer_id);
+        if (marketer == null) throw new ApiException("marketer not found");
+        return productRepository.findAllByMarketersContains(marketer);
+    }
 
-//    marketer add product - path variable
 
-    public void supplierAddProduct(Integer supplier_id, Product product) {
+    public List<Product> getAllProductsByCategory(Integer category_id) {
+        Category category = categoryRepository.findCategoryById(category_id);
+        if (category == null) throw new ApiException("category not found");
+
+        return productRepository.findProductsByCategory(category);
+    }
+
+
+    public void supplierAddProduct(Integer supplier_id, Integer img_id, Product product) {
         Supplier supplier = supplierRepository.findSupplierById(supplier_id);
+        Image image = imageRepository.findImageById(img_id);
 
         if (supplier == null) throw new ApiException("supplier not exist");
+        if (image == null) throw new ApiException("image not found");
 
+        product.setImage(image);
         product.setSupplier(supplier);
         productRepository.save(product);
     }
 
     public void marketerAddProduct(Integer marketer_id, Integer product_id, Integer supplier_id ) {
         Marketer marketer = marketerRepository.findMarketerById(marketer_id);
-        Product product = productRepository.findProductById(product_id);
-        Supplier supplier = supplierRepository.findSupplierById(supplier_id);
+        Product product = productRepository.findProductByIdAndSupplierId(product_id, supplier_id);
 
-        if (marketer == null || product == null || supplier == null) throw new ApiException("cannot add product to marketer");
+        if (marketer == null || product == null) throw new ApiException("cannot add product to marketer");
 
-
+        product.getMarketers().add(marketer);
+        productRepository.save(product);
     }
-
-//    public void shopperAddProductToOrder(Integer shopper_id,Integer product_id, Integer order_id) {
-//        Shopper shopper = shopperRepository.findShopperById(shopper_id);
-//        Product product = productRepository.findProductById(product_id);
-//        Orders order = ordersRepository.findOrdersById(order_id);
-//
-//        if (shopper == null || product == null || order == null) throw new ApiException("cannot add product to order");
-//
-//        product.setOrders(order);
-//        productRepository.save(product);
-//    }
 
 
     public void supplierUpdateProduct(Integer supplier_id, Integer product_id, Product product) {
-        Supplier supplier = supplierRepository.findSupplierById(supplier_id);
-        Product oldProduct = productRepository.findProductById(product_id);
+        Product oldProduct = productRepository.findProductByIdAndSupplierId(product_id, supplier_id);
 
-        if (supplier == null || oldProduct == null) throw new ApiException("supplier or product not exist");
+        if (oldProduct == null) throw new ApiException("supplier or product not exist");
 
         oldProduct.setName(product.getName());
         oldProduct.setDescription(product.getDescription());
@@ -82,14 +83,16 @@ public class ProductService {
 
         if (marketer == null || product == null) throw new ApiException("marketer or product not exist");
 
-        product.setPrice_after_discount(product.getPrice() * discount);
+        if (product.getMarketers().contains(marketer)){
+            product.setPrice_after_discount(product.getPrice() * discount);
+            productRepository.save(product);
+        }else throw new ApiException("you cannot apply discount on this product");
     }
 
     public void supplierDeleteProduct(Integer supplier_id, Integer product_id) {
-        Supplier supplier = supplierRepository.findSupplierById(supplier_id);
-        Product product = productRepository.findProductById(product_id);
+        Product product = productRepository.findProductByIdAndSupplierId(product_id, supplier_id);
 
-        if (supplier == null || product == null) throw new ApiException("supplier or product not exist");
+        if (product == null) throw new ApiException("supplier or product not exist");
 
         productRepository.delete(product);
     }
@@ -100,8 +103,11 @@ public class ProductService {
 
         if (marketer == null || product == null) throw new ApiException("marketer or product not exist");
 
-//        product.setMarketer(null);
-        productRepository.save(product);
+        if (product.getMarketers().contains(marketer)) {
+            product.getMarketers().remove(marketer);
+            productRepository.save(product);
+        }else throw new ApiException("you cannot delete this product");
+
     }
 
 //    public void shopperRemoveProductFromOrder(Integer shopper_id, Integer product_id) {
@@ -116,7 +122,16 @@ public class ProductService {
 //        }else throw new ApiException("you cannot delete product after shipping");
 //    }
 
-
+    //    public void shopperAddProductToOrder(Integer shopper_id,Integer product_id, Integer order_id) {
+//        Shopper shopper = shopperRepository.findShopperById(shopper_id);
+//        Product product = productRepository.findProductById(product_id);
+//        Orders order = ordersRepository.findOrdersById(order_id);
+//
+//        if (shopper == null || product == null || order == null) throw new ApiException("cannot add product to order");
+//
+//        product.setOrders(order);
+//        productRepository.save(product);
+//    }
     public void assignSupplierToProduct(Integer supplier_id, Integer product_id){
         Supplier supplier = supplierRepository.findSupplierById(supplier_id);
         Product product = productRepository.findProductById(product_id);
