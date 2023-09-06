@@ -20,7 +20,7 @@ public class SupplierService {
     }
 
     public void completeProfile(SupplierDTO supplierDTO) {
-        Supplier supplier = new Supplier(null, supplierDTO.getName(), supplierDTO.getPhone(),null,null,null);
+        Supplier supplier = new Supplier(null, supplierDTO.getName(), supplierDTO.getPhone(),null,null,null,null,null);
         supplierRepository.save(supplier);
     }
 
@@ -34,7 +34,6 @@ public class SupplierService {
 
         supplierRepository.save(supplier);
     }
-//comment
 
     // TODO: 9/6/2023   add conditional  about order status & req status.
     public void deleteAccount(Integer supplier_id) {
