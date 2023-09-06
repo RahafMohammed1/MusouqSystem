@@ -19,10 +19,10 @@ public class SupplierService {
         return supplierRepository.findAll();
     }
 
-//    public void completeProfile(SupplierDTO supplierDTO) {
-//        Supplier supplier = new Supplier(null, supplierDTO.getName(), supplierDTO.getPhone(),null,null,null,null,null);
-//        supplierRepository.save(supplier);
-//    }
+    public void completeProfile(Supplier supplier) {
+//        Supplier supplier = new Supplier(null, supplierDTO.getName(), supplierDTO.getPhone(),null,null,null,null);
+        supplierRepository.save(supplier);
+    }
 
     public void updateProfile(Integer supplier_id, SupplierDTO supplierDTO) {
         Supplier supplier = supplierRepository.findSupplierById(supplier_id);
