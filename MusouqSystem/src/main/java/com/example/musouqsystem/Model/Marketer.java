@@ -53,12 +53,13 @@ public class Marketer {
     private Set<Request> requests;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "marketer")
+    private Set<Orders> orders;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "marketer")
     private Set<Coupons> coupons;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "marketer")
     private Set<ReviewMarketer> reviewMarketers;
 
-
-
-
+    
 }

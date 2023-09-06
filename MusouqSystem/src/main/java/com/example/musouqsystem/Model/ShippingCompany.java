@@ -39,5 +39,4 @@ public class ShippingCompany {
 
     @ManyToMany
     private Set<Supplier> suppliers;
-
 }
