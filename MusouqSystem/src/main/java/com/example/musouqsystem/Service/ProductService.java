@@ -15,6 +15,7 @@ public class ProductService {
     private final SupplierRepository supplierRepository;
     private final MarketerRepository marketerRepository;
     private final ImageRepository imageRepository;
+    private final CategoryRepository categoryRepository;
 
 
 //    marketer & supplier get all
@@ -22,10 +23,21 @@ public class ProductService {
         return productRepository.findProductsBySupplierId(supplier_id);
     }
 
+
 //    shopper
-//    public List<Product> getAllProductsOfMarketer(Integer marketer_id) {
-//        return productRepository.findProductsByMarketerId(marketer_id);
-//    }
+    public List<Product> getAllProductsOfMarketer(Integer marketer_id) {
+        Marketer marketer = marketerRepository.findMarketerById(marketer_id);
+        if (marketer == null) throw new ApiException("marketer not found");
+        return productRepository.findAllByMarketersContains(marketer);
+    }
+
+
+    public List<Product> getAllProductsByCategory(Integer category_id) {
+        Category category = categoryRepository.findCategoryById(category_id);
+        if (category == null) throw new ApiException("category not found");
+
+        return productRepository.findProductsByCategory(category);
+    }
 
 
     public void supplierAddProduct(Integer supplier_id, Integer img_id, Product product) {
@@ -49,17 +61,6 @@ public class ProductService {
         product.getMarketers().add(marketer);
         productRepository.save(product);
     }
-
-//    public void shopperAddProductToOrder(Integer shopper_id,Integer product_id, Integer order_id) {
-//        Shopper shopper = shopperRepository.findShopperById(shopper_id);
-//        Product product = productRepository.findProductById(product_id);
-//        Orders order = ordersRepository.findOrdersById(order_id);
-//
-//        if (shopper == null || product == null || order == null) throw new ApiException("cannot add product to order");
-//
-//        product.setOrders(order);
-//        productRepository.save(product);
-//    }
 
 
     public void supplierUpdateProduct(Integer supplier_id, Integer product_id, Product product) {
@@ -121,7 +122,16 @@ public class ProductService {
 //        }else throw new ApiException("you cannot delete product after shipping");
 //    }
 
-
+    //    public void shopperAddProductToOrder(Integer shopper_id,Integer product_id, Integer order_id) {
+//        Shopper shopper = shopperRepository.findShopperById(shopper_id);
+//        Product product = productRepository.findProductById(product_id);
+//        Orders order = ordersRepository.findOrdersById(order_id);
+//
+//        if (shopper == null || product == null || order == null) throw new ApiException("cannot add product to order");
+//
+//        product.setOrders(order);
+//        productRepository.save(product);
+//    }
     public void assignSupplierToProduct(Integer supplier_id, Integer product_id){
         Supplier supplier = supplierRepository.findSupplierById(supplier_id);
         Product product = productRepository.findProductById(product_id);
