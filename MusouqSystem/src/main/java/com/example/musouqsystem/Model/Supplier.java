@@ -3,6 +3,7 @@ package com.example.musouqsystem.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,7 +27,7 @@ public class Supplier {
     private String name;
 
     @NotEmpty(message = "phone should not be empty")
-    @Length(min = 9, message = "phone length should be 10 numbers")
+    @Pattern(regexp = "^(009665|9665|\\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$")
     @Column(columnDefinition = "varchar(10) not null")
     private String phone;
 
