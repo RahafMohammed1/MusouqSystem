@@ -2,6 +2,7 @@ package com.example.musouqsystem.Service;
 
 import com.example.musouqsystem.Api.ApiException;
 import com.example.musouqsystem.DTO.SupplierDTO;
+import com.example.musouqsystem.Model.Request;
 import com.example.musouqsystem.Model.Supplier;
 import com.example.musouqsystem.Repository.SupplierRepository;
 import lombok.RequiredArgsConstructor;
@@ -35,13 +36,14 @@ public class SupplierService {
         supplierRepository.save(supplier);
     }
 
-    // TODO: 9/6/2023   add conditional  about order status & req status.
     public void deleteAccount(Integer supplier_id) {
         Supplier supplier = supplierRepository.findSupplierById(supplier_id);
 
         if (supplier == null) throw new ApiException("supplier not exist");
 
-        supplierRepository.delete(supplier);
+        if (supplier.getMarketers().isEmpty() || supplier.getOrders().isEmpty())
+            supplierRepository.delete(supplier);
+        else throw new ApiException("you cannot delete your account while there are marketing request & orders");
     }
 
 
