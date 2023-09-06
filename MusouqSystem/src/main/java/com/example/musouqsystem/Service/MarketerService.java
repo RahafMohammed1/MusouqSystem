@@ -1,11 +1,61 @@
 package com.example.musouqsystem.Service;
 
+import com.example.musouqsystem.Api.ApiException;
+import com.example.musouqsystem.DTO.MarketerDTO;
+import com.example.musouqsystem.DTO.MarketerEditProfileDTO;
+import com.example.musouqsystem.DTO.SupplierDTO;
+import com.example.musouqsystem.Model.*;
+import com.example.musouqsystem.Repository.AuthRepository;
 import com.example.musouqsystem.Repository.MarketerRepository;
+import com.example.musouqsystem.Repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class MarketerService {
     private final MarketerRepository marketerRepository;
+    private final AuthRepository authRepository;
+    private final ProductRepository productRepository;
+
+    public List<Marketer> shopperGetAllMarketer()
+    {
+        return marketerRepository.findAll();
+    }
+
+    public void completeProfile(Marketer marketer)
+    {
+        marketerRepository.save(marketer);
+    }
+
+    public void updateProfile(Integer marketer_id, MarketerDTO marketerDTO) {
+        Marketer marketer=marketerRepository.findMarketerById(marketer_id);
+        if (marketer == null) throw new ApiException("marketer not exist");
+        marketer.setName(marketerDTO.getName());
+        marketer.setPhone(marketerDTO.getPhone());
+        marketerRepository.save(marketer);
+    }
+
+    public void deleteProfile(Integer marketer_id){
+        Marketer marketer=marketerRepository.findMarketerById(marketer_id);
+        if (marketer == null) throw new ApiException("the marketer not found");
+        marketerRepository.delete(marketer);
+    }
+
+    public void assignProductToMarketer(Integer marketer_id,Integer product_id)
+    {
+        Marketer marketer= marketerRepository.findMarketerById(marketer_id);
+        Product product=productRepository.findProductById(product_id);
+        if(marketer==null||product==null) throw new ApiException("cannot assign");
+
+        product.getMarketers().add(marketer);
+        marketer.getProducts().add(product);
+
+        productRepository.save(product);
+        marketerRepository.save(marketer);
+    }
+
+
 }
