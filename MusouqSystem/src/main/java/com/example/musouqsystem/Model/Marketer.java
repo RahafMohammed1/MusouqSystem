@@ -17,6 +17,7 @@ import org.hibernate.validator.constraints.Length;
 @NoArgsConstructor
 public class Marketer {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotEmpty(message = "The marketer name must not empty")
