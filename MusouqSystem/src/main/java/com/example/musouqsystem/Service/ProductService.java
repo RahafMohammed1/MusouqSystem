@@ -13,12 +13,10 @@ import java.util.List;
 public class ProductService {
     private final ProductRepository productRepository;
     private final SupplierRepository supplierRepository;
-    private final ShopperRepository shopperRepository;
-    private final OrdersRepository ordersRepository;
     private final MarketerRepository marketerRepository;
 
 
-//    marketer & supplier
+//    marketer & supplier get all
     public List<Product> getAllProductsOfSupplier(Integer supplier_id) {
         return productRepository.findProductsBySupplierId(supplier_id);
     }
