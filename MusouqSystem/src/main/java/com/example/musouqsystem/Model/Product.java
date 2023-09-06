@@ -43,7 +43,7 @@ public class Product {
 
 
     @ManyToOne
-    @JoinColumn(name = "supplier_id", referencedColumnName = "user_id")
+    @JoinColumn(name = "supplier_id", referencedColumnName = "id")
     @JsonIgnore
     private Supplier supplier;
 

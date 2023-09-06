@@ -19,6 +19,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class Shopper {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotEmpty(message = "The shopper name must not empty")
@@ -39,13 +40,13 @@ public class Shopper {
     @Column(columnDefinition = "int default 0")
     private Integer num_of_orders;
 
-    @OneToOne
-    @MapsId
-    @JsonIgnore
-    private User user;
+//    @OneToOne
+//    @MapsId
+//    @JsonIgnore
+//    private User user;
 
     @ManyToOne
-    @JoinColumn(name = "marketer_id", referencedColumnName = "user_id")
+    @JoinColumn(name = "marketer_id", referencedColumnName = "id")
     private Marketer marketer;
 
     @OneToMany(cascade = CascadeType.ALL , mappedBy = "shopper")
@@ -61,7 +62,7 @@ public class Shopper {
     private Set<ReviewOrder> reviewOrders;
 
     @ManyToOne
-    @JoinColumn(name = "supplier_id", referencedColumnName = "user_id")
+    @JoinColumn(name = "supplier_id", referencedColumnName = "id")
     @JsonIgnore
     private Supplier supplier;
 }

@@ -19,6 +19,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class Marketer {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotEmpty(message = "The marketer name must not empty")
@@ -37,10 +38,10 @@ public class Marketer {
     @Column(columnDefinition = "double default 0")
     private Double dues = 0.0 ;
 
-    @OneToOne
-    @MapsId
-    @JsonIgnore
-    private User user;
+//    @OneToOne
+//    @MapsId
+//    @JsonIgnore
+//    private User user;
 
     @OneToMany(cascade = CascadeType.ALL , mappedBy = "marketer")
     @JsonIgnore

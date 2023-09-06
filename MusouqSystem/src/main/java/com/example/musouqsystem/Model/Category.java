@@ -26,7 +26,7 @@ public class Category {
 
 
     @ManyToOne
-    @JoinColumn(name = "supplier_id", referencedColumnName = "user_id")
+    @JoinColumn(name = "supplier_id", referencedColumnName = "id")
     private Supplier supplier;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")

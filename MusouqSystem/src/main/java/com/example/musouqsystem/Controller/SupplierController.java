@@ -19,11 +19,11 @@ public class SupplierController {
         return ResponseEntity.status(200).body(supplierService.marketerGetAllSuppliers());
     }
 
-    @PostMapping("/completeProfile")
-    public ResponseEntity completeProfile(@RequestBody @Valid SupplierDTO supplierDTO){
-        supplierService.completeProfile(supplierDTO);
-        return ResponseEntity.status(200).body(new ApiResponse("your profile completed"));
-    }
+//    @PostMapping("/completeProfile")
+//    public ResponseEntity completeProfile(@RequestBody @Valid SupplierDTO supplierDTO){
+//        supplierService.completeProfile(supplierDTO);
+//        return ResponseEntity.status(200).body(new ApiResponse("your profile completed"));
+//    }
 
     @PutMapping("/updateProfile/{supplier_id}")
     public ResponseEntity updateProfile(@PathVariable Integer supplier_id, @RequestBody @Valid SupplierDTO supplierDTO) {

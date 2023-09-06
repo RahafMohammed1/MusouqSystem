@@ -37,16 +37,16 @@ public class User {
     private String email;
 
 
-
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
-    @PrimaryKeyJoinColumn
-    private Marketer marketer;
-
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
-    @PrimaryKeyJoinColumn
-    private Shopper shopper;
-
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
-    @PrimaryKeyJoinColumn
-    private Supplier supplier;
+//
+//    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+//    @PrimaryKeyJoinColumn
+//    private Marketer marketer;
+//
+//    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+//    @PrimaryKeyJoinColumn
+//    private Shopper shopper;
+//
+//    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+//    @PrimaryKeyJoinColumn
+//    private Supplier supplier;
 }

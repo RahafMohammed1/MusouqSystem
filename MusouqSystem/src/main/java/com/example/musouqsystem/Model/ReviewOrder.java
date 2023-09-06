@@ -30,7 +30,7 @@ public class ReviewOrder {
     private Integer rate_order;
 
     @ManyToOne
-    @JoinColumn(name = "shopper_id", referencedColumnName = "user_id")
+    @JoinColumn(name = "shopper_id", referencedColumnName = "id")
     private Shopper shopper;
 
     @OneToOne
