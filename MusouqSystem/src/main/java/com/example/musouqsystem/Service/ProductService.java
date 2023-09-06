@@ -14,6 +14,7 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final SupplierRepository supplierRepository;
     private final MarketerRepository marketerRepository;
+    private final ImageRepository imageRepository;
 
 
 //    marketer & supplier get all
@@ -26,13 +27,15 @@ public class ProductService {
 //        return productRepository.findProductsByMarketerId(marketer_id);
 //    }
 
-//    marketer add product - path variable
 
-    public void supplierAddProduct(Integer supplier_id, Product product) {
+    public void supplierAddProduct(Integer supplier_id, Integer img_id, Product product) {
         Supplier supplier = supplierRepository.findSupplierById(supplier_id);
+        Image image = imageRepository.findImageById(img_id);
 
         if (supplier == null) throw new ApiException("supplier not exist");
+        if (image == null) throw new ApiException("image not found");
 
+        product.setImage(image);
         product.setSupplier(supplier);
         productRepository.save(product);
     }
