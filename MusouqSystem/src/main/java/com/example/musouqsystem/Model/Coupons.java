@@ -39,5 +39,4 @@ public class Coupons {
     @JsonIgnore
     private Marketer marketer;
 
-
 }
