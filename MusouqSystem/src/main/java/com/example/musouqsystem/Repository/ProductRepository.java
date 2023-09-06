@@ -10,8 +10,8 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product, Integer> {
     Product findProductById(Integer id);
 
-//    Product findProductByIdAnd
     List<Product> findProductsBySupplierId(Integer supplier_id);
 
-//    List<Product> findProductsByMarketerId(Integer marketer_id);
+    Product findProductByIdAndSupplierId(Integer product_id, Integer supplier_id);
+
 }
