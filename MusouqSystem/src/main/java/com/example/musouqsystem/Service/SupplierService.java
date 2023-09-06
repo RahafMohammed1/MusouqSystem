@@ -34,7 +34,7 @@ public class SupplierService {
 
         supplierRepository.save(supplier);
     }
-
+//comment
 
     // TODO: 9/6/2023   add conditional  about order status & req status.
     public void deleteAccount(Integer supplier_id) {
