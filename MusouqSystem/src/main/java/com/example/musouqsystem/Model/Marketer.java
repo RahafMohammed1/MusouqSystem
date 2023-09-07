@@ -40,6 +40,7 @@ public class Marketer {
 
     @ManyToOne
     @JoinColumn(name = "supplier_id", referencedColumnName = "id")
+    @JsonIgnore
     private Supplier supplier;
 
     @ManyToMany
