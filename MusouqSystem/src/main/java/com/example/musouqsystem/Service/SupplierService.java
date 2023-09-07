@@ -4,12 +4,15 @@ import com.example.musouqsystem.Api.ApiException;
 import com.example.musouqsystem.DTO.SupplierDTO;
 import com.example.musouqsystem.Model.Orders;
 import com.example.musouqsystem.Model.Request;
+import com.example.musouqsystem.Model.ShippingCompany;
 import com.example.musouqsystem.Model.Supplier;
 import com.example.musouqsystem.Repository.OrdersRepository;
+import com.example.musouqsystem.Repository.ShippingCompanyRepository;
 import com.example.musouqsystem.Repository.SupplierRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -17,6 +20,7 @@ import java.util.List;
 public class SupplierService {
     private final SupplierRepository supplierRepository;
     private final OrdersRepository ordersRepository;
+    private final ShippingCompanyRepository shippingCompanyRepository;
 
 
     public List<Supplier> marketerGetAllSuppliers() {
@@ -39,7 +43,7 @@ public class SupplierService {
         supplierRepository.save(supplier);
     }
 
-    public void supplierShippedOrder(Integer supplier_id, Integer order_id) {
+    public void supplierShippedOrder(Integer supplier_id, Integer order_id, String date) {
         Supplier supplier = supplierRepository.findSupplierById(supplier_id);
         Orders order = ordersRepository.findOrdersById(order_id);
         if (supplier == null || order == null) throw new ApiException("supplier or order not exist");
@@ -47,6 +51,7 @@ public class SupplierService {
         if (supplier.getOrders().contains(order))
             if (order.getOrder_status().equalsIgnoreCase("processing")) {
                 order.setOrder_status("shipped");
+                order.getShippingCompany().setDelivery_time(date);
                 ordersRepository.save(order);
             }
 

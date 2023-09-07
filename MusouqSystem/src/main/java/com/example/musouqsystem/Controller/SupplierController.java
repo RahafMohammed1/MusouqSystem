@@ -33,8 +33,8 @@ public class SupplierController {
     }
 
     @PutMapping("/shipOrder/{supplier_id}/{order_id}")
-    public ResponseEntity supplierShippedOrder(@PathVariable Integer supplier_id, @PathVariable Integer order_id) {
-        supplierService.supplierShippedOrder(supplier_id, order_id);
+    public ResponseEntity supplierShippedOrder(@PathVariable Integer supplier_id, @PathVariable Integer order_id, @PathVariable String date) {
+        supplierService.supplierShippedOrder(supplier_id, order_id, date);
         return ResponseEntity.status(200).body(new ApiResponse("order shipped successfully"));
     }
 
