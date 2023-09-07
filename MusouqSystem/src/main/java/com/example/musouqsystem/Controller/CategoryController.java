@@ -34,6 +34,12 @@ public class CategoryController {
         return ResponseEntity.status(200).body(new ApiResponse("category updated successfully"));
     }
 
+    @PutMapping("/updatePercent/{supplier_id}/{category_id}/{percent}")
+    public ResponseEntity supplierUpdateMarketerPercent(@PathVariable Integer supplier_id, @PathVariable Integer category_id, @PathVariable Double percent) {
+        categoryService.supplierUpdateMarketerPercent(supplier_id, category_id, percent);
+        return ResponseEntity.status(200).body(new ApiResponse("category marketer percent updated successfully"));
+    }
+
     @DeleteMapping("/deleteCategory/{category_id}")
     public ResponseEntity deleteCategory(@PathVariable Integer category_id) {
         categoryService.deleteCategory(category_id);

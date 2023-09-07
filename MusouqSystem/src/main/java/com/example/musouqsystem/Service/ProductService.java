@@ -14,7 +14,6 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final SupplierRepository supplierRepository;
     private final MarketerRepository marketerRepository;
-    private final ImageRepository imageRepository;
     private final CategoryRepository categoryRepository;
 
 
@@ -48,7 +47,6 @@ public class ProductService {
 
         product.setSupplier(supplier);
         product.setCategory(category);
-        category.setSupplier(supplier);
         category.setMarketer_percent(percent / 100);
         productRepository.save(product);
         categoryRepository.save(category);
