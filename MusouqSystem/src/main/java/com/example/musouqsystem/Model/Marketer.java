@@ -21,9 +21,6 @@ public class Marketer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
-    @JsonIgnore
-    private Integer supplierSelectedId;
 
     @NotEmpty(message = "The marketer name must not empty")
     @Length(min = 3, message = "marketer name length should be more than 3 characters")
@@ -43,6 +40,9 @@ public class Marketer {
 
     @Column(columnDefinition = "int default 0")
     private Integer marketer_rate;
+
+    @JsonIgnore
+    private Integer supplierSelectedId;
 
     @ManyToOne
     @JoinColumn(name = "supplier_id", referencedColumnName = "id")
