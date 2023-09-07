@@ -36,7 +36,5 @@ public class ShippingCompany {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "shippingCompany")
     private Set<Orders> orders;
-
-    @ManyToMany
-    private Set<Supplier> suppliers;
+    
 }
