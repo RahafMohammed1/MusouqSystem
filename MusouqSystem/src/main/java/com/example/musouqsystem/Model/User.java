@@ -36,6 +36,7 @@ public class User {
     @Column(columnDefinition = "varchar(30) not null unique")
     private String email;
 
+    private String role;
 
 //
 //    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
