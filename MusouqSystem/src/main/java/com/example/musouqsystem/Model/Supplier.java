@@ -39,7 +39,7 @@ public class Supplier {
 //    private User user;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "supplier")
-    private Set<Product> marketers;
+    private Set<Marketer> marketers;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "supplier")
     private Set<Product> products;

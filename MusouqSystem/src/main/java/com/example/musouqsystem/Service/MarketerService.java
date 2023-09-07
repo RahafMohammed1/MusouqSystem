@@ -58,9 +58,10 @@ public class MarketerService {
         Marketer marketer = marketerRepository.findMarketerById(marketer_id);
         if (marketer == null) throw new ApiException("marketer not found");
         Supplier supplier = supplierRepository.findSupplierById(supplier_id);
-        if (supplier == null) throw new ApiException("please select supplier");
+        if (supplier == null) throw new ApiException("please enter correct supplier id");
 
         marketer.setSupplier(supplier);
+        //supplier.getMarketers().add(marketer);
         marketerRepository.save(marketer);
     }
 }

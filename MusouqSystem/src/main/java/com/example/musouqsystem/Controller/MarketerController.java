@@ -41,7 +41,7 @@ public class MarketerController {
     }
 
     @PutMapping("/select/supplier/{marketer_id}/{supplier_id}")
-    public ResponseEntity selectSupplier(@PathVariable Integer marketer_id, Integer supplier_id) {
+    public ResponseEntity selectSupplier(@PathVariable Integer marketer_id,@PathVariable Integer supplier_id) {
         marketerService.marketerSelectSupplier(marketer_id, supplier_id);
         return ResponseEntity.status(200).body(new ApiResponse("your selection is done successfully"));
     }
