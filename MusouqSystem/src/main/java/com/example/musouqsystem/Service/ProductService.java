@@ -40,7 +40,7 @@ public class ProductService {
     }
 
 
-    public void supplierAddProduct(Integer supplier_id, Integer category_id, Product product) {
+    public void supplierAddProduct(Integer supplier_id, Integer category_id, Product product, Double percent) {
         Supplier supplier = supplierRepository.findSupplierById(supplier_id);
         Category category = categoryRepository.findCategoryById(category_id);
 
@@ -48,7 +48,10 @@ public class ProductService {
 
         product.setSupplier(supplier);
         product.setCategory(category);
+        category.setSupplier(supplier);
+        category.setMarketer_percent(percent / 100);
         productRepository.save(product);
+        categoryRepository.save(category);
     }
 
     public void marketerAddProduct(Integer marketer_id, Integer product_id, Integer supplier_id ) {
@@ -138,6 +141,16 @@ public class ProductService {
         if (supplier == null || product == null) throw new ApiException("cannot assign supplier to product");
 
         product.setSupplier(supplier);
+        productRepository.save(product);
+    }
+
+    public void assignCategoryToProduct(Integer category_id, Integer product_id) {
+        Category category = categoryRepository.findCategoryById(category_id);
+        Product product = productRepository.findProductById(product_id);
+
+        if (category == null || product == null) throw new ApiException("cannot assign category to product");
+
+        product.setCategory(category);
         productRepository.save(product);
     }
 }

@@ -31,13 +31,13 @@ public class ProductController {
 
 
     @GetMapping("/getAllProductsByCategory/{category_id}")
-    public ResponseEntity getAllProductsByCategory(Integer category_id) {
+    public ResponseEntity getAllProductsByCategory(@PathVariable Integer category_id) {
         return ResponseEntity.status(200).body(productService.getAllProductsByCategory(category_id));
     }
 
-    @PostMapping("/supplierAddProduct/{supplier_id}/{category_id}")
-    public ResponseEntity supplierAddProduct(@PathVariable Integer supplier_id, @PathVariable Integer category_id, @RequestBody @Valid Product product) {
-        productService.supplierAddProduct(supplier_id, category_id, product);
+    @PostMapping("/supplierAddProduct/{supplier_id}/{category_id}/{percent}")
+    public ResponseEntity supplierAddProduct(@PathVariable Integer supplier_id, @PathVariable Integer category_id, @RequestBody @Valid Product product, @PathVariable Double percent) {
+        productService.supplierAddProduct(supplier_id, category_id, product, percent);
         return ResponseEntity.status(200).body(new ApiResponse("product added successfully"));
     }
 
