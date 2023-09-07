@@ -2,6 +2,7 @@ package com.example.musouqsystem.Controller;
 
 import com.example.musouqsystem.Api.ApiResponse;
 import com.example.musouqsystem.DTO.ImageDTO;
+import com.example.musouqsystem.Model.Image;
 import com.example.musouqsystem.Service.ImageService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,16 +28,16 @@ public class ImageController {
         return ResponseEntity.status(200).body(new ApiResponse("image added successfully"));
     }
 
-    @PutMapping("/changeImage/{img_id}")
-    public ResponseEntity changeImage(@PathVariable Integer img_id, @RequestBody @Valid ImageDTO imageDTO) {
-        imageService.changeImage(img_id, imageDTO);
-        return ResponseEntity.status(200).body(new ApiResponse("image added successfully"));
+    @PutMapping("/changeImage/{supplier_id}/{product_id}")
+    public ResponseEntity changeImage(@PathVariable Integer supplier_id, @PathVariable Integer product_id, @RequestBody @Valid Image image) {
+        imageService.changeImage(supplier_id, product_id, image);
+        return ResponseEntity.status(200).body(new ApiResponse("image changed successfully"));
 
     }
 
-    @DeleteMapping("/deleteImage/{img_id}")
-    public ResponseEntity deleteImage(@PathVariable Integer img_id) {
-        imageService.deleteImage(img_id);
-        return ResponseEntity.status(200).body(new ApiResponse("image added successfully"));
+    @DeleteMapping("/deleteImage/{supplier_id}/{product_id}")
+    public ResponseEntity deleteImage(@PathVariable Integer supplier_id, @PathVariable Integer product_id) {
+        imageService.deleteImage(supplier_id, product_id);
+        return ResponseEntity.status(200).body(new ApiResponse("image deleted successfully"));
     }
 }
