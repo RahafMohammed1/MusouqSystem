@@ -26,17 +26,18 @@ public class RequestService {
     public Set<Request> marketerViewAllHisRequest(Integer marketer_id)
     {
         Marketer marketer=marketerRepository.findMarketerById(marketer_id);
-        if (marketer==null) throw new ApiException("marketer not found");
-        //check if marketer have requests or not
-        if(marketer.getRequests()==null)throw new ApiException("you are not send any request yet");
+        if (marketer==null)
+            throw new ApiException("marketer not found");
+
         return marketer.getRequests();
     }
 
     public Set<Request> supplierViewAllHisRequest(Integer supplier_id)
     {
         Supplier supplier=supplierRepository.findSupplierById(supplier_id);
-        if (supplier==null) throw new ApiException("supplier not found");
-        if(supplier.getRequests()==null)throw new ApiException("you have not any request yet");
+        if (supplier==null)
+            throw new ApiException("supplier not found");
+
         return supplier.getRequests();
     }
 
@@ -61,22 +62,30 @@ public class RequestService {
     public void marketerUpdateRequest(Integer marketer_id,Integer request_id,RequestDTO requestDTO)
     {
         Marketer marketer=marketerRepository.findMarketerById(marketer_id);
-        if (marketer==null) throw new ApiException("marketer not found");
-        if(marketer.getRequests()==null)throw new ApiException("you are not send any request yet");
+        if (marketer==null)
+            throw new ApiException("marketer not found");
+        if(marketer.getRequests()==null)
+            throw new ApiException("you are not send any request yet");
         Request request=requestRepository.findRequestById(request_id);
-        if (request==null) throw new ApiException("request not found");
-        if(marketer_id!=request.getMarketer().getId()) throw new ApiException("the request not belong to you");
+        if (request==null)
+            throw new ApiException("request not found");
+        if(marketer_id!=request.getMarketer().getId())
+            throw new ApiException("the request not belong to you");
         request.setReq_description(requestDTO.getReq_description());
         requestRepository.save(request);
     }
 
     public void marketerDeleteRequest(Integer marketer_id,Integer request_id) {
         Marketer marketer = marketerRepository.findMarketerById(marketer_id);
-        if (marketer == null) throw new ApiException("marketer not found");
-        if (marketer.getRequests() == null) throw new ApiException("you are not send any request yet");
+        if (marketer == null)
+            throw new ApiException("marketer not found");
+        if (marketer.getRequests() == null)
+            throw new ApiException("you are not send any request yet");
         Request request = requestRepository.findRequestById(request_id);
-        if (request == null) throw new ApiException("request not found");
-        if(marketer_id!=request.getMarketer().getId()) throw new ApiException("the request not belong to you");
+        if (request == null)
+            throw new ApiException("request not found");
+        if(marketer_id!=request.getMarketer().getId())
+            throw new ApiException("the request not belong to you");
         requestRepository.delete(request);
     }
 
@@ -84,13 +93,21 @@ public class RequestService {
     //supplierAcceptRequest
     public void supplierAcceptRequest(Integer supplier_id,Integer request_id){
 
+
         Supplier supplier=supplierRepository.findSupplierById(supplier_id);
         if (supplier==null) throw new ApiException("supplier not found");
 
         Request request=requestRepository.findRequestById(request_id);
         if (request==null) throw new ApiException("request not found");
 
-        if(request.getSupplier().getId()!=supplier_id) throw new ApiException("this request not belong to you");
+        if(request.getSupplier().getId()!=supplier_id)
+            throw new ApiException("this request not belong to you");
+
+        if (request.getStatus().equalsIgnoreCase("Accepted"))
+            throw new ApiException("Error,you already accept this request");
+
+        if (request.getStatus().equalsIgnoreCase("Rejected"))
+            throw new ApiException("Error,you already reject this request");
 
         request.setStatus("Accepted");
         requestRepository.save(request);
@@ -104,7 +121,15 @@ public class RequestService {
         Request request=requestRepository.findRequestById(request_id);
         if (request==null) throw new ApiException("request not found");
 
-        if(request.getSupplier().getId()!=supplier_id) throw new ApiException("this request not belong to you");
+        if(request.getSupplier().getId()!=supplier_id)
+            throw new ApiException("this request not belong to you");
+
+        if (request.getStatus().equalsIgnoreCase("Accepted"))
+            throw new ApiException("Error,you already accept this request");
+
+        if (request.getStatus().equalsIgnoreCase("Rejected"))
+            throw new ApiException("Error,you already reject this request");
+
 
         request.setStatus("Rejected");
         requestRepository.save(request);

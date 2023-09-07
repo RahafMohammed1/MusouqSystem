@@ -51,7 +51,7 @@ public class RequestController {
         return ResponseEntity.status(200).body(new ApiResponse("your are accept the request"));
     }
     @PutMapping("/reject-request/{supplier_id}/{request_id}")
-    public ResponseEntity supplierRejectRequest(Integer supplier_id,Integer request_id){
+    public ResponseEntity supplierRejectRequest(@PathVariable Integer supplier_id,@PathVariable Integer request_id){
 
         requestService.supplierRejectRequest(supplier_id, request_id);
         return ResponseEntity.status(200).body(new ApiResponse("your are reject the request"));
