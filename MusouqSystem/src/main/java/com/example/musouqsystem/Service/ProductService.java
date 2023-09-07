@@ -14,7 +14,6 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final SupplierRepository supplierRepository;
     private final MarketerRepository marketerRepository;
-    private final ImageRepository imageRepository;
     private final CategoryRepository categoryRepository;
 
 
@@ -40,7 +39,7 @@ public class ProductService {
     }
 
 
-    public void supplierAddProduct(Integer supplier_id, Integer category_id, Product product, Double percent) {
+    public void supplierAddProduct(Integer supplier_id, Integer category_id, Product product) {
         Supplier supplier = supplierRepository.findSupplierById(supplier_id);
         Category category = categoryRepository.findCategoryById(category_id);
 
@@ -48,8 +47,6 @@ public class ProductService {
 
         product.setSupplier(supplier);
         product.setCategory(category);
-        category.setSupplier(supplier);
-        category.setMarketer_percent(percent / 100);
         productRepository.save(product);
         categoryRepository.save(category);
     }
@@ -61,6 +58,8 @@ public class ProductService {
         if (marketer == null || product == null) throw new ApiException("cannot add product to marketer");
 
         product.getMarketers().add(marketer);
+        marketer.getProducts().add(product);
+        marketerRepository.save(marketer);
         productRepository.save(product);
     }
 
@@ -79,14 +78,14 @@ public class ProductService {
         productRepository.save(oldProduct);
     }
 
-    public void marketerApplyDiscount(Integer marketer_id, Integer product_id, Double discount) {
+    public void marketerApplyDiscount(Integer marketer_id, Integer product_id, Integer discount) {
         Marketer marketer = marketerRepository.findMarketerById(marketer_id);
         Product product = productRepository.findProductById(product_id);
 
         if (marketer == null || product == null) throw new ApiException("marketer or product not exist");
 
         if (product.getMarketers().contains(marketer)){
-            product.setPrice_after_discount(product.getPrice() * discount);
+            product.setPrice_after_discount(product.getPrice() * (discount / 100.0));
             productRepository.save(product);
         }else throw new ApiException("you cannot apply discount on this product");
     }

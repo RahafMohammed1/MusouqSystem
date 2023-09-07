@@ -35,9 +35,9 @@ public class ProductController {
         return ResponseEntity.status(200).body(productService.getAllProductsByCategory(category_id));
     }
 
-    @PostMapping("/supplierAddProduct/{supplier_id}/{category_id}/{percent}")
-    public ResponseEntity supplierAddProduct(@PathVariable Integer supplier_id, @PathVariable Integer category_id, @RequestBody @Valid Product product, @PathVariable Double percent) {
-        productService.supplierAddProduct(supplier_id, category_id, product, percent);
+    @PostMapping("/supplierAddProduct/{supplier_id}/{category_id}")
+    public ResponseEntity supplierAddProduct(@PathVariable Integer supplier_id, @PathVariable Integer category_id, @RequestBody @Valid Product product) {
+        productService.supplierAddProduct(supplier_id, category_id, product);
         return ResponseEntity.status(200).body(new ApiResponse("product added successfully"));
     }
 
@@ -54,8 +54,8 @@ public class ProductController {
         return ResponseEntity.status(200).body(new ApiResponse("product updated successfully"));
     }
 
-    @PutMapping("/marketerApplyDiscount/{marketer_id}/{product_id}")
-    public ResponseEntity marketerApplyDiscount(@PathVariable Integer marketer_id, @PathVariable Integer product_id, @RequestBody @Valid Double discount) {
+    @PutMapping("/marketerApplyDiscount/{marketer_id}/{product_id}/{discount}")
+    public ResponseEntity marketerApplyDiscount(@PathVariable Integer marketer_id, @PathVariable Integer product_id, @PathVariable Integer discount) {
         productService.marketerApplyDiscount(marketer_id, product_id, discount);
         return ResponseEntity.status(200).body(new ApiResponse("discount applied to product successfully"));
     }
