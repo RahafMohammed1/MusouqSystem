@@ -104,8 +104,10 @@ public class ProductService {
 
         if (marketer == null || product == null) throw new ApiException("marketer or product not exist");
 
-        if (product.getMarketers().contains(marketer)) {
+        if (product.getMarketers().contains(marketer) || marketer.getProducts().contains(product)) {
             product.getMarketers().remove(marketer);
+            marketer.getProducts().remove(product);
+            marketerRepository.save(marketer);
             productRepository.save(product);
         }else throw new ApiException("you cannot delete this product");
 
