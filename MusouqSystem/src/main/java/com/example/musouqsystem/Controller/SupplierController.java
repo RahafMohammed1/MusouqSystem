@@ -32,7 +32,7 @@ public class SupplierController {
         return ResponseEntity.status(200).body(new ApiResponse("your profile updated successfully"));
     }
 
-    @PutMapping("/shipOrder/{supplier_id}/{order_id}")
+    @PutMapping("/shipOrder/{supplier_id}/{order_id}/{date}")
     public ResponseEntity supplierShippedOrder(@PathVariable Integer supplier_id, @PathVariable Integer order_id, @PathVariable String date) {
         supplierService.supplierShippedOrder(supplier_id, order_id, date);
         return ResponseEntity.status(200).body(new ApiResponse("order shipped successfully"));
