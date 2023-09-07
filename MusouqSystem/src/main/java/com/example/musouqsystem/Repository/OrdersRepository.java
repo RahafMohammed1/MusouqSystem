@@ -15,5 +15,5 @@ public interface OrdersRepository extends JpaRepository<Orders , Integer> {
 
     // to get the orders for the shopper
 //    List<Orders> findAllByUser();
-    
+
 }
