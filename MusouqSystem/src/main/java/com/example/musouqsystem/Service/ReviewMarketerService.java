@@ -62,8 +62,6 @@ public class ReviewMarketerService {
         if (reviewMarketer == null)
             throw new ApiException("Sorry the review order is wrong");
 
-//        reviewMarketer.setMarketer(null);
-//        reviewMarketer.setShopper(null);
         reviewMarketerRepository.delete(reviewMarketer);
     }
 
