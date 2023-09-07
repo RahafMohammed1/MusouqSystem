@@ -35,9 +35,9 @@ public class ProductController {
         return ResponseEntity.status(200).body(productService.getAllProductsByCategory(category_id));
     }
 
-    @PostMapping("/supplierAddProduct/{supplier_id}")
-    public ResponseEntity supplierAddProduct(@PathVariable Integer supplier_id, @PathVariable Integer img_id, @RequestBody @Valid Product product) {
-        productService.supplierAddProduct(supplier_id, img_id, product);
+    @PostMapping("/supplierAddProduct/{supplier_id}/{category_id}")
+    public ResponseEntity supplierAddProduct(@PathVariable Integer supplier_id, @PathVariable Integer category_id, @RequestBody @Valid Product product) {
+        productService.supplierAddProduct(supplier_id, category_id, product);
         return ResponseEntity.status(200).body(new ApiResponse("product added successfully"));
     }
 

@@ -15,7 +15,6 @@ import lombok.Setter;
 public class Image {
 
     @Id
-    @GeneratedValue
     private Integer id;
 
     private String url;
