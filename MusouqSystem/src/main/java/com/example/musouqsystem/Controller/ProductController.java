@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,6 +23,11 @@ public class ProductController {
     @GetMapping("/getAllProductsOfSupplier/{supplier_id}")
     public ResponseEntity getAllProductsOfSupplier(@PathVariable Integer supplier_id) {
         return ResponseEntity.status(200).body(productService.getAllProductsOfSupplier(supplier_id));
+    }
+
+    @GetMapping("/marketerGetAllProductsOfSupplier/{marketer_id}/{supplier_id}")
+    public ResponseEntity marketerGetAllProductsOfSupplier(@PathVariable Integer marketer_id, @PathVariable Integer supplier_id) {
+        return ResponseEntity.status(200).body(productService.marketerGetAllProductsOfSupplier(marketer_id, supplier_id));
     }
 
     @GetMapping("/getAllProductsOfMarketer/{marketer_id}")

@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -17,9 +18,17 @@ public class ProductService {
     private final CategoryRepository categoryRepository;
 
 
-//    marketer & supplier get all
+//    supplier get all
     public List<Product> getAllProductsOfSupplier(Integer supplier_id) {
         return productRepository.findProductsBySupplierId(supplier_id);
+    }
+
+    public Set<Product> marketerGetAllProductsOfSupplier(Integer marketer_id, Integer supplier_id) {
+        Marketer marketer = marketerRepository.findMarketerById(marketer_id);
+
+        if (marketer == null) throw new ApiException("you don't have supplier, select one first");
+
+        return marketer.getSupplier().getProducts();
     }
 
 
@@ -57,10 +66,13 @@ public class ProductService {
 
         if (marketer == null || product == null) throw new ApiException("cannot add product to marketer");
 
-        product.getMarketers().add(marketer);
-        marketer.getProducts().add(product);
-        marketerRepository.save(marketer);
-        productRepository.save(product);
+        if (marketer.getSupplier().getId().equals(supplier_id)) {
+            product.getMarketers().add(marketer);
+            marketer.getProducts().add(product);
+            marketerRepository.save(marketer);
+            productRepository.save(product);
+        }else throw new ApiException("you cannot add this product");
+
     }
 
 
