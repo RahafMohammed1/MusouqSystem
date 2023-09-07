@@ -36,8 +36,8 @@ public class ProductController {
     }
 
     @PostMapping("/supplierAddProduct/{supplier_id}")
-    public ResponseEntity supplierAddProduct(@PathVariable Integer supplier_id, @PathVariable Integer img_id, @RequestBody @Valid Product product) {
-        productService.supplierAddProduct(supplier_id, img_id, product);
+    public ResponseEntity supplierAddProduct(@PathVariable Integer supplier_id, @RequestBody @Valid Product product) {
+        productService.supplierAddProduct(supplier_id, product);
         return ResponseEntity.status(200).body(new ApiResponse("product added successfully"));
     }
 

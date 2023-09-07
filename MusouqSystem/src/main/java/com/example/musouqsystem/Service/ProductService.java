@@ -40,14 +40,11 @@ public class ProductService {
     }
 
 
-    public void supplierAddProduct(Integer supplier_id, Integer img_id, Product product) {
+    public void supplierAddProduct(Integer supplier_id, Product product) {
         Supplier supplier = supplierRepository.findSupplierById(supplier_id);
-        Image image = imageRepository.findImageById(img_id);
 
         if (supplier == null) throw new ApiException("supplier not exist");
-        if (image == null) throw new ApiException("image not found");
 
-        product.setImage(image);
         product.setSupplier(supplier);
         productRepository.save(product);
     }
