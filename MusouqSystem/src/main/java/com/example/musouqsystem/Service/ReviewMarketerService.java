@@ -25,22 +25,21 @@ public class ReviewMarketerService {
         return reviewMarketerRepository.findAll();
     }
 
-    public void addReviewMarketer(Integer shopper_id,Integer order_id, ReviewMarketer reviewMarketer){
+    public void addReviewMarketer(Integer order_id, ReviewMarketer reviewMarketer){
         Orders orders = ordersRepository.findOrdersById(order_id);
-        Shopper shopper = shopperRepository.findShopperById(shopper_id);
-        Marketer marketer = marketerRepository.findMarketerById(orders.getMarketer().getId());
-
         if (orders == null)
             throw new ApiException("Sorry no order to rate it");
-        else if (shopper == null)
-            throw new ApiException("Sorry , the shopper id is wrong");
+        Shopper shopper = shopperRepository.findShopperById(orders.getShopper().getId());
+        Marketer marketer = marketerRepository.findMarketerById(orders.getMarketer().getId());
 
-        if (orders.getShopper().getId() != shopper.getId())
-            throw new ApiException("Sorry you can't rate the marketer of this order");
+        if (shopper == null)
+            throw new ApiException("Sorry , the shopper id is wrong");
+        else if (marketer == null) {
+            throw new ApiException("wrong marketer");
+        }
 
         if (!(orders.getOrder_status().equalsIgnoreCase("delivered")))
             throw new ApiException("You can't rate becuase the order does not delivered");
-
 
         reviewMarketer.setShopper(shopper);
         reviewMarketer.setMarketer(marketer);
@@ -63,8 +62,8 @@ public class ReviewMarketerService {
         if (reviewMarketer == null)
             throw new ApiException("Sorry the review order is wrong");
 
-        reviewMarketer.setMarketer(null);
-        reviewMarketer.setShopper(null);
+//        reviewMarketer.setMarketer(null);
+//        reviewMarketer.setShopper(null);
         reviewMarketerRepository.delete(reviewMarketer);
     }
 

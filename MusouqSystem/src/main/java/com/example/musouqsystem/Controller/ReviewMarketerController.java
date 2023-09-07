@@ -19,9 +19,9 @@ public class ReviewMarketerController {
         return ResponseEntity.status(200).body(reviewMarketerService.getAllReviewMarketers());
     }
 
-    @PostMapping("/addReviewMarketer/{shopper_id}/{order_id}")
-    public ResponseEntity addReviewMarketerController(@PathVariable Integer shopper_id, @PathVariable Integer order_id,@RequestBody @Valid ReviewMarketer reviewMarketer){
-        reviewMarketerService.addReviewMarketer(shopper_id,order_id, reviewMarketer);
+    @PostMapping("/addReviewMarketer/{order_id}")
+    public ResponseEntity addReviewMarketerController( @PathVariable Integer order_id,@RequestBody @Valid ReviewMarketer reviewMarketer){
+        reviewMarketerService.addReviewMarketer(order_id, reviewMarketer);
         return ResponseEntity.status(200).body(new ApiResponse("your review marketer added successfully "));
     }
 
