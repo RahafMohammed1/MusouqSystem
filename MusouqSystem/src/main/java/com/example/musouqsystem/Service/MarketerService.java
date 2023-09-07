@@ -22,35 +22,31 @@ public class MarketerService {
     private final AuthRepository authRepository;
     private final ProductRepository productRepository;
     private final SupplierRepository supplierRepository;
-    public List<Marketer> shopperGetAllMarketer()
-    {
+
+    public List<Marketer> shopperGetAllMarketer() {
         return marketerRepository.findAll();
     }
 
-    public void completeProfile(Marketer marketer)
-    {
+    public void completeProfile(Marketer marketer) {
         marketerRepository.save(marketer);
     }
 
     public void updateProfile(Integer marketer_id, MarketerDTO marketerDTO) {
-        Marketer marketer=marketerRepository.findMarketerById(marketer_id);
+        Marketer marketer = marketerRepository.findMarketerById(marketer_id);
         if (marketer == null) throw new ApiException("marketer not exist");
         marketer.setName(marketerDTO.getName());
         marketer.setPhone(marketerDTO.getPhone());
         marketerRepository.save(marketer);
     }
-
-    public void deleteProfile(Integer marketer_id){
-        Marketer marketer=marketerRepository.findMarketerById(marketer_id);
+    public void deleteProfile(Integer marketer_id) {
+        Marketer marketer = marketerRepository.findMarketerById(marketer_id);
         if (marketer == null) throw new ApiException("the marketer not found");
         marketerRepository.delete(marketer);
     }
-
-    public void assignProductToMarketer(Integer marketer_id,Integer product_id)
-    {
-        Marketer marketer= marketerRepository.findMarketerById(marketer_id);
-        Product product=productRepository.findProductById(product_id);
-        if(marketer==null||product==null) throw new ApiException("cannot assign");
+    public void assignProductToMarketer(Integer marketer_id, Integer product_id) {
+        Marketer marketer = marketerRepository.findMarketerById(marketer_id);
+        Product product = productRepository.findProductById(product_id);
+        if (marketer == null || product == null) throw new ApiException("cannot assign");
 
         product.getMarketers().add(marketer);
         marketer.getProducts().add(product);
@@ -58,24 +54,13 @@ public class MarketerService {
         productRepository.save(product);
         marketerRepository.save(marketer);
     }
-
-    public void MarketerSelectSupplier(Integer marketer_id, Integer supplier_id)
-    {
-        Marketer marketer=marketerRepository.findMarketerById(marketer_id);
-        if (marketer==null) throw new ApiException("marketer not found");
-        Supplier supplier=supplierRepository.findSupplierById(supplier_id);
-        if (supplier==null) throw new ApiException("please select supplier");
+    public void marketerSelectSupplier(Integer marketer_id, Integer supplier_id) {
+        Marketer marketer = marketerRepository.findMarketerById(marketer_id);
+        if (marketer == null) throw new ApiException("marketer not found");
+        Supplier supplier = supplierRepository.findSupplierById(supplier_id);
+        if (supplier == null) throw new ApiException("please select supplier");
 
         marketer.setSupplier(supplier);
         marketerRepository.save(marketer);
     }
-
-
-    //public void MarketerSelectSupplier(Integer supplier_id)
-    //{
-      //  Supplier supplier=supplierRepository.findSupplierById(supplier_id);
-       // if(supplier==null) throw new ApiException("please select a supplier");
-      //  if(supplier)
-    //}
-    //public void MarketerAddRequest()
 }
