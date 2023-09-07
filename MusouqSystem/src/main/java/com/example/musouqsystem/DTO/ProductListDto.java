@@ -8,8 +8,16 @@ import lombok.Data;
 import java.util.ArrayList;
 
 @Data
-@AllArgsConstructor
 public class ProductListDto {
-    @NotNull(message = "The product list must not null")
+//    @NotNull(message = "The product list must not null")
     private ArrayList<Integer> products;
+
+    public ProductListDto(){
+        super();
+    }
+
+    public ProductListDto(ArrayList<Integer> products){
+        this.products = products;
+    }
+
 }

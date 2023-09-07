@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 @RestController
 @RequestMapping("/api/v1/order")
 @RequiredArgsConstructor
@@ -20,10 +22,10 @@ public class OrdersController {
         return ResponseEntity.status(200).body(ordersService.getMyOrders());
     }
 
-    @PostMapping("/addOrder/{shopper_id}/{marketer_id}/{shippingCompany_id}")
-    public ResponseEntity shopperAddOrderController(@PathVariable Integer shopper_id,@PathVariable Integer marketer_id ,@PathVariable Integer shippingCompany_id ,@RequestBody @Valid ProductListDto productListDto){
-        ordersService.ShopperAddOrder(shopper_id,marketer_id ,shippingCompany_id,productListDto);
-        return ResponseEntity.status(200).body(new ApiResponse("The ordered created successfully"));
+    @PostMapping("/makeOrder")
+    public ResponseEntity shopperMakeOrder(){
+        ordersService.ShopperMakeOrder(new Orders());
+        return ResponseEntity.status(200).body(new ApiResponse("You created the order successfully"));
     }
 
     @DeleteMapping("/deleteOrder/{order_id}")
