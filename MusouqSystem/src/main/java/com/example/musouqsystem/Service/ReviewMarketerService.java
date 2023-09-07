@@ -1,7 +1,6 @@
 package com.example.musouqsystem.Service;
 
 import com.example.musouqsystem.Api.ApiException;
-import com.example.musouqsystem.DTO.ReviewOrderDTO;
 import com.example.musouqsystem.Model.*;
 import com.example.musouqsystem.Repository.MarketerRepository;
 import com.example.musouqsystem.Repository.OrdersRepository;
@@ -53,8 +52,8 @@ public class ReviewMarketerService {
         if (oldReviewMarketer == null)
             throw new ApiException("Sorry the review marketer id is wrong");
 
-        oldReviewMarketer.setReview_order(reviewMarketer.getReview_order());
-        oldReviewMarketer.setRate_order(reviewMarketer.getRate_order());
+        oldReviewMarketer.setReview_marketer(reviewMarketer.getReview_marketer());
+        oldReviewMarketer.setRate_marketer(reviewMarketer.getRate_marketer());
         reviewMarketerRepository.save(reviewMarketer);
     }
 
@@ -67,5 +66,18 @@ public class ReviewMarketerService {
         reviewMarketer.setMarketer(null);
         reviewMarketer.setShopper(null);
         reviewMarketerRepository.delete(reviewMarketer);
+    }
+
+    public Marketer calculateMarketerRate(Integer marketer_id){
+        Marketer marketer = marketerRepository.findMarketerById(marketer_id);
+
+        if (marketer == null)
+            throw new ApiException("Sorry the marketer id is wrong");
+
+        Integer result_rate = reviewMarketerRepository.calculateRateToMarketer(marketer_id);
+        marketer.setMarketer_rate(result_rate);
+        marketerRepository.save(marketer);
+
+        return marketer;
     }
 }

@@ -55,6 +55,6 @@ public class Supplier {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "supplier")
     private Set<Request> requests;
-    
+
 
 }

@@ -36,4 +36,10 @@ public class ReviewMarketerController {
         reviewMarketerService.deleteReviewMarketer(reviewMarketer);
         return ResponseEntity.status(200).body(new ApiResponse("your review marketer deleted successfully"));
     }
+
+
+    @PutMapping("/rateMarketer/{marketer_id}")
+    public ResponseEntity calculateMarketerRateController(@PathVariable Integer marketer_id){
+        return ResponseEntity.status(200).body(reviewMarketerService.calculateMarketerRate(marketer_id));
+    }
 }

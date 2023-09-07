@@ -38,6 +38,9 @@ public class Marketer {
     @Column(columnDefinition = "double default 0")
     private Double dues = 0.0 ;
 
+    @Column(columnDefinition = "int default 0")
+    private Integer marketer_rate;
+
     @ManyToOne
     @JoinColumn(name = "supplier_id", referencedColumnName = "id")
     @JsonIgnore

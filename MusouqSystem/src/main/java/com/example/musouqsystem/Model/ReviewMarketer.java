@@ -23,12 +23,12 @@ public class ReviewMarketer {
 
     @NotEmpty(message = "review content must not null")
     @Column(name = "review_marketer" , length = 1000)
-    private String review_order;
+    private String review_marketer;
 
     @Min(1)
     @Max(5)
     @Column(columnDefinition = "int(5) not null")
-    private Integer rate_order;
+    private Integer rate_marketer;
 
     @ManyToOne
     @JoinColumn(name = "shopper_id", referencedColumnName = "id")
