@@ -63,4 +63,17 @@ public class MarketerService {
         marketer.setSupplier(supplier);
         marketerRepository.save(marketer);
     }
+
+    public void marketerDeleteSupplier(Integer marketer_id)
+    {
+        Marketer marketer=marketerRepository.findMarketerById(marketer_id);
+        if (marketer == null) throw new ApiException("marketer not found");
+        if (marketer.getSupplier()==null)
+            throw new ApiException("you don't have supplier to deleted");
+        if (marketer.getDues()!=0)
+            throw new ApiException("You cannot delete your supplier because there are duse to you that have not yet been paid");
+        marketer.setSupplier(null);
+    }
+
+
 }
