@@ -56,6 +56,7 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "order_id", referencedColumnName = "id")
+    @JsonIgnore
     private Orders orders;
 
     @ManyToMany

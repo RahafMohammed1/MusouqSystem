@@ -1,7 +1,6 @@
 package com.example.musouqsystem.Controller;
 
 import com.example.musouqsystem.Api.ApiResponse;
-import com.example.musouqsystem.DTO.ProductListDto;
 import com.example.musouqsystem.Model.Orders;
 import com.example.musouqsystem.Service.OrdersService;
 import jakarta.validation.Valid;
@@ -26,6 +25,34 @@ public class OrdersController {
     public ResponseEntity shopperMakeOrder(){
         ordersService.ShopperMakeOrder(new Orders());
         return ResponseEntity.status(200).body(new ApiResponse("You created the order successfully"));
+    }
+
+    @PostMapping("/addProduct/{shopper_id}/{product_id}/{order_id}")
+    public ResponseEntity shopperAddProductToOrder(@PathVariable Integer shopper_id, @PathVariable Integer product_id , @PathVariable Integer order_id){
+        ordersService.ShopperAddProductToOrder(shopper_id, product_id, order_id);
+        return ResponseEntity.status(200).body(new ApiResponse("The product added successfully to order"));
+    }
+
+    @PutMapping ("/calcAmount/{order_id}/{product_id}")
+    public ResponseEntity calculateProductsAmountControlller(@PathVariable Integer order_id, @PathVariable Integer product_id){
+
+        return ResponseEntity.status(200).body(new ApiResponse("The order total amount = "+ ordersService.calculateProductsAmount(order_id, product_id)));
+    }
+    @PutMapping("/SelectshippingCompany/{order_id}/{shippingCompany_id}")
+    public ResponseEntity selectShippingCompanyController(@PathVariable Integer order_id, @PathVariable Integer shippingCompany_id){
+        return ResponseEntity.status(200).body(new ApiResponse("The total amount after select shipping company = "+ordersService.selectShippingCompany(order_id, shippingCompany_id)));
+    }
+
+
+    @PutMapping("/completeOrder/{order_id}")
+    public ResponseEntity completeOrderController(@PathVariable Integer order_id){
+        return ResponseEntity.status(200).body(ordersService.completeOrder(order_id));
+    }
+
+    @PutMapping("/deleviredOrder/{order_id}")
+    public ResponseEntity deliveredOrderedController(@PathVariable Integer order_id){
+        ordersService.deliveredOrder(order_id);
+     return ResponseEntity.status(200).body(new ApiResponse("The order status changed to delivered successfully"));
     }
 
     @DeleteMapping("/deleteOrder/{order_id}")

@@ -62,9 +62,7 @@ public class ShopperService {
             throw new ApiException("Sorry the marketer id is wrong");
 
         shopper.setMarketer(marketer);
-        marketer.getShoppers().add(shopper);
 
         shopperRepository.save(shopper);
-        marketerRepository.save(marketer);
     }
 }

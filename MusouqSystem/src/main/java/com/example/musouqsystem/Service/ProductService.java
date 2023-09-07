@@ -16,6 +16,8 @@ public class ProductService {
     private final SupplierRepository supplierRepository;
     private final MarketerRepository marketerRepository;
     private final CategoryRepository categoryRepository;
+    private final ShopperRepository shopperRepository;
+    private final OrdersRepository ordersRepository;
 
 
 //    supplier get all
@@ -137,15 +139,24 @@ public class ProductService {
 //        }else throw new ApiException("you cannot delete product after shipping");
 //    }
 
-    //    public void shopperAddProductToOrder(Integer shopper_id,Integer product_id, Integer order_id) {
+//        public void shopperAddProductToOrder(Integer shopper_id,Integer product_id, Integer order_id) {
 //        Shopper shopper = shopperRepository.findShopperById(shopper_id);
 //        Product product = productRepository.findProductById(product_id);
 //        Orders order = ordersRepository.findOrdersById(order_id);
 //
 //        if (shopper == null || product == null || order == null) throw new ApiException("cannot add product to order");
 //
+////        if (shopper.getMarketer() == null)
+////            throw new ApiException("sorry you must select the marketer first");
+////
+////            product.setOrders(order);
+////            order.setShopper(shopper);
+////            order.setSupplier(product.getSupplier());
+////            order.setMarketer(shopper.getMarketer());
+////            ordersRepository.save(order);
 //        product.setOrders(order);
 //        productRepository.save(product);
+//        shopperRepository.save(shopper);
 //    }
     public void assignSupplierToProduct(Integer supplier_id, Integer product_id){
         Supplier supplier = supplierRepository.findSupplierById(supplier_id);

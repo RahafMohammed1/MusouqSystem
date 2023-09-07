@@ -73,5 +73,4 @@ public class ProductController {
         return ResponseEntity.status(200).body(new ApiResponse("product deleted successfully"));
     }
 
-
 }

@@ -80,4 +80,9 @@ public class ControllerAdvice {
         String msg = e.getMessage();
         return ResponseEntity.status(400).body(new ApiResponse(msg));
     }
+    @ExceptionHandler(value = NullPointerException.class)
+    public ResponseEntity NullPointerException(NullPointerException e){
+        String msg = e.getMessage();
+        return ResponseEntity.status(400).body(new ApiResponse(msg));
+    }
 }
