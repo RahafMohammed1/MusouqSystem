@@ -36,9 +36,12 @@ public class ReviewOrderService {
 
         if (orders.getReview_status())
             throw new ApiException("You already rate this order");
+        else if (!(orders.getOrder_status().equals("delivered")))
+            throw new ApiException("You can't review until the order delivered to you ");
 
         ReviewOrder reviewOrder = new ReviewOrder(null, reviewOrderDTO.getReview_order(), reviewOrderDTO.getRate_order(),shopper,orders);
-
+        orders.setReview_status(true);
+        ordersRepository.save(orders);
         reviewOrderRepository.save(reviewOrder);
     }
     public void updateReviewOrder(Integer shopper_id, ReviewOrderDTO reviewOrderDTO){

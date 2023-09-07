@@ -20,9 +20,9 @@ public class OrdersController {
         return ResponseEntity.status(200).body(ordersService.getMyOrders());
     }
 
-    @PostMapping("/addOrder/{shopper_id}/{shippingCompany_id}")
-    public ResponseEntity shopperAddOrderController(@PathVariable Integer shopper_id, @PathVariable Integer shippingCompany_id ,@RequestBody @Valid ProductListDto productListDto){
-        ordersService.ShopperAddOrder(shopper_id, shippingCompany_id,productListDto);
+    @PostMapping("/addOrder/{shopper_id}/{marketer_id}/{shippingCompany_id}")
+    public ResponseEntity shopperAddOrderController(@PathVariable Integer shopper_id,@PathVariable Integer marketer_id ,@PathVariable Integer shippingCompany_id ,@RequestBody @Valid ProductListDto productListDto){
+        ordersService.ShopperAddOrder(shopper_id,marketer_id ,shippingCompany_id,productListDto);
         return ResponseEntity.status(200).body(new ApiResponse("The ordered created successfully"));
     }
 

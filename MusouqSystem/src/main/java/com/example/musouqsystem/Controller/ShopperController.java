@@ -38,4 +38,9 @@ public class ShopperController {
         shopperService.deleteShopperAccount(shopper_id);
         return ResponseEntity.status(200).body(new ApiResponse("your account deleted successfully"));
     }
+    @PutMapping("/selectMarketer/{shopper_id}/{maarketer_id}")
+    public ResponseEntity shopperSelectMarketerController(@PathVariable Integer shopper_id , @PathVariable Integer maarketer_id){
+        shopperService.ShopperSelectMarketer(shopper_id, maarketer_id);
+        return ResponseEntity.status(200).body(new ApiResponse("the marketer selected successfully"));
+    }
 }

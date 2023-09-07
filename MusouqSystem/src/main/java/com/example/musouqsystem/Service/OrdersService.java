@@ -2,14 +2,8 @@ package com.example.musouqsystem.Service;
 
 import com.example.musouqsystem.Api.ApiException;
 import com.example.musouqsystem.DTO.ProductListDto;
-import com.example.musouqsystem.Model.Orders;
-import com.example.musouqsystem.Model.Product;
-import com.example.musouqsystem.Model.ShippingCompany;
-import com.example.musouqsystem.Model.Shopper;
-import com.example.musouqsystem.Repository.OrdersRepository;
-import com.example.musouqsystem.Repository.ProductRepository;
-import com.example.musouqsystem.Repository.ShippingCompanyRepository;
-import com.example.musouqsystem.Repository.ShopperRepository;
+import com.example.musouqsystem.Model.*;
+import com.example.musouqsystem.Repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
@@ -24,6 +18,8 @@ public class OrdersService {
     private final ShopperRepository shopperRepository;
     private final ProductRepository productRepository;
     private final ShippingCompanyRepository shippingCompanyRepository;
+    private final MarketerRepository marketerRepository;
+    private final CouponsRepository couponsRepository;
 
     // TODO: 9/6/2023 the user get his/her orders with security
     public List<Orders> getMyOrders(){
@@ -31,30 +27,36 @@ public class OrdersService {
     }
 
     // auth by shopper
-    public void ShopperAddOrder(Integer shopper_id, Integer shippingCompany_id, ProductListDto productListDto){
+    public void ShopperAddOrder(Integer shopper_id, Integer marketer_id,Integer shippingCompany_id, ProductListDto productListDto){
         // initialize a new order
         Orders orders = new Orders();
 
         Shopper shopper = shopperRepository.findShopperById(shopper_id);
+        Marketer marketer = marketerRepository.findMarketerById(marketer_id);
         List<Product> productList = new ArrayList<>();
         ArrayList<Integer> products = productListDto.getProducts();
+
+        List<Product> marketerProducts = productRepository.findAllByMarketersContains(marketer);
+
         Double total_price = 0.0;
 
         if (shopper == null)
             throw new ApiException("Sorry the shopper id is wrong");
+
+        if (marketer.getId() != shopper.getMarketer().getId())
+            throw new ApiException("the wrong marketer");
+
 
         for (int i = 0; i < products.size(); i++) {
             Product checkProduct = productRepository.findProductById(products.get(i));
             if (checkProduct == null)
                 throw new ApiException("Sorry the product id is wrong");
 
-            total_price += checkProduct.getPrice();
-            productList.add(checkProduct);
+            if (marketerProducts.get(i).getId() == checkProduct.getId()){
+                total_price += checkProduct.getPrice();
+                productList.add(checkProduct);
+            }
         }
-
-        if (shopper.getMarketer() == null)
-            throw new ApiException("you must choose the marketer of the product");
-
 
         Double shipPrice = assignOrderToShippingCompany(orders.getId(), shippingCompany_id);
 
@@ -72,8 +74,10 @@ public class OrdersService {
         ordersRepository.save(orders);
 
         // count completed order
-        shopper.setNum_of_orders(shopper.getNum_of_orders() + 1);
+        shopper.setNum_of_orders((shopper.getNum_of_orders() + 1));
+        marketer.setNumber_of_product_sold((marketer.getNumber_of_product_sold() +1));
         shopperRepository.save(shopper);
+        marketerRepository.save(marketer);
     }
 
     public void deleteOrder(Integer order_id){
@@ -109,5 +113,22 @@ public class OrdersService {
         shippingCompanyRepository.save(shippingCompany);
 
         return shippingCompany.getShipping_price();
+    }
+
+
+    // TODO: 9/7/2023 with secuirty i need to take a user id 
+    public void confirmDeliver(Integer order_id){
+        Orders confirmOrder = ordersRepository.findOrdersById(order_id);
+        
+        if (confirmOrder == null)
+            throw new ApiException("Sorry, the order id is wrong");
+        if (confirmOrder.getOrder_status().equals("processing"))
+            throw new ApiException("Your order need to shipping");
+        if (confirmOrder.getOrder_status().equals("delivered"))
+            throw new ApiException("Your order already delivered");
+        
+        confirmOrder.setOrder_status("delivered");
+        
+        ordersRepository.save(confirmOrder);
     }
 }
