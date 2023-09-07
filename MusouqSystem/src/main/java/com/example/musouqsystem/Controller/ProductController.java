@@ -1,9 +1,6 @@
 package com.example.musouqsystem.Controller;
 
-import com.example.musouqsystem.Api.ApiException;
 import com.example.musouqsystem.Api.ApiResponse;
-import com.example.musouqsystem.Model.Category;
-import com.example.musouqsystem.Model.Marketer;
 import com.example.musouqsystem.Model.Product;
 import com.example.musouqsystem.Service.ProductService;
 import jakarta.validation.Valid;
@@ -11,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
