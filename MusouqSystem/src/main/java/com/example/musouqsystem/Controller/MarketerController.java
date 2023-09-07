@@ -46,4 +46,9 @@ public class MarketerController {
         return ResponseEntity.status(200).body(new ApiResponse("your selection is done successfully"));
     }
 
+    @PutMapping("/delete-supplier/{marketer_id}")
+    public ResponseEntity MarketerDeleteSupplierToChangeIt(@PathVariable Integer marketer_id) {
+    marketerService.marketerDeleteSupplier(marketer_id);
+        return ResponseEntity.status(200).body(new ApiResponse("your supplier are deleted"));
+    }
 }

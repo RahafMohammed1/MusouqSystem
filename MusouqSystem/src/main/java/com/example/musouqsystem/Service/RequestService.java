@@ -82,10 +82,10 @@ public class RequestService {
         if (marketer.getRequests() == null)
             throw new ApiException("you are not send any request yet");
         Request request = requestRepository.findRequestById(request_id);
-        if (request == null)
-            throw new ApiException("request not found");
         if(marketer_id!=request.getMarketer().getId())
             throw new ApiException("the request not belong to you");
+        if (request == null)
+            throw new ApiException("request not found");
         requestRepository.delete(request);
     }
 
