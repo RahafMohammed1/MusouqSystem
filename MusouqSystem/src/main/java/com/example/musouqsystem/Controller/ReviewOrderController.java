@@ -26,9 +26,9 @@ public class ReviewOrderController {
         return ResponseEntity.status(200).body(new ApiResponse("your review order added successfully "));
     }
 
-    @PutMapping("/updateReviewOrder/{shopper_id}")
-    public ResponseEntity updateReviewOrderController(@PathVariable Integer shopper_id,@RequestBody @Valid ReviewOrderDTO reviewOrderDTO) {
-        reviewOrderService.updateReviewOrder(shopper_id, reviewOrderDTO);
+    @PutMapping("/updateReviewOrder")
+    public ResponseEntity updateReviewOrderController(@RequestBody @Valid ReviewOrderDTO reviewOrderDTO) {
+        reviewOrderService.updateReviewOrder(reviewOrderDTO);
         return ResponseEntity.status(200).body(new ApiResponse("your review order updated successfully"));
     }
 

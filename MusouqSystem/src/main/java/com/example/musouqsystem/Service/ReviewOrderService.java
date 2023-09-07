@@ -44,12 +44,13 @@ public class ReviewOrderService {
         ordersRepository.save(orders);
         reviewOrderRepository.save(reviewOrder);
     }
-    public void updateReviewOrder(Integer shopper_id, ReviewOrderDTO reviewOrderDTO){
+    public void updateReviewOrder( ReviewOrderDTO reviewOrderDTO){
         Orders orders = ordersRepository.findOrdersById(reviewOrderDTO.getOrder_id());
-        Shopper shopper = shopperRepository.findShopperById(shopper_id);
         if (orders == null)
             throw new ApiException("Sorry the review is wrong");
-        else if (shopper == null)
+
+        Shopper shopper = shopperRepository.findShopperById(orders.getShopper().getId());
+        if (shopper == null)
             throw new ApiException("Sorry the shopper id is wrong");
 
         ReviewOrder updateReview = new ReviewOrder(reviewOrderDTO.getOrder_id(), reviewOrderDTO.getReview_order(),reviewOrderDTO.getRate_order(),shopper, orders);
@@ -58,15 +59,10 @@ public class ReviewOrderService {
     }
 
     public void deleteReviewOrder(Integer reviewOrder_id){
-        ReviewOrder reviewOrder = reviewOrderRepository.findReviewOrderById(reviewOrder_id);
+        Orders review_order_deleted = ordersRepository.findOrdersById(reviewOrder_id);
 
-        if (reviewOrder == null)
+        if (review_order_deleted == null)
             throw new ApiException("Sorry the review order is wrong");
-
-        reviewOrder.setOrders(null);
-        reviewOrder.setShopper(null);
-
-
-        reviewOrderRepository.delete(reviewOrder);
+        reviewOrderRepository.delete(review_order_deleted.getReviewOrder());
     }
 }
