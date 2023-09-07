@@ -28,17 +28,27 @@ public class ImageService {
         imageRepository.save(image);
     }
 
-    public void changeImage(Integer img_id, ImageDTO imageDTO) {
-        Image image = imageRepository.findImageById(img_id);
-        if (image == null) throw new ApiException("image not exist");
-        image.setUrl(imageDTO.getUrl());
-        imageRepository.save(image);
+    public void changeImage(Integer supplier_id, Integer product_id, Image image) {
+        Product product = productRepository.findProductByIdAndSupplierId(product_id, supplier_id);
+        if (product == null) throw new ApiException("product not exist");
+
+        Image oldImage = imageRepository.findImageByProductId(product.getId());
+        if (oldImage == null) throw new ApiException("image not exist");
+
+        oldImage.setUrl(image.getUrl());
+        imageRepository.save(oldImage);
     }
 
-    public void deleteImage(Integer img_id) {
-        Image image = imageRepository.findImageById(img_id);
-        if (image == null) throw new ApiException("image not exist");
-        imageRepository.delete(image);
+    public void deleteImage(Integer supplier_id, Integer product_id) {
+        Product product = productRepository.findProductByIdAndSupplierId(product_id, supplier_id);
+        if (product == null) throw new ApiException("product not exist");
+
+        Image oldImage = imageRepository.findImageByProductId(product.getId());
+        if (oldImage == null) throw new ApiException("image not exist");
+
+
+        productRepository.delete(product);
+        imageRepository.delete(oldImage);
     }
 
 
