@@ -39,7 +39,7 @@ public class ProductService {
     }
 
 
-    public void supplierAddProduct(Integer supplier_id, Integer category_id, Product product, Double percent) {
+    public void supplierAddProduct(Integer supplier_id, Integer category_id, Product product) {
         Supplier supplier = supplierRepository.findSupplierById(supplier_id);
         Category category = categoryRepository.findCategoryById(category_id);
 
@@ -47,7 +47,6 @@ public class ProductService {
 
         product.setSupplier(supplier);
         product.setCategory(category);
-        category.setMarketer_percent(percent / 100);
         productRepository.save(product);
         categoryRepository.save(category);
     }
@@ -59,6 +58,8 @@ public class ProductService {
         if (marketer == null || product == null) throw new ApiException("cannot add product to marketer");
 
         product.getMarketers().add(marketer);
+        marketer.getProducts().add(product);
+        marketerRepository.save(marketer);
         productRepository.save(product);
     }
 

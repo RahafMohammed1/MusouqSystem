@@ -39,7 +39,7 @@ public class CategoryService {
         Supplier supplier = supplierRepository.findSupplierById(supplier_id);
         Category category = categoryRepository.findCategoryById(category_id);
 
-        if (supplier == null || category == null) throw new ApiException("category not exist");
+        if (supplier == null || category == null) throw new ApiException("category or supplier not exist");
 
         category.setMarketer_percent(percent / 100);
         categoryRepository.save(category);
