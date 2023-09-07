@@ -2,8 +2,10 @@ package com.example.musouqsystem.Service;
 
 import com.example.musouqsystem.Api.ApiException;
 import com.example.musouqsystem.DTO.SupplierDTO;
+import com.example.musouqsystem.Model.Orders;
 import com.example.musouqsystem.Model.Request;
 import com.example.musouqsystem.Model.Supplier;
+import com.example.musouqsystem.Repository.OrdersRepository;
 import com.example.musouqsystem.Repository.SupplierRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SupplierService {
     private final SupplierRepository supplierRepository;
+    private final OrdersRepository ordersRepository;
 
 
     public List<Supplier> marketerGetAllSuppliers() {
@@ -34,6 +37,19 @@ public class SupplierService {
         supplier.setPhone(supplierDTO.getPhone());
 
         supplierRepository.save(supplier);
+    }
+
+    public void supplierShippedOrder(Integer supplier_id, Integer order_id) {
+        Supplier supplier = supplierRepository.findSupplierById(supplier_id);
+        Orders order = ordersRepository.findOrdersById(order_id);
+        if (supplier == null || order == null) throw new ApiException("supplier or order not exist");
+
+        if (supplier.getOrders().contains(order))
+            if (order.getOrder_status().equalsIgnoreCase("processing")) {
+                order.setOrder_status("shipped");
+                ordersRepository.save(order);
+            }
+
     }
 
     public void deleteAccount(Integer supplier_id) {

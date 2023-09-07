@@ -32,6 +32,13 @@ public class SupplierController {
         return ResponseEntity.status(200).body(new ApiResponse("your profile updated successfully"));
     }
 
+    @PutMapping("/shipOrder/{supplier_id}/{order_id}")
+    public ResponseEntity supplierShippedOrder(@PathVariable Integer supplier_id, @PathVariable Integer order_id) {
+        supplierService.supplierShippedOrder(supplier_id, order_id);
+        return ResponseEntity.status(200).body(new ApiResponse("order shipped successfully"));
+    }
+
+
     @DeleteMapping("/deleteAccount/{supplier_id}")
     public ResponseEntity deleteAccount(@PathVariable Integer supplier_id) {
         supplierService.deleteAccount(supplier_id);
