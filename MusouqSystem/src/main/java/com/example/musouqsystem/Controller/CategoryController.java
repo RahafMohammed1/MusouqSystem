@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class CategoryController {
     private final CategoryService categoryService;
 
-    @GetMapping("/supplierGetAllCategories")
+    @GetMapping("/getAllCategories")
     public ResponseEntity supplierGetAllCategories() {
         return ResponseEntity.status(200).body(categoryService.supplierGetAllCategories());
     }

@@ -39,7 +39,9 @@ public class CategoryService {
         Category oldCategory = categoryRepository.findCategoryById(category_id);
         if (oldCategory == null) throw new ApiException("category not exist");
 
-        categoryRepository.delete(oldCategory);
+        if (oldCategory.getProducts().isEmpty())
+            categoryRepository.delete(oldCategory);
+        else throw new ApiException("you cannot delete category that has products");
     }
 
 

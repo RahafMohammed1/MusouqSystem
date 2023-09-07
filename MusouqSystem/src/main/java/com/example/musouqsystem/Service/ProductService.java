@@ -44,7 +44,7 @@ public class ProductService {
         Supplier supplier = supplierRepository.findSupplierById(supplier_id);
         Category category = categoryRepository.findCategoryById(category_id);
 
-        if (supplier == null || category == null) throw new ApiException("supplier not exist");
+        if (supplier == null || category == null) throw new ApiException("supplier or category not exist");
 
         product.setSupplier(supplier);
         product.setCategory(category);
