@@ -25,7 +25,7 @@ public class ProductController {
     }
 
     @GetMapping("/getAllProductsOfMarketer/{marketer_id}")
-    public ResponseEntity getAllProductsOfMarketer(Integer marketer_id) {
+    public ResponseEntity getAllProductsOfMarketer(@PathVariable Integer marketer_id) {
         return ResponseEntity.status(200).body(productService.getAllProductsOfMarketer(marketer_id));
     }
 

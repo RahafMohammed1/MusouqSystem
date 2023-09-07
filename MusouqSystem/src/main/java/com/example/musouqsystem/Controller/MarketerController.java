@@ -45,5 +45,5 @@ public class MarketerController {
         marketerService.marketerSelectSupplier(marketer_id, supplier_id);
         return ResponseEntity.status(200).body(new ApiResponse("your selection is done successfully"));
     }
-    
+
 }
