@@ -45,4 +45,11 @@ public class MarketerController {
         marketerService.marketerSelectSupplier(marketer_id, supplier_id);
         return ResponseEntity.status(200).body(new ApiResponse("your selection is done successfully"));
     }
+
+    @PutMapping("/assignProduct/{marketer_id}/{product_id}")
+    public ResponseEntity assignMarketerToProduct(@PathVariable Integer marketer_id , @PathVariable Integer product_id){
+        marketerService.assignProductToMarketer(marketer_id , product_id);
+        return ResponseEntity.status(200).body(new ApiResponse("The marketer assigned to product successfully"));
+    }
+    
 }
