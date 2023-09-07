@@ -25,4 +25,11 @@ public class OrdersController {
         ordersService.ShopperAddOrder(shopper_id, shippingCompany_id,productListDto);
         return ResponseEntity.status(200).body(new ApiResponse("The ordered created successfully"));
     }
+
+    @DeleteMapping("/deleteOrder/{order_id}")
+    public ResponseEntity deleteOrderController(@PathVariable Integer order_id){
+        ordersService.deleteOrder(order_id);
+        return ResponseEntity.status(200).body(new ApiResponse("The ordered deleted successfully"));
+
+    }
 }
