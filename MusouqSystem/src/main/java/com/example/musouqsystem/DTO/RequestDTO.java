@@ -12,6 +12,6 @@ public class RequestDTO {
     @Column(columnDefinition = "varchar(200) not null")
     private String req_description;
 
-
+    private Integer user_id;
 
 }

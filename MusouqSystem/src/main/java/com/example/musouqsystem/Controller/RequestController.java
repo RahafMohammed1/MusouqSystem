@@ -2,6 +2,7 @@ package com.example.musouqsystem.Controller;
 
 import com.example.musouqsystem.Api.ApiResponse;
 import com.example.musouqsystem.DTO.RequestDTO;
+import com.example.musouqsystem.Model.Request;
 import com.example.musouqsystem.Service.RequestService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,7 @@ public class RequestController {
     @PostMapping("/send-request/{marketer_id}")
     public ResponseEntity marketerSendRequestTo(@PathVariable Integer marketer_id, @RequestBody @Valid RequestDTO requestDTO)
     {
-        requestService.marketerSendRequest(marketer_id, requestDTO);
+        requestService.marketerSendRequest(marketer_id,requestDTO);
         return ResponseEntity.status(200).body(new ApiResponse("your request is sent"));
     }
 
@@ -38,7 +39,7 @@ public class RequestController {
         return ResponseEntity.status(200).body(new ApiResponse("your request is updated"));
     }
 
-    @DeleteMapping("/update-request/{marketer_id}/{request_id}")
+    @DeleteMapping("/delete-request/{marketer_id}/{request_id}")
     public ResponseEntity marketerDeleteRequest (@PathVariable Integer marketer_id,@PathVariable Integer request_id)
     {
         requestService.marketerDeleteRequest(marketer_id, request_id);
@@ -55,5 +56,4 @@ public class RequestController {
         requestService.supplierRejectRequest(supplier_id, request_id);
         return ResponseEntity.status(200).body(new ApiResponse("your are reject the request"));
     }
-
     }

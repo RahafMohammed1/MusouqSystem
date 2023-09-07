@@ -21,6 +21,7 @@ public class Request {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotEmpty(message = "please type some thing to your supplier")
     @Column(columnDefinition = "varchar(200) not null")
     private String req_description;
 

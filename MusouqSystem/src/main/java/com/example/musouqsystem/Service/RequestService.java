@@ -11,6 +11,7 @@ import com.example.musouqsystem.Repository.SupplierRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -53,6 +54,7 @@ public class RequestService {
         request.setStatus("pending");
         request.setSupplier(marketer.getSupplier());
         request.setMarketer(marketer);
+        request.setReq_date(LocalDate.now());
         requestRepository.save(request);
     }
 
@@ -63,8 +65,9 @@ public class RequestService {
         if(marketer.getRequests()==null)throw new ApiException("you are not send any request yet");
         Request request=requestRepository.findRequestById(request_id);
         if (request==null) throw new ApiException("request not found");
-        if(request_id!=request.getMarketer().getId()) throw new ApiException("the request not belong to you");
+        if(marketer_id!=request.getMarketer().getId()) throw new ApiException("the request not belong to you");
         request.setReq_description(requestDTO.getReq_description());
+        requestRepository.save(request);
     }
 
     public void marketerDeleteRequest(Integer marketer_id,Integer request_id) {
@@ -73,7 +76,7 @@ public class RequestService {
         if (marketer.getRequests() == null) throw new ApiException("you are not send any request yet");
         Request request = requestRepository.findRequestById(request_id);
         if (request == null) throw new ApiException("request not found");
-        if(request_id!=request.getMarketer().getId()) throw new ApiException("the request not belong to you");
+        if(marketer_id!=request.getMarketer().getId()) throw new ApiException("the request not belong to you");
         requestRepository.delete(request);
     }
 
