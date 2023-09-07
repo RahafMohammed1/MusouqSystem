@@ -78,14 +78,14 @@ public class ProductService {
         productRepository.save(oldProduct);
     }
 
-    public void marketerApplyDiscount(Integer marketer_id, Integer product_id, Double discount) {
+    public void marketerApplyDiscount(Integer marketer_id, Integer product_id, Integer discount) {
         Marketer marketer = marketerRepository.findMarketerById(marketer_id);
         Product product = productRepository.findProductById(product_id);
 
         if (marketer == null || product == null) throw new ApiException("marketer or product not exist");
 
         if (product.getMarketers().contains(marketer)){
-            product.setPrice_after_discount(product.getPrice() * discount);
+            product.setPrice_after_discount(product.getPrice() * (discount / 100.0));
             productRepository.save(product);
         }else throw new ApiException("you cannot apply discount on this product");
     }

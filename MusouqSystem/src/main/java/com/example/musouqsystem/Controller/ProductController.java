@@ -54,8 +54,8 @@ public class ProductController {
         return ResponseEntity.status(200).body(new ApiResponse("product updated successfully"));
     }
 
-    @PutMapping("/marketerApplyDiscount/{marketer_id}/{product_id}")
-    public ResponseEntity marketerApplyDiscount(@PathVariable Integer marketer_id, @PathVariable Integer product_id, @RequestBody @Valid Double discount) {
+    @PutMapping("/marketerApplyDiscount/{marketer_id}/{product_id}/{discount}")
+    public ResponseEntity marketerApplyDiscount(@PathVariable Integer marketer_id, @PathVariable Integer product_id, @PathVariable Integer discount) {
         productService.marketerApplyDiscount(marketer_id, product_id, discount);
         return ResponseEntity.status(200).body(new ApiResponse("discount applied to product successfully"));
     }
