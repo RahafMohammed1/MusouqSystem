@@ -45,15 +45,20 @@ public class RequestService {
     {
         Marketer marketer=marketerRepository.findMarketerById(marketer_id);
         if (marketer==null) throw new ApiException("marketer not found");
-        //check if the marketer select supplier or not
-        if(marketer.getSupplier()==null)
+        if(marketer.getSupplierSelectedId()==null)
         {
             throw new ApiException("you must select a supplier first to send request to him");
         }
+        Supplier supplier=supplierRepository.findSupplierById(marketer.getSupplierSelectedId());
+        if (supplier==null)
+            throw new ApiException("supplier not found");
+
+        //check if the marketer select supplier or not
         Request request=new Request();
         request.setReq_description(requestDTO.getReq_description());
         request.setStatus("pending");
-        request.setSupplier(marketer.getSupplier());
+
+        request.setSupplier(supplier);
         request.setMarketer(marketer);
         request.setReq_date(LocalDate.now());
         requestRepository.save(request);
@@ -110,6 +115,9 @@ public class RequestService {
             throw new ApiException("Error,you already reject this request");
 
         request.setStatus("Accepted");
+        Marketer marketer=request.getMarketer();
+        marketer.setSupplier(supplier);
+        marketerRepository.save(marketer);
         requestRepository.save(request);
     }
     //supplierRejectRequest

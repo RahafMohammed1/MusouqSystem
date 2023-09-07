@@ -23,6 +23,7 @@ public class MarketerService {
     private final ProductRepository productRepository;
     private final SupplierRepository supplierRepository;
 
+
     public List<Marketer> shopperGetAllMarketer() {
         return marketerRepository.findAll();
     }
@@ -60,7 +61,7 @@ public class MarketerService {
         Supplier supplier = supplierRepository.findSupplierById(supplier_id);
         if (supplier == null) throw new ApiException("please enter correct supplier id");
 
-        marketer.setSupplier(supplier);
+        marketer.setSupplierSelectedId(supplier.getId());
         marketerRepository.save(marketer);
     }
 
@@ -74,6 +75,5 @@ public class MarketerService {
             throw new ApiException("You cannot delete your supplier because there are duse to you that have not yet been paid");
         marketer.setSupplier(null);
     }
-
 
 }

@@ -21,6 +21,9 @@ public class Marketer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    
+    @JsonIgnore
+    private Integer supplierSelectedId;
 
     @NotEmpty(message = "The marketer name must not empty")
     @Length(min = 3, message = "marketer name length should be more than 3 characters")
