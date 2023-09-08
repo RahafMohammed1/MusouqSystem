@@ -23,24 +23,31 @@ public class ShippingCompanyController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity addShippingCompany(@RequestBody @Valid ShippingCompany shippingCompany)
+    public ResponseEntity adminAddShippingCompany(@RequestBody @Valid ShippingCompany shippingCompany)
     {
-        shippingCompanyService.addShippingCompany(shippingCompany);
+        shippingCompanyService.adminAddShippingCompany(shippingCompany);
         return ResponseEntity.status(200).body(new ApiResponse("the ShippingCompany is added"));
     }
 
     @PutMapping("/update/{shippingCompany_id}")
-    public ResponseEntity updateShippingCompany(@PathVariable Integer shippingCompany_id,@RequestBody @Valid ShippingCompany shippingCompany)
+    public ResponseEntity adminUpdateShippingCompany(@PathVariable Integer shippingCompany_id,@RequestBody @Valid ShippingCompany shippingCompany)
     {
-        shippingCompanyService.updateShippingCompany(shippingCompany_id, shippingCompany);
+        shippingCompanyService.adminUpdateShippingCompany(shippingCompany_id, shippingCompany);
         return ResponseEntity.status(200).body(new ApiResponse("the ShippingCompany is updated"));
     }
 
     @DeleteMapping("/delete/{shippingCompany_id}")
 
-    public ResponseEntity deleteShippingCompany(@PathVariable Integer shippingCompany_id)
+    public ResponseEntity adminDeleteShippingCompany(@PathVariable Integer shippingCompany_id)
     {
-        shippingCompanyService.deleteShippingCompany(shippingCompany_id);
+        shippingCompanyService.adminDeleteShippingCompany(shippingCompany_id);
         return ResponseEntity.status(200).body(new ApiResponse("the ShippingCompany id deleted"));
+    }
+
+    @PutMapping("/supplier-update/delivery-time/{order_id}/{deliveryTime}")
+    public ResponseEntity supplierUpdateShippingDeliveryTimeOfProduct(@PathVariable Integer order_id,@PathVariable String deliveryTime)
+    {
+        shippingCompanyService.supplierUpdateDeliveryTimeOfOrder(order_id,deliveryTime);
+        return ResponseEntity.status(200).body(new ApiResponse("the delivery time is updated"));
     }
 }

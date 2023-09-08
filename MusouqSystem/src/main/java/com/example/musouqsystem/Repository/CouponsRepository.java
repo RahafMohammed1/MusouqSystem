@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CouponsRepository extends JpaRepository<Coupons,Integer> {
     Coupons findCouponsById(Integer id);
+    Coupons findCouponsByCode(String code);
 }

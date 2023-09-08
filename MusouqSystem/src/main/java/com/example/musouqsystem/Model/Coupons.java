@@ -2,6 +2,7 @@ package com.example.musouqsystem.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -31,12 +32,20 @@ public class Coupons {
     @Column(columnDefinition = "double not null")
     private Double percentage;
 
-    @Column(columnDefinition = "boolean")
-    private Boolean status;
+    @Pattern(regexp = "(active)|(deactive)")
+    @NotEmpty(message = "activation status should not be empty")
+    @Column(columnDefinition = "varchar(20) not null")
+    private String status;
+
+    @Pattern(regexp = "(general)|(special)")
+    @NotEmpty(message = "Thy type of coupon should not be empty")
+    @Column(columnDefinition = "varchar(20) not null")
+    private String type;
 
     @ManyToOne
     @JoinColumn(name = "marketer_id", referencedColumnName = "id")
     @JsonIgnore
     private Marketer marketer;
+
 
 }

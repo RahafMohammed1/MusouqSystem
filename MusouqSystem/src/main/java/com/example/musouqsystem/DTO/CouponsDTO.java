@@ -20,5 +20,6 @@ public class CouponsDTO {
     @Column(columnDefinition = "double not null")
     private Double percentage;
 
+
     private Integer marketer_id;
 }

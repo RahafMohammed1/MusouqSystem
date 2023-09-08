@@ -37,4 +37,5 @@ public class MarketerEditProfileDTO {
     @Column(columnDefinition = "varchar(10) not null")
     private String phone;
 
+    private Integer user_id;
 }

@@ -31,6 +31,9 @@ public class Orders {
     @Column(columnDefinition = "double default 0")
     private Double total_amount ;
 
+    @Column(columnDefinition = "boolean default false")
+    private boolean isAppliedCoupon;
+
     @Column(columnDefinition = "boolean")
     private Boolean review_status;
 
