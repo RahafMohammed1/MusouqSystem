@@ -38,7 +38,7 @@ public class Orders {
     private Boolean review_status;
 
     @ManyToOne
-    @JoinColumn(name = "shopper_id" , referencedColumnName = "id")
+    @JoinColumn(name = "shopper_id" , referencedColumnName = "user_id")
     private Shopper shopper;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "orders")
@@ -46,12 +46,12 @@ public class Orders {
     private ReviewOrder reviewOrder;
 
     @ManyToOne
-    @JoinColumn(name = "supplier_id", referencedColumnName = "id")
+    @JoinColumn(name = "supplier_id", referencedColumnName = "user_id")
     @JsonIgnore
     private Supplier supplier;
 
     @ManyToOne
-    @JoinColumn(name = "marketer_id", referencedColumnName = "id")
+    @JoinColumn(name = "marketer_id", referencedColumnName = "user_id")
     @JsonIgnore
     private Marketer marketer;
 

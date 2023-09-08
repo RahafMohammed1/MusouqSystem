@@ -40,10 +40,10 @@ public class Shopper {
     @Column(columnDefinition = "int default 0")
     private Integer num_of_orders;
 
-//    @OneToOne
-//    @MapsId
-//    @JsonIgnore
-//    private User user;
+    @OneToOne
+    @MapsId
+    @JsonIgnore
+    private User user;
 
     @OneToMany(cascade = CascadeType.ALL , mappedBy = "shopper")
     @JsonIgnore
@@ -58,12 +58,12 @@ public class Shopper {
     private Set<ReviewOrder> reviewOrders;
 
     @ManyToOne
-    @JoinColumn(name = "supplier_id", referencedColumnName = "id")
+    @JoinColumn(name = "supplier_id", referencedColumnName = "user_id")
     @JsonIgnore
     private Supplier supplier;
 
     @ManyToOne
-    @JoinColumn(name = "marketer_id", referencedColumnName = "id")
+    @JoinColumn(name = "marketer_id", referencedColumnName = "user_id")
     @JsonIgnore
     private Marketer marketer;
 

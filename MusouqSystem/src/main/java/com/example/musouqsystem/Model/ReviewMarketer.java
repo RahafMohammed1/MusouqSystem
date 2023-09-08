@@ -31,11 +31,11 @@ public class ReviewMarketer {
     private Integer rate_marketer;
 
     @ManyToOne
-    @JoinColumn(name = "shopper_id", referencedColumnName = "id")
+    @JoinColumn(name = "shopper_id", referencedColumnName = "user_id")
     private Shopper shopper;
 
     @ManyToOne
-    @JoinColumn(name = "marketer_id" , referencedColumnName = "id")
+    @JoinColumn(name = "marketer_id" , referencedColumnName = "user_id")
     @JsonIgnore
     private Marketer marketer;
 

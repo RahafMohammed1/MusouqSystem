@@ -19,7 +19,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class Marketer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotEmpty(message = "The marketer name must not empty")
@@ -44,8 +44,13 @@ public class Marketer {
     @JsonIgnore
     private Integer supplierSelectedId;
 
+    @OneToOne
+    @MapsId
+    @JsonIgnore
+    private User user;
+
     @ManyToOne
-    @JoinColumn(name = "supplier_id", referencedColumnName = "id")
+    @JoinColumn(name = "supplier_id", referencedColumnName = "user_id")
     @JsonIgnore
     private Supplier supplier;
 
@@ -66,5 +71,7 @@ public class Marketer {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "marketer")
     private Set<ReviewMarketer> reviewMarketers;
+
+
 
 }

@@ -43,7 +43,7 @@ public class Coupons {
     private String type;
 
     @ManyToOne
-    @JoinColumn(name = "marketer_id", referencedColumnName = "id")
+    @JoinColumn(name = "marketer_id", referencedColumnName = "user_id")
     @JsonIgnore
     private Marketer marketer;
 

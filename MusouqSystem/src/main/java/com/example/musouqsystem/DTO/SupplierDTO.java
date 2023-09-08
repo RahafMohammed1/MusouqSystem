@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.Length;
 @Data
 @AllArgsConstructor
 public class SupplierDTO {
+    private Integer user_id;
     @NotEmpty(message = "name should not be empty")
     @Length(min = 3, message = "name length should be more than 3 characters")
     @Column(columnDefinition = "varchar(10) not null")
@@ -19,5 +20,5 @@ public class SupplierDTO {
     @Column(columnDefinition = "varchar(10) not null")
     private String phone;
 
-    private Integer user_id;
+
 }

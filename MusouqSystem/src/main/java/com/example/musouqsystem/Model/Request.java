@@ -33,12 +33,12 @@ public class Request {
     private LocalDate req_date;
 
     @ManyToOne
-    @JoinColumn(name = "marketer_id", referencedColumnName = "id")
+    @JoinColumn(name = "marketer_id", referencedColumnName = "user_id")
     @JsonIgnore
     private Marketer marketer;
 
     @ManyToOne
-    @JoinColumn(name = "supplier_id", referencedColumnName = "id")
+    @JoinColumn(name = "supplier_id", referencedColumnName = "user_id")
     @JsonIgnore
     private Supplier supplier;
 

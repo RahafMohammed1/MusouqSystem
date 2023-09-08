@@ -19,7 +19,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class Supplier {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotEmpty(message = "name should not be empty")
@@ -33,10 +33,10 @@ public class Supplier {
     private String phone;
 
 
-//    @OneToOne
-//    @MapsId
-//    @JsonIgnore
-//    private User user;
+    @OneToOne
+    @MapsId
+    @JsonIgnore
+    private User user;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "supplier")
     private Set<Marketer> marketers;
