@@ -3,10 +3,12 @@ package com.example.musouqsystem.Controller;
 import com.example.musouqsystem.Api.ApiResponse;
 import com.example.musouqsystem.DTO.SupplierDTO;
 import com.example.musouqsystem.Model.Supplier;
+import com.example.musouqsystem.Model.User;
 import com.example.musouqsystem.Service.SupplierService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,27 +23,27 @@ public class SupplierController {
     }
 
     @PostMapping("/completeProfile")
-    public ResponseEntity completeProfile(@RequestBody @Valid Supplier supplier){
-        supplierService.completeProfile(supplier);
+    public ResponseEntity completeProfile(@AuthenticationPrincipal User user, @RequestBody @Valid SupplierDTO supplierDTO){
+        supplierService.completeProfile(user.getId(), supplierDTO);
         return ResponseEntity.status(200).body(new ApiResponse("your profile completed"));
     }
 
-    @PutMapping("/updateProfile/{supplier_id}")
-    public ResponseEntity updateProfile(@PathVariable Integer supplier_id, @RequestBody @Valid SupplierDTO supplierDTO) {
-        supplierService.updateProfile(supplier_id, supplierDTO);
+    @PutMapping("/updateProfile")
+    public ResponseEntity updateProfile(@AuthenticationPrincipal User user, @RequestBody @Valid SupplierDTO supplierDTO) {
+        supplierService.updateProfile(user.getId(), supplierDTO);
         return ResponseEntity.status(200).body(new ApiResponse("your profile updated successfully"));
     }
 
-    @PutMapping("/shipOrder/{supplier_id}/{order_id}/{date}")
-    public ResponseEntity supplierShippedOrder(@PathVariable Integer supplier_id, @PathVariable Integer order_id, @PathVariable String date) {
-        supplierService.supplierShippedOrder(supplier_id, order_id, date);
+    @PutMapping("/shipOrder/{order_id}")
+    public ResponseEntity supplierShippedOrder(@AuthenticationPrincipal User user, @PathVariable Integer order_id) {
+        supplierService.supplierShippedOrder(user.getId(), order_id);
         return ResponseEntity.status(200).body(new ApiResponse("order shipped successfully"));
     }
 
 
-    @DeleteMapping("/deleteAccount/{supplier_id}")
-    public ResponseEntity deleteAccount(@PathVariable Integer supplier_id) {
-        supplierService.deleteAccount(supplier_id);
+    @DeleteMapping("/deleteAccount")
+    public ResponseEntity deleteAccount(@AuthenticationPrincipal User user) {
+        supplierService.deleteAccount(user.getId());
         return ResponseEntity.status(200).body(new ApiResponse("your account deleted successfully"));
     }
 }
