@@ -28,7 +28,7 @@ public class SecurityConfig {
                 BCryptPasswordEncoder());
         return authenticationProvider;
     }
-
+//SHOPPER MARKETER SUPPLIER ADMIN
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http)
             throws Exception{
@@ -41,6 +41,12 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
 
                 .requestMatchers("/api/v1/auth/**").permitAll()
+                .requestMatchers("/api/v1/shopper/marketerGetShoppers").hasAuthority("MARKETER")
+                .requestMatchers("/api/v1/shopper/completeProfile").hasAuthority("SHOPPER")
+                .requestMatchers("/api/v1/shopper/updateProfile/{shopper_id}").hasAuthority("SHOPPER")
+                .requestMatchers("/api/v1/shopper/deleteAccount/{shopper_id}").hasAuthority("SHOPPER")
+                .requestMatchers("/api/v1/shopper/selectMarketer/{shopper_id}/{marketer_id}").hasAuthority("SHOPPER")
+//                .requestMatchers("/api/v1/marketer/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .logout().logoutUrl("/api/v1/auth/logout")
