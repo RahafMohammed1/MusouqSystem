@@ -20,19 +20,30 @@ public class OrdersService {
     private final ShippingCompanyRepository shippingCompanyRepository;
     private final MarketerRepository marketerRepository;
     private final CouponsRepository couponsRepository;
+    private final AuthRepository authRepository;
 
     // TODO: 9/6/2023 the user get his/her orders with security
-    public List<Orders> getMyOrders(){
-        return ordersRepository.findAll() ;
+    public List<Orders> getMyOrders(Integer user_id){
+        Shopper shopper = shopperRepository.findShopperById(user_id);
+        return ordersRepository.findAllByShopperId(shopper.getId());
     }
-    public void ShopperMakeOrder(Orders orders){
-    ordersRepository.save(orders);
+    public void ShopperMakeOrder(Integer user_id,Integer shopper_id,Orders orders){
+        User user = authRepository.findUserById(user_id);
+        Shopper shopper = shopperRepository.findShopperById(shopper_id);
+        if (shopper == null)
+            throw new ApiException("Sorry the shopper id is wrong");
+
+        if (shopper.getId() != user.getShopper().getId())
+            throw new ApiException("Sorry you can't create order for this shopper");
+
+        orders.setShopper(shopper);
+        ordersRepository.save(orders);
     }
-    public void ShopperAddProductToOrder(Integer shopper_id, Integer product_id,Integer order_id ) {
+    public void ShopperAddProductToOrder(Integer user_id, Integer shopper_id, Integer product_id,Integer order_id ) {
         Shopper shopper = shopperRepository.findShopperById(shopper_id);
         Product product = productRepository.findProductById(product_id);
         Orders orders = ordersRepository.findOrdersById(order_id);
-
+        User user = authRepository.findUserById(user_id);
 
         if (shopper == null)
             throw new ApiException("shopper id is wrong");
@@ -40,6 +51,12 @@ public class OrdersService {
             throw new ApiException("product id is wrong");
         else if (orders == null)
             throw new ApiException("order id is wrong");
+
+        if (orders.getShopper().getId() != shopper_id)
+            throw new ApiException("Sorry you can't add product to this order");
+        else if (user.getShopper().getId() != shopper_id)
+            throw new ApiException("You can't see this page");
+
 
         if ((orders.getOrder_status() != null))
             throw new ApiException("Sorry you can't add product beacuse the order status changed, make a new order to add a products");
@@ -54,16 +71,16 @@ public class OrdersService {
         if (shopper.getMarketer().getProducts().contains(product)){
             orders.getProducts().add(product);
             product.setOrders(orders);
-            orders.setShopper(shopper);
             orders.setSupplier(product.getSupplier());
             orders.setMarketer(shopper.getMarketer());
             product.setStock(product.getStock() -1);
             ordersRepository.save(orders);
         }else throw new ApiException("Sorry the product id does not match the prodcut in marketer store");
     }
-    public Double calculateProductsAmount(Integer order_id, Integer product_id){
+    public Double calculateProductsAmount(Integer user_id,Integer order_id, Integer product_id){
         Orders orders = ordersRepository.findOrdersById(order_id);
         Product product = productRepository.findProductById(product_id);
+        User user = authRepository.findUserById(user_id);
         Double total = 0.0;
 
         if (orders == null)
@@ -71,6 +88,9 @@ public class OrdersService {
         else if (product == null){
             throw new ApiException("product id is wrong");
         }
+        if (user.getShopper().getId() != orders.getShopper().getId())
+            throw new ApiException("Sorry you can't see this page");
+
 
         if (orders.getProducts().isEmpty())
             throw new ApiException("You must add product to calculate amount");
@@ -91,14 +111,17 @@ public class OrdersService {
         return total;
     }
 
-    public Double selectShippingCompany(Integer order_id, Integer shippingCompany_id){
+    public Double selectShippingCompany(Integer user_id,Integer order_id, Integer shippingCompany_id){
         ShippingCompany shippingCompany = shippingCompanyRepository.findShippingCompanyById(shippingCompany_id);
         Orders orders = ordersRepository.findOrdersById(order_id);
+        User user = authRepository.findUserById(user_id);
 
         if (shippingCompany == null)
             throw new ApiException("Sorry the shipping company id is wrong");
         else if (orders == null)
             throw new ApiException("Sorry the order id is wrong");
+        if (user.getShopper().getId() != orders.getShopper().getId())
+            throw new ApiException("Sorry you can't see this page");
 
         orders.setShippingCompany(shippingCompany);
 
@@ -114,11 +137,13 @@ public class OrdersService {
         return total;
     }
 
-    public Orders completeOrder(Integer order_id) {
+    public Orders completeOrder(Integer user_id,Integer order_id) {
         Orders orders = ordersRepository.findOrdersById(order_id);
         ShippingCompany shippingCompany = shippingCompanyRepository.findShippingCompanyById(orders.getShippingCompany().getId());
         Shopper shopper = shopperRepository.findShopperById(orders.getShopper().getId());
         Marketer marketer = marketerRepository.findMarketerById(orders.getMarketer().getId());
+        User user = authRepository.findUserById(user_id);
+
 
         if (orders == null)
             throw new ApiException("Sorry, the order id is wrong");
@@ -127,7 +152,8 @@ public class OrdersService {
             throw new ApiException("Sorry you must choose the shipping company to complete the order");
         if (orders.getProducts().isEmpty())
             throw new ApiException("You must add product to complete the order");
-
+        if (user.getShopper().getId() != shopper.getId())
+            throw new ApiException("Sorry you can't see this page");
 
         orders.setOrder_date(LocalDate.now());
         orders.setOrder_status("processing");
@@ -148,16 +174,18 @@ public class OrdersService {
         return orders;
 
     }
-
-    public void deliveredOrder(Integer order_id){
+// Admin role
+    public void deliveredOrder(Integer user_id,Integer order_id){
         Orders confirmOrder = ordersRepository.findOrdersById(order_id);
-
+        User user = authRepository.findUserById(user_id);
         if (confirmOrder == null)
             throw new ApiException("Sorry, the order id is wrong");
         if (confirmOrder.getOrder_status().equals("processing"))
             throw new ApiException("Your order need to shipping");
         if (confirmOrder.getOrder_status().equals("delivered"))
             throw new ApiException("Your order already delivered");
+        if (!(user.getRole().equalsIgnoreCase("ADMIN")))
+            throw new ApiException("Only admin can see this page");
 
         confirmOrder.setOrder_status("delivered");
 
@@ -222,11 +250,15 @@ public class OrdersService {
 
 
 
-    public void deleteOrder(Integer order_id){
+    public void deleteOrder(Integer user_id,Integer order_id){
         Orders deleteOrder = ordersRepository.findOrdersById(order_id);
+        User user = authRepository.findUserById(user_id);
 
         if (deleteOrder == null)
             throw new ApiException("Sorry the order is is wrong");
+        else if (user.getShopper().getId() != deleteOrder.getShopper().getId()) {
+            throw new ApiException("You have not authorized to deleted this order");
+        }
 
         if (deleteOrder.getOrder_status()!= null)
             throw new ApiException("Sorry, you can't cancel your order");

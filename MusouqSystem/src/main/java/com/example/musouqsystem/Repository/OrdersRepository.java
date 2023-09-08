@@ -14,6 +14,5 @@ public interface OrdersRepository extends JpaRepository<Orders , Integer> {
     Orders findOrdersById(Integer id);
 
     // to get the orders for the shopper
-//    List<Orders> findAllByUser();
-
+   List<Orders> findAllByShopperId(Integer shopper_id);
 }
