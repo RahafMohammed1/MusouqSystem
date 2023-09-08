@@ -41,6 +41,9 @@ public class OrdersService {
         else if (orders == null)
             throw new ApiException("order id is wrong");
 
+        if ((orders.getOrder_status() != null))
+            throw new ApiException("Sorry you can't add product beacuse the order status changed, make a new order to add a products");
+
 
         if (shopper.getMarketer() == null)
             throw new ApiException("sorry you must select the marketer first");
@@ -226,13 +229,9 @@ public class OrdersService {
         if (deleteOrder == null)
             throw new ApiException("Sorry the order is is wrong");
 
-//        if (!(deleteOrder.getOrder_status().equalsIgnoreCase("processing")))
-//            throw new ApiException("Sorry, you can't cancel your order");
-
-//        deleteOrder.setShopper(null);
-//        deleteOrder.setReviewOrder(null);
-//        deleteOrder.setSupplier(null);
-
+        if (deleteOrder.getOrder_status()!= null)
+            throw new ApiException("Sorry, you can't cancel your order");
+        
         ordersRepository.delete(deleteOrder);
     }
 
