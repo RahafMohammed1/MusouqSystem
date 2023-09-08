@@ -101,7 +101,6 @@ public class OrdersService {
             throw new ApiException("Sorry the order id is wrong");
 
         orders.setShippingCompany(shippingCompany);
-        shippingCompany.getOrders().add(orders);
 
         if (orders.getTotal_amount() == null)
             orders.setTotal_amount(0.0);
@@ -231,7 +230,7 @@ public class OrdersService {
 
         if (deleteOrder.getOrder_status()!= null)
             throw new ApiException("Sorry, you can't cancel your order");
-        
+
         ordersRepository.delete(deleteOrder);
     }
 
