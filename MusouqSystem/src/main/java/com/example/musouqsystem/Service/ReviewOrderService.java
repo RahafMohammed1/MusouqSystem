@@ -32,18 +32,16 @@ public class ReviewOrderService {
         return reviewOrderRepository.findAllByShopperId(user.getShopper().getId());
     }
 
-    public void addReviewOrder(Integer user_id,Integer shopper_id,ReviewOrderDTO reviewOrderDTO){
-        User user = authRepository.findUserById(user_id);
+    public void addReviewOrder(Integer user_id,ReviewOrderDTO reviewOrderDTO){
         Orders orders = ordersRepository.findOrdersById(reviewOrderDTO.getOrder_id());
-        Shopper shopper = shopperRepository.findShopperById(shopper_id);
+        Shopper shopper = shopperRepository.findShopperById(user_id);
 
         if (orders == null)
             throw new ApiException("Sorry no order to rate it");
         else if (shopper == null)
             throw new ApiException("Sorry , the shopper id is wrong");
-
-        if (user.getShopper().getId() != shopper.getId())
-            throw new ApiException("You can't write review order");
+        if (!(shopper.getOrders().contains(orders)))
+            throw new ApiException("Sorry you can't write review for this order");
 
         if (orders.getReview_status())
             throw new ApiException("You already rate this order");

@@ -29,7 +29,7 @@ public class ReviewMarketerController {
 
     @PutMapping("/updateReviewMarketer/{reviewMarketer_id}")
     public ResponseEntity updateReviewMarketerController(@AuthenticationPrincipal User user,@PathVariable Integer reviewMarketer_id,@RequestBody @Valid ReviewMarketer reviewMarketer) {
-        reviewMarketerService.updateReviewMarketer(user.getId(), reviewMarketer_id, reviewMarketer);
+        reviewMarketerService.updateReviewMarketer(user.getId(),reviewMarketer_id,reviewMarketer);
         return ResponseEntity.status(200).body(new ApiResponse("your review marketer updated successfully"));
     }
 

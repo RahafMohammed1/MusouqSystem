@@ -22,9 +22,9 @@ public class ReviewOrderController {
         return ResponseEntity.status(200).body(reviewOrderService.getAllReviews(user.getId()));
     }
 
-    @PostMapping("/addReviewOrder/{shopper_id}")
-    public ResponseEntity addReviewOrderController(@AuthenticationPrincipal User user,@PathVariable Integer shopper_id,@RequestBody @Valid ReviewOrderDTO reviewOrderDTO){
-        reviewOrderService.addReviewOrder(user.getId(), shopper_id , reviewOrderDTO);
+    @PostMapping("/addReviewOrder")
+    public ResponseEntity addReviewOrderController(@AuthenticationPrincipal User user,@RequestBody @Valid ReviewOrderDTO reviewOrderDTO){
+        reviewOrderService.addReviewOrder(user.getId(), reviewOrderDTO);
         return ResponseEntity.status(200).body(new ApiResponse("your review order added successfully "));
     }
 

@@ -45,6 +45,8 @@ public class ReviewMarketerService {
         if (user.getShopper().getId() != shopper.getId())
             throw new ApiException("Sorry you can't add review marketer");
 
+
+
         if (!(orders.getOrder_status().equalsIgnoreCase("delivered")))
             throw new ApiException("You can't rate becuase the order does not delivered");
 
@@ -58,12 +60,14 @@ public class ReviewMarketerService {
 
         if (oldReviewMarketer == null)
             throw new ApiException("Sorry the review marketer id is wrong");
-        else if (user.getShopper().getId() != oldReviewMarketer.getShopper().getId())
+
+        if (user.getShopper().getId() != oldReviewMarketer.getShopper().getId())
             throw new ApiException("Sorry you can't update oon this review marketer");
+
 
         oldReviewMarketer.setReview_marketer(reviewMarketer.getReview_marketer());
         oldReviewMarketer.setRate_marketer(reviewMarketer.getRate_marketer());
-        reviewMarketerRepository.save(reviewMarketer);
+        reviewMarketerRepository.save(oldReviewMarketer);
     }
 
     public void deleteReviewMarketer(Integer user_id,Integer reviewMarketer_id){

@@ -22,28 +22,23 @@ public class OrdersService {
     private final CouponsRepository couponsRepository;
     private final AuthRepository authRepository;
 
-    // TODO: 9/6/2023 the user get his/her orders with security
+
     public List<Orders> getMyOrders(Integer user_id){
         Shopper shopper = shopperRepository.findShopperById(user_id);
         return ordersRepository.findAllByShopperId(shopper.getId());
     }
     public void ShopperMakeOrder(Integer user_id,Orders orders){
-        User user = authRepository.findUserById(user_id);
-        Shopper shopper = shopperRepository.findShopperById(user.getShopper().getId());
+        Shopper shopper=shopperRepository.findShopperById(user_id);
         if (shopper == null)
             throw new ApiException("Sorry can't create the order until complete your profile");
-
-        if (shopper.getId() != user.getShopper().getId())
-            throw new ApiException("Sorry you can't create order for this shopper");
 
         orders.setShopper(shopper);
         ordersRepository.save(orders);
     }
-    public void ShopperAddProductToOrder(Integer user_id, Integer shopper_id, Integer product_id,Integer order_id ) {
-        Shopper shopper = shopperRepository.findShopperById(shopper_id);
+    public void ShopperAddProductToOrder(Integer user_id, Integer product_id,Integer order_id ) {
+        Shopper shopper = shopperRepository.findShopperById(user_id);
         Product product = productRepository.findProductById(product_id);
         Orders orders = ordersRepository.findOrdersById(order_id);
-        User user = authRepository.findUserById(user_id);
 
         if (shopper == null)
             throw new ApiException("shopper id is wrong");
@@ -52,10 +47,8 @@ public class OrdersService {
         else if (orders == null)
             throw new ApiException("order id is wrong");
 
-        if (orders.getShopper().getId() != shopper_id)
+        if (orders.getShopper().getId() != shopper.getId())
             throw new ApiException("Sorry you can't add product to this order");
-        else if (user.getShopper().getId() != shopper_id)
-            throw new ApiException("You can't see this page");
 
 
         if ((orders.getOrder_status() != null))
