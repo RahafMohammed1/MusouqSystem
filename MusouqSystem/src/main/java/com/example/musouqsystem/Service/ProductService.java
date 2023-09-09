@@ -48,11 +48,12 @@ public class ProductService {
 
         if (category == null) throw new ApiException("category not found");
 
-        List<Product> products = productRepository.findProductsByCategory(category);
-
-        if (products.contains(user))
-            return products;
+        if (user.getRole().equals("MARKETER"))
+            return productRepository.findProductsByCategoryAndMarketersContains(category, user.getMarketer());
+        else if (user.getRole().equals("SUPPLIER"))
+            return productRepository.findProductsByCategoryAndSupplier(category, user.getSupplier());
         else throw new ApiException("you don't have products of this category yet");
+
     }
 
 
@@ -114,7 +115,7 @@ public class ProductService {
         User user = authRepository.findUserById(supplier_id);
         Product product = productRepository.findProductByIdAndSupplierId(product_id, user.getId());
 
-        if (product == null) throw new ApiException("supplier or product not exist");
+        if (product == null) throw new ApiException("product not exist");
 
         if (product.getMarketers().isEmpty())
             productRepository.delete(product);
@@ -125,7 +126,7 @@ public class ProductService {
         User user = authRepository.findUserById(marketer_id);
         Product product = productRepository.findProductById(product_id);
 
-        if (product == null) throw new ApiException("marketer or product not exist");
+        if (product == null) throw new ApiException("product not exist");
 
         if (product.getMarketers().contains(user.getMarketer()) || user.getMarketer().getProducts().contains(product)) {
             product.getMarketers().remove(user.getMarketer());

@@ -57,7 +57,9 @@ public class SupplierService {
     public void deleteAccount(Integer supplier_id) {
         User user = authRepository.findUserById(supplier_id);
 
-        if (user.getSupplier().getMarketers().isEmpty() || user.getSupplier().getOrders().isEmpty()){
+        if (user.getSupplier().getMarketers().isEmpty()
+                && user.getSupplier().getOrders().isEmpty()
+                && user.getSupplier().getProducts().isEmpty()){
             supplierRepository.delete(user.getSupplier());
             authRepository.delete(user);
         }

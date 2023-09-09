@@ -86,7 +86,8 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/request/reject-request/{request_id}").hasAuthority("SUPPLIER")
 
 
-                .requestMatchers("/api/v1/category/addCategory","/api/v1/category/updateCategory/{category_id}","/api/v1/category/deleteCategory/{category_id}").hasAuthority("ADMIN")
+                .requestMatchers("/api/v1/category/addCategory","/api/v1/category/updateCategory/{category_id}","/api/v1/category/deleteCategory/{category_id}"
+                        ,"/api/v1/image/getAllImage").hasAuthority("ADMIN")
 
                 .requestMatchers("/api/v1/supplier/getAllSuppliers","/api/v1/product/marketerGetAllProductsOfSupplier"
                         ,"/api/v1/product/marketerAddProduct/{product_id}/{supplier_id}","/api/v1/product/marketerApplyDiscount/{product_id}/{discount}"
