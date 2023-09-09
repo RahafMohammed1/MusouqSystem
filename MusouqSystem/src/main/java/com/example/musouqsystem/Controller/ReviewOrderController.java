@@ -2,10 +2,12 @@ package com.example.musouqsystem.Controller;
 
 import com.example.musouqsystem.Api.ApiResponse;
 import com.example.musouqsystem.DTO.ReviewOrderDTO;
+import com.example.musouqsystem.Model.User;
 import com.example.musouqsystem.Service.ReviewOrderService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,25 +18,25 @@ public class ReviewOrderController {
 
     // TODO: 9/6/2023 with secuity i must update it
     @GetMapping("/get")
-    public ResponseEntity getAllReviewsController() {
-        return ResponseEntity.status(200).body(reviewOrderService.getAllReviews());
+    public ResponseEntity getAllReviewsController(@AuthenticationPrincipal User user) {
+        return ResponseEntity.status(200).body(reviewOrderService.getAllReviews(user.getId()));
     }
 
     @PostMapping("/addReviewOrder/{shopper_id}")
-    public ResponseEntity addReviewOrderController(@PathVariable Integer shopper_id,@RequestBody @Valid ReviewOrderDTO reviewOrderDTO){
-        reviewOrderService.addReviewOrder(shopper_id , reviewOrderDTO);
+    public ResponseEntity addReviewOrderController(@AuthenticationPrincipal User user,@PathVariable Integer shopper_id,@RequestBody @Valid ReviewOrderDTO reviewOrderDTO){
+        reviewOrderService.addReviewOrder(user.getId(), shopper_id , reviewOrderDTO);
         return ResponseEntity.status(200).body(new ApiResponse("your review order added successfully "));
     }
 
     @PutMapping("/updateReviewOrder")
-    public ResponseEntity updateReviewOrderController(@RequestBody @Valid ReviewOrderDTO reviewOrderDTO) {
-        reviewOrderService.updateReviewOrder(reviewOrderDTO);
+    public ResponseEntity updateReviewOrderController(@AuthenticationPrincipal User user,@RequestBody @Valid ReviewOrderDTO reviewOrderDTO) {
+        reviewOrderService.updateReviewOrder(user.getId(),reviewOrderDTO);
         return ResponseEntity.status(200).body(new ApiResponse("your review order updated successfully"));
     }
 
     @DeleteMapping("/deleteReviewOrder/{reviewOrder}")
-    public ResponseEntity deleteReviewOrderSuccessfully(@PathVariable Integer reviewOrder) {
-        reviewOrderService.deleteReviewOrder(reviewOrder);
+    public ResponseEntity deleteReviewOrderSuccessfully(@AuthenticationPrincipal User user, @PathVariable Integer reviewOrder) {
+        reviewOrderService.deleteReviewOrder(user.getId(),reviewOrder);
         return ResponseEntity.status(200).body(new ApiResponse("your review order deleted successfully"));
     }
 }
