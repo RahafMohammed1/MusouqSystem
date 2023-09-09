@@ -23,9 +23,9 @@ public class OrdersController {
         return ResponseEntity.status(200).body(ordersService.getMyOrders(user.getId()));
     }
 
-    @PostMapping("/makeOrder/{shopper_id}")
-    public ResponseEntity shopperMakeOrder(@AuthenticationPrincipal User user, @PathVariable Integer shopper_id){
-        ordersService.ShopperMakeOrder(user.getId(),shopper_id,new Orders());
+    @PostMapping("/makeOrder")
+    public ResponseEntity shopperMakeOrder(@AuthenticationPrincipal User user){
+        ordersService.ShopperMakeOrder(user.getId(),new Orders());
         return ResponseEntity.status(200).body(new ApiResponse("You created the order successfully"));
     }
 
