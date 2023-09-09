@@ -93,7 +93,6 @@ public class ProductService {
         oldProduct.setName(product.getName());
         oldProduct.setDescription(product.getDescription());
         oldProduct.setPrice(product.getPrice());
-        oldProduct.setCategory(product.getCategory());
         oldProduct.setStock(product.getStock());
 
         productRepository.save(oldProduct);
@@ -116,8 +115,10 @@ public class ProductService {
         Product product = productRepository.findProductByIdAndSupplierId(product_id, user.getId());
 
         if (product == null) throw new ApiException("supplier or product not exist");
-        // TODO: 9/8/2023   
-        productRepository.delete(product);
+
+        if (product.getMarketers().isEmpty())
+            productRepository.delete(product);
+        else throw new ApiException("product belongs to a marketer now");
     }
 
     public void marketerDeleteProduct(Integer marketer_id, Integer product_id) {
