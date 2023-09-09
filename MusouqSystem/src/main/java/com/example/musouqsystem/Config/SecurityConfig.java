@@ -83,6 +83,19 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/request/accept-request/{request_id}").hasAuthority("SUPPLIER")
                 .requestMatchers("/api/v1/request/reject-request/{request_id}").hasAuthority("SUPPLIER")
 
+                .requestMatchers("/api/v1/coupons/get-all").hasAuthority("MARKETER")
+                .requestMatchers("/api/v1/coupons/add-general").hasAuthority("MARKETER")
+                .requestMatchers("/api/v1/coupons/add-special").hasAuthority("MARKETER")
+                .requestMatchers("/api/v1/coupons/update/{coupon_id}").hasAuthority("MARKETER")
+                .requestMatchers("/api/v1/coupons/delete/{coupon_id}").hasAuthority("MARKETER")
+                .requestMatchers("/api/v1/coupons/marketer-activate-coupon/{coupon_id}").hasAuthority("MARKETER")
+                .requestMatchers("/api/v1/coupons/marketer-deactivate-coupon/{coupon_id}").hasAuthority("MARKETER")
+                .requestMatchers("/api/v1/coupons/apply-coupon/{order_id}/{code}").hasAuthority("SHOPPER")
+
+                .requestMatchers("/api/v1/shipping/get-all").hasAnyAuthority("ADMIN","SHOPPER")
+                .requestMatchers("/api/v1/shipping/add").hasAuthority("ADMIN")
+                .requestMatchers("/api/v1/shipping/update/{shippingCompany_id}").hasAuthority("ADMIN")
+                .requestMatchers("/api/v1/shipping/delete/{shippingCompany_id}").hasAuthority("ADMIN")
 
                 .requestMatchers("/api/v1/category/addCategory","/api/v1/category/updateCategory/{category_id}","/api/v1/category/deleteCategory/{category_id}").hasAuthority("ADMIN")
 
@@ -97,7 +110,6 @@ public class SecurityConfig {
                         ,"/api/v1/image/addImage/{product_id}","/api/v1/image/changeImage/{product_id}","/api/v1/image/deleteImage/{product_id}").hasAuthority("SUPPLIER")
 
                 .requestMatchers("/api/v1/product/getAllProductsByCategory/{category_id}").hasAnyAuthority("SHOPPER","MARKETER","SUPPLIER")
-                
 
                 .anyRequest().authenticated()
                 .and()
