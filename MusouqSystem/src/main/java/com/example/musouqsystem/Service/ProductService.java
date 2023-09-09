@@ -52,7 +52,7 @@ public class ProductService {
             return productRepository.findProductsByCategoryAndMarketersContains(category, user.getMarketer());
         else if (user.getRole().equals("SUPPLIER"))
             return productRepository.findProductsByCategoryAndSupplier(category, user.getSupplier());
-        else throw new ApiException("you don't have products of this category yet");
+        else throw new ApiException("you don't have products yet");
 
     }
 
