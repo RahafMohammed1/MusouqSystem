@@ -83,7 +83,8 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/supplier/completeProfile","/api/v1/supplier/updateProfile","/api/v1/supplier/shipOrder/{order_id}","/api/v1/supplier/deleteAccount"
                         ,"/api/v1/product/getAllProductsOfSupplier","/api/v1/product/getAllProductsByCategory/{category_id}","/api/v1/product/supplierAddProduct/{category_id}"
                         , "/api/v1/product/supplierUpdateProduct/{product_id}","/api/v1/product/supplierDeleteProduct/{product_id}"
-                        ,"/api/v1/category/getAllCategories","/api/v1/category/updatePercent/{category_id}/{percent}").hasAuthority("SUPPLIER")
+                        ,"/api/v1/category/getAllCategories","/api/v1/category/updatePercent/{category_id}/{percent}"
+                        ,"/api/v1/image/addImage/{product_id}","/api/v1/image/changeImage/{product_id}","/api/v1/image/deleteImage/{product_id}").hasAuthority("SUPPLIER")
 
                 .requestMatchers("/api/v1/product/getAllProductsByCategory/{category_id}").hasAuthority("SHOPPER")
                 

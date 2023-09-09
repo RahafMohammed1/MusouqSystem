@@ -3,10 +3,12 @@ package com.example.musouqsystem.Controller;
 import com.example.musouqsystem.Api.ApiResponse;
 import com.example.musouqsystem.DTO.ImageDTO;
 import com.example.musouqsystem.Model.Image;
+import com.example.musouqsystem.Model.User;
 import com.example.musouqsystem.Service.ImageService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,21 +25,21 @@ public class ImageController {
     }
 
     @PostMapping("/addImage/{product_id}")
-    public ResponseEntity addImage(@PathVariable Integer product_id, @RequestBody @Valid ImageDTO imageDTO) {
-        imageService.addImage(product_id, imageDTO);
+    public ResponseEntity addImage(@AuthenticationPrincipal User user, @PathVariable Integer product_id, @RequestBody @Valid ImageDTO imageDTO) {
+        imageService.addImage(user.getId(), product_id, imageDTO);
         return ResponseEntity.status(200).body(new ApiResponse("image added successfully"));
     }
 
-    @PutMapping("/changeImage/{supplier_id}/{product_id}")
-    public ResponseEntity changeImage(@PathVariable Integer supplier_id, @PathVariable Integer product_id, @RequestBody @Valid Image image) {
-        imageService.changeImage(supplier_id, product_id, image);
+    @PutMapping("/changeImage/{product_id}")
+    public ResponseEntity changeImage(@AuthenticationPrincipal User user, @PathVariable Integer product_id, @RequestBody @Valid Image image) {
+        imageService.changeImage(user.getId(), product_id, image);
         return ResponseEntity.status(200).body(new ApiResponse("image changed successfully"));
 
     }
 
-    @DeleteMapping("/deleteImage/{supplier_id}/{product_id}")
-    public ResponseEntity deleteImage(@PathVariable Integer supplier_id, @PathVariable Integer product_id) {
-        imageService.deleteImage(supplier_id, product_id);
+    @DeleteMapping("/deleteImage/{product_id}")
+    public ResponseEntity deleteImage(@AuthenticationPrincipal User user, @PathVariable Integer product_id) {
+        imageService.deleteImage(user.getId(), product_id);
         return ResponseEntity.status(200).body(new ApiResponse("image deleted successfully"));
     }
 }
