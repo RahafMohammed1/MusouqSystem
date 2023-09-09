@@ -57,12 +57,12 @@ public class ProductService {
 
 
     public void supplierAddProduct(Integer supplier_id, Integer category_id, Product product) {
-        Supplier supplier = supplierRepository.findSupplierById(supplier_id);
+        User user = authRepository.findUserById(supplier_id);
         Category category = categoryRepository.findCategoryById(category_id);
 
-        if (supplier == null || category == null) throw new ApiException("supplier or category not exist");
+        if (category == null) throw new ApiException("category not exist");
 
-        product.setSupplier(supplier);
+        product.setSupplier(user.getSupplier());
         product.setCategory(category);
         productRepository.save(product);
         categoryRepository.save(category);
