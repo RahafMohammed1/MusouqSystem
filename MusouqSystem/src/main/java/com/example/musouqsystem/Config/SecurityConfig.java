@@ -80,17 +80,17 @@ public class SecurityConfig {
 
                 .requestMatchers("/api/v1/category/addCategory","/api/v1/category/updateCategory/{category_id}","/api/v1/category/deleteCategory/{category_id}").hasAuthority("ADMIN")
 
-                .requestMatchers("/api/v1/supplier/getAllSuppliers","/api/v1/product/marketerGetAllProductsOfSupplier","/api/v1/product/getAllProductsByCategory/{category_id}"
+                .requestMatchers("/api/v1/supplier/getAllSuppliers","/api/v1/product/marketerGetAllProductsOfSupplier"
                         ,"/api/v1/product/marketerAddProduct/{product_id}/{supplier_id}","/api/v1/product/marketerApplyDiscount/{product_id}/{discount}"
                         ,"/api/v1/product/marketerDeleteProduct/{product_id}").hasAuthority("MARKETER")
 
                 .requestMatchers("/api/v1/supplier/completeProfile","/api/v1/supplier/updateProfile","/api/v1/supplier/shipOrder/{order_id}","/api/v1/supplier/deleteAccount"
-                        ,"/api/v1/product/getAllProductsOfSupplier","/api/v1/product/getAllProductsByCategory/{category_id}","/api/v1/product/supplierAddProduct/{category_id}"
+                        ,"/api/v1/product/getAllProductsOfSupplier","/api/v1/product/supplierAddProduct/{category_id}"
                         , "/api/v1/product/supplierUpdateProduct/{product_id}","/api/v1/product/supplierDeleteProduct/{product_id}"
                         ,"/api/v1/category/getAllCategories","/api/v1/category/updatePercent/{category_id}/{percent}"
                         ,"/api/v1/image/addImage/{product_id}","/api/v1/image/changeImage/{product_id}","/api/v1/image/deleteImage/{product_id}").hasAuthority("SUPPLIER")
 
-                .requestMatchers("/api/v1/product/getAllProductsByCategory/{category_id}").hasAuthority("SHOPPER")
+                .requestMatchers("/api/v1/product/getAllProductsByCategory/{category_id}").hasAnyAuthority("SHOPPER","MARKETER","SUPPLIER")
                 
 
                 .anyRequest().authenticated()
