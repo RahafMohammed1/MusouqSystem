@@ -51,27 +51,27 @@ public class ProductController {
     }
 
 
-    @PutMapping("/supplierUpdateProduct/{supplier_id}/{product_id}")
-    public ResponseEntity supplierUpdateProduct(@PathVariable Integer supplier_id, @PathVariable Integer product_id, @RequestBody @Valid Product product) {
-        productService.supplierUpdateProduct(supplier_id, product_id, product);
+    @PutMapping("/supplierUpdateProduct/{product_id}")
+    public ResponseEntity supplierUpdateProduct(@AuthenticationPrincipal User user, @PathVariable Integer product_id, @RequestBody @Valid Product product) {
+        productService.supplierUpdateProduct(user.getId(), product_id, product);
         return ResponseEntity.status(200).body(new ApiResponse("product updated successfully"));
     }
 
-    @PutMapping("/marketerApplyDiscount/{marketer_id}/{product_id}/{discount}")
-    public ResponseEntity marketerApplyDiscount(@PathVariable Integer marketer_id, @PathVariable Integer product_id, @PathVariable Integer discount) {
-        productService.marketerApplyDiscount(marketer_id, product_id, discount);
+    @PutMapping("/marketerApplyDiscount/{product_id}/{discount}")
+    public ResponseEntity marketerApplyDiscount(@AuthenticationPrincipal User user, @PathVariable Integer product_id, @PathVariable Integer discount) {
+        productService.marketerApplyDiscount(user.getId(), product_id, discount);
         return ResponseEntity.status(200).body(new ApiResponse("discount applied to product successfully"));
     }
 
-    @DeleteMapping("/supplierDeleteProduct/{supplier_id}/{product_id}")
-    public ResponseEntity supplierDeleteProduct(@PathVariable Integer supplier_id, @PathVariable Integer product_id) {
-        productService.supplierDeleteProduct(supplier_id, product_id);
+    @DeleteMapping("/supplierDeleteProduct/{product_id}")
+    public ResponseEntity supplierDeleteProduct(@AuthenticationPrincipal User user, @PathVariable Integer product_id) {
+        productService.supplierDeleteProduct(user.getId(), product_id);
         return ResponseEntity.status(200).body(new ApiResponse("product deleted successfully"));
     }
 
-    @DeleteMapping("/marketerDeleteProduct/{marketer_id}/{product_id}")
-    public ResponseEntity marketerDeleteProduct(@PathVariable Integer marketer_id, @PathVariable Integer product_id) {
-        productService.marketerDeleteProduct(marketer_id, product_id);
+    @DeleteMapping("/marketerDeleteProduct/{product_id}")
+    public ResponseEntity marketerDeleteProduct(@AuthenticationPrincipal User user, @PathVariable Integer product_id) {
+        productService.marketerDeleteProduct(user.getId(), product_id);
         return ResponseEntity.status(200).body(new ApiResponse("product deleted successfully"));
     }
 
