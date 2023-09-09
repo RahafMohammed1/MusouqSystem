@@ -27,24 +27,28 @@ public class RequestService {
     {
         Marketer marketer=marketerRepository.findMarketerById(marketer_id);
         if (marketer==null)
-            throw new ApiException("marketer not found");
-
+            throw new ApiException("you should complete your profile first");
+        if(marketer.getRequests().isEmpty())
+            throw new ApiException("You haven't sent any marketing requests yet");
         return marketer.getRequests();
     }
 
     public Set<Request> supplierViewAllHisRequest(Integer supplier_id)
     {
+
         Supplier supplier=supplierRepository.findSupplierById(supplier_id);
         if (supplier==null)
-            throw new ApiException("supplier not found");
-
+            throw new ApiException("you should complete your profile first");
+        if(supplier.getRequests().isEmpty())
+            throw new ApiException("You do not have any marketing requests yet");
         return supplier.getRequests();
     }
 
     public void marketerSendRequest(Integer marketer_id, RequestDTO requestDTO)
     {
         Marketer marketer=marketerRepository.findMarketerById(marketer_id);
-        if (marketer==null) throw new ApiException("marketer not found");
+        if (marketer==null) throw new ApiException("you should complete your profile first");
+        //check if the marketer select supplier or not
         if(marketer.getSupplierSelectedId()==null)
         {
             throw new ApiException("you must select a supplier first to send request to him");
@@ -53,7 +57,6 @@ public class RequestService {
         if (supplier==null)
             throw new ApiException("supplier not found");
 
-        //check if the marketer select supplier or not
         Request request=new Request();
         request.setReq_description(requestDTO.getReq_description());
         request.setStatus("pending");
@@ -68,14 +71,15 @@ public class RequestService {
     {
         Marketer marketer=marketerRepository.findMarketerById(marketer_id);
         if (marketer==null)
-            throw new ApiException("marketer not found");
-        if(marketer.getRequests()==null)
-            throw new ApiException("you are not send any request yet");
+            throw new ApiException("you should complete your profile first");
+        if(marketer.getRequests().isEmpty())
+            throw new ApiException("you have not any request yet");
         Request request=requestRepository.findRequestById(request_id);
         if (request==null)
             throw new ApiException("request not found");
         if(marketer_id!=request.getMarketer().getId())
             throw new ApiException("the request not belong to you");
+
         request.setReq_description(requestDTO.getReq_description());
         requestRepository.save(request);
     }
@@ -83,14 +87,16 @@ public class RequestService {
     public void marketerDeleteRequest(Integer marketer_id,Integer request_id) {
         Marketer marketer = marketerRepository.findMarketerById(marketer_id);
         if (marketer == null)
-            throw new ApiException("marketer not found");
-        if (marketer.getRequests() == null)
-            throw new ApiException("you are not send any request yet");
+            throw new ApiException("you should complete your profile first");
+        if (marketer.getRequests().isEmpty())
+            throw new ApiException("you are not send any request yet, to delete it");
         Request request = requestRepository.findRequestById(request_id);
-        if(marketer_id!=request.getMarketer().getId())
-            throw new ApiException("the request not belong to you");
         if (request == null)
             throw new ApiException("request not found");
+        if(marketer_id!=request.getMarketer().getId())
+            throw new ApiException("the request not belong to you");
+        request.setSupplier(null);
+        request.setMarketer(null);
         requestRepository.delete(request);
     }
 
@@ -100,7 +106,7 @@ public class RequestService {
 
 
         Supplier supplier=supplierRepository.findSupplierById(supplier_id);
-        if (supplier==null) throw new ApiException("supplier not found");
+        if (supplier==null) throw new ApiException("you should complete your profile first");
 
         Request request=requestRepository.findRequestById(request_id);
         if (request==null) throw new ApiException("request not found");
