@@ -4,10 +4,12 @@ package com.example.musouqsystem.Controller;
 import com.example.musouqsystem.Api.ApiException;
 import com.example.musouqsystem.Api.ApiResponse;
 import com.example.musouqsystem.Model.Category;
+import com.example.musouqsystem.Model.User;
 import com.example.musouqsystem.Service.CategoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -34,9 +36,9 @@ public class CategoryController {
         return ResponseEntity.status(200).body(new ApiResponse("category updated successfully"));
     }
 
-    @PutMapping("/updatePercent/{supplier_id}/{category_id}/{percent}")
-    public ResponseEntity supplierUpdateMarketerPercent(@PathVariable Integer supplier_id, @PathVariable Integer category_id, @PathVariable Double percent) {
-        categoryService.supplierUpdateMarketerPercent(supplier_id, category_id, percent);
+    @PutMapping("/updatePercent/{category_id}/{percent}")
+    public ResponseEntity supplierUpdateMarketerPercent(@PathVariable Integer category_id, @PathVariable Double percent) {
+        categoryService.supplierUpdateMarketerPercent(category_id, percent);
         return ResponseEntity.status(200).body(new ApiResponse("category marketer percent updated successfully"));
     }
 
