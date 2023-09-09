@@ -62,6 +62,4 @@ public class Orders {
     @JoinColumn(name = "shipping_company_id", referencedColumnName = "id")
     @JsonIgnore
     private ShippingCompany shippingCompany;
-
-
 }

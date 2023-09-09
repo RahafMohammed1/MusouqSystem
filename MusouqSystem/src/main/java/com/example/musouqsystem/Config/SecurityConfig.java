@@ -54,7 +54,15 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/order/completeOrder/{order_id}").hasAuthority("SHOPPER")
                 .requestMatchers("/api/v1/order/deleviredOrder/{order_id}").hasAuthority("ADMIN")
                 .requestMatchers("/api/v1/order/deleteOrder/{order_id}").hasAuthority("SHOPPER")
-//                .requestMatchers("/api/v1/marketer/**").permitAll()
+
+                .requestMatchers("/api/v1/marketer/get-all-marketer").hasAuthority("SHOPPER")
+                .requestMatchers("/api/v1/marketer/complete-profile").hasAuthority("MARKETER")
+                .requestMatchers("/api/v1/marketer/update-profile/{marketer_id}").hasAuthority("MARKETER")
+                .requestMatchers("/api/v1/marketer/delete-profile").hasAuthority("MARKETER")
+                .requestMatchers("/api/v1/marketer/select/supplier/{supplier_id}").hasAuthority("MARKETER")
+                .requestMatchers("/api/v1/marketer/select/supplier/{supplier_id}").hasAuthority("MARKETER")
+                .requestMatchers("/api/v1/marketer/delete-supplier").hasAuthority("MARKETER")
+
                 .anyRequest().authenticated()
                 .and()
                 .logout().logoutUrl("/api/v1/auth/logout")

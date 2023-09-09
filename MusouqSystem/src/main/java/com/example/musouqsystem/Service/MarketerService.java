@@ -2,14 +2,11 @@ package com.example.musouqsystem.Service;
 
 import com.example.musouqsystem.Api.ApiException;
 import com.example.musouqsystem.DTO.MarketerDTO;
-import com.example.musouqsystem.DTO.MarketerEditProfileDTO;
-import com.example.musouqsystem.DTO.SupplierDTO;
 import com.example.musouqsystem.Model.*;
 import com.example.musouqsystem.Repository.AuthRepository;
 import com.example.musouqsystem.Repository.MarketerRepository;
 import com.example.musouqsystem.Repository.ProductRepository;
 import com.example.musouqsystem.Repository.SupplierRepository;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,25 +21,41 @@ public class MarketerService {
     private final SupplierRepository supplierRepository;
 
 
+
     public List<Marketer> shopperGetAllMarketer() {
         return marketerRepository.findAll();
     }
 
-    public void completeProfile(Marketer marketer) {
+    public void completeProfile(Integer marketer_id ,MarketerDTO marketerDTO) {
+        User user=authRepository.findUserById(marketer_id);
+        Marketer marketer = new Marketer(null, marketerDTO.getName(), marketerDTO.getPhone(),null,null,null,null,user,null,null,null,null,null,null,null);
         marketerRepository.save(marketer);
     }
 
     public void updateProfile(Integer marketer_id, MarketerDTO marketerDTO) {
         Marketer marketer = marketerRepository.findMarketerById(marketer_id);
-        if (marketer == null) throw new ApiException("marketer not exist");
+        if(marketer == null)
+            throw new ApiException("you should complete your profile first");
+
         marketer.setName(marketerDTO.getName());
         marketer.setPhone(marketerDTO.getPhone());
         marketerRepository.save(marketer);
+
     }
     public void deleteProfile(Integer marketer_id) {
+        User user=authRepository.findUserById(marketer_id);
         Marketer marketer = marketerRepository.findMarketerById(marketer_id);
-        if (marketer == null) throw new ApiException("the marketer not found");
-        marketerRepository.delete(marketer);
+
+        if(marketer == null){ authRepository.delete(user);}
+        else
+        {
+            if (marketer.getDues()==null)
+                marketer.setDues(0.0);
+            if (marketer.getDues() != 0.0)
+                throw new ApiException("You cannot delete your account because you have unpaid dues");
+            marketerRepository.delete(marketer);
+            authRepository.delete(user);
+        }
     }
     public void assignProductToMarketer(Integer marketer_id, Integer product_id) {
         Marketer marketer = marketerRepository.findMarketerById(marketer_id);
@@ -57,9 +70,14 @@ public class MarketerService {
     }
     public void marketerSelectSupplier(Integer marketer_id, Integer supplier_id) {
         Marketer marketer = marketerRepository.findMarketerById(marketer_id);
-        if (marketer == null) throw new ApiException("marketer not found");
+        if(marketer == null)
+            throw new ApiException("you should complete your profile first");
+        if (marketer.getSupplier()!=null)
+            throw new ApiException("You have already chosen a supplier and your request has been accepted by him. Delete it first if you want to change it");
+
         Supplier supplier = supplierRepository.findSupplierById(supplier_id);
-        if (supplier == null) throw new ApiException("please enter correct supplier id");
+        if (supplier == null)
+            throw new ApiException("please enter correct supplier id");
 
         marketer.setSupplierSelectedId(supplier.getId());
         marketerRepository.save(marketer);
@@ -68,10 +86,11 @@ public class MarketerService {
     public void marketerDeleteSupplier(Integer marketer_id)
     {
         Marketer marketer=marketerRepository.findMarketerById(marketer_id);
-        if (marketer == null) throw new ApiException("marketer not found");
+        if(marketer == null)
+            throw new ApiException("you should complete your profile first");
         if (marketer.getSupplier()==null)
             throw new ApiException("you don't have supplier to deleted");
-        if (marketer.getDues()!=0)
+        if (marketer.getDues()!=0.0)
             throw new ApiException("You cannot delete your supplier because there are duse to you that have not yet been paid");
         marketer.setSupplier(null);
     }

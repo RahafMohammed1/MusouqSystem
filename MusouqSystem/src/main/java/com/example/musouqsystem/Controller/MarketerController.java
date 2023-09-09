@@ -2,14 +2,13 @@ package com.example.musouqsystem.Controller;
 
 import com.example.musouqsystem.Api.ApiResponse;
 import com.example.musouqsystem.DTO.MarketerDTO;
-import com.example.musouqsystem.Model.Marketer;
+import com.example.musouqsystem.Model.User;
 import com.example.musouqsystem.Service.MarketerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/marketer")
@@ -23,32 +22,32 @@ public class MarketerController {
     }
 
     @PostMapping("/complete-profile")
-    public ResponseEntity completeProfile(@RequestBody @Valid Marketer marketer) {
-        marketerService.completeProfile(marketer);
+    public ResponseEntity completeProfile(@AuthenticationPrincipal User user ,@RequestBody@Valid MarketerDTO marketerDTO ) {
+        marketerService.completeProfile(user.getId(),marketerDTO);
         return ResponseEntity.status(200).body(new ApiResponse("your profile is completed"));
     }
 
-    @PutMapping("/update-profile/{marketer_id}")
-    public ResponseEntity updateProfile(@PathVariable Integer marketer_id, @RequestBody @Valid MarketerDTO marketerDTO) {
-        marketerService.updateProfile(marketer_id, marketerDTO);
+    @PutMapping("/update-profile")
+    public ResponseEntity updateProfile(@AuthenticationPrincipal User user, @RequestBody @Valid MarketerDTO marketerDTO) {
+        marketerService.updateProfile(user.getId(),marketerDTO);
         return ResponseEntity.status(200).body(new ApiResponse("your profile is updated"));
     }
 
-    @DeleteMapping("/delete-profile/{marketer_id}")
-    public ResponseEntity deleteProfile(@PathVariable Integer marketer_id) {
-        marketerService.deleteProfile(marketer_id);
+    @DeleteMapping("/delete-profile")
+    public ResponseEntity deleteProfile(@AuthenticationPrincipal User user) {
+        marketerService.deleteProfile(user.getId());
         return ResponseEntity.status(200).body(new ApiResponse("your profile is deleted"));
     }
 
-    @PutMapping("/select/supplier/{marketer_id}/{supplier_id}")
-    public ResponseEntity selectSupplier(@PathVariable Integer marketer_id,@PathVariable Integer supplier_id) {
-        marketerService.marketerSelectSupplier(marketer_id, supplier_id);
+    @PutMapping("/select/supplier/{supplier_id}")
+    public ResponseEntity selectSupplier(@AuthenticationPrincipal User user,@PathVariable Integer supplier_id) {
+        marketerService.marketerSelectSupplier(user.getId(), supplier_id);
         return ResponseEntity.status(200).body(new ApiResponse("your selection is done successfully"));
     }
 
-    @PutMapping("/delete-supplier/{marketer_id}")
-    public ResponseEntity MarketerDeleteSupplierToChangeIt(@PathVariable Integer marketer_id) {
-    marketerService.marketerDeleteSupplier(marketer_id);
+    @PutMapping("/delete-supplier")
+    public ResponseEntity MarketerDeleteSupplierToChangeIt(@AuthenticationPrincipal User user) {
+    marketerService.marketerDeleteSupplier(user.getId());
         return ResponseEntity.status(200).body(new ApiResponse("your supplier are deleted"));
     }
 }

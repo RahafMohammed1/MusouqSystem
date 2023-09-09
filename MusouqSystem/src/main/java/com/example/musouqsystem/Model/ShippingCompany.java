@@ -30,9 +30,6 @@ public class ShippingCompany {
     @Column(columnDefinition = "double not null")
     private Double shipping_price;
 
-    @NotEmpty(message = "delivery time should not be empty")
-    @Column(columnDefinition = "varchar(20) not null")
-    private String delivery_time;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "shippingCompany")
     private Set<Orders> orders;

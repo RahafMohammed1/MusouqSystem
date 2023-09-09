@@ -37,17 +37,10 @@ public class ShippingCompanyController {
     }
 
     @DeleteMapping("/delete/{shippingCompany_id}")
-
     public ResponseEntity adminDeleteShippingCompany(@PathVariable Integer shippingCompany_id)
     {
         shippingCompanyService.adminDeleteShippingCompany(shippingCompany_id);
         return ResponseEntity.status(200).body(new ApiResponse("the ShippingCompany id deleted"));
     }
 
-    @PutMapping("/supplier-update/delivery-time/{order_id}/{deliveryTime}")
-    public ResponseEntity supplierUpdateShippingDeliveryTimeOfProduct(@PathVariable Integer order_id,@PathVariable String deliveryTime)
-    {
-        shippingCompanyService.supplierUpdateDeliveryTimeOfOrder(order_id,deliveryTime);
-        return ResponseEntity.status(200).body(new ApiResponse("the delivery time is updated"));
-    }
 }

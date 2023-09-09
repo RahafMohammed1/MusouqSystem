@@ -42,6 +42,7 @@ public class Marketer {
     private Integer marketer_rate;
 
     @JsonIgnore
+    @Column(columnDefinition = "int ")
     private Integer supplierSelectedId;
 
     @OneToOne
