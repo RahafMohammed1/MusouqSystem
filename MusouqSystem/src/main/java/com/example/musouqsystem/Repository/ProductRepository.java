@@ -20,4 +20,5 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     List<Product> findAllByMarketersContains(Marketer marketer);
 
+
 }

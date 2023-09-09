@@ -34,8 +34,8 @@ public class ProductController {
 
 
     @GetMapping("/getAllProductsByCategory/{category_id}")
-    public ResponseEntity getAllProductsByCategory(@PathVariable Integer category_id) {
-        return ResponseEntity.status(200).body(productService.getAllProductsByCategory(category_id));
+    public ResponseEntity getAllProductsByCategory(@AuthenticationPrincipal User user, @PathVariable Integer category_id) {
+        return ResponseEntity.status(200).body(productService.getAllProductsByCategory(user.getId(), category_id));
     }
 
     @PostMapping("/supplierAddProduct/{supplier_id}/{category_id}")

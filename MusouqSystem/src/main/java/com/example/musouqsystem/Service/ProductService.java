@@ -42,11 +42,17 @@ public class ProductService {
     }
 
 
-    public List<Product> getAllProductsByCategory(Integer category_id) {
+    public List<Product> getAllProductsByCategory(Integer user_id, Integer category_id) {
+        User user = authRepository.findUserById(user_id);
         Category category = categoryRepository.findCategoryById(category_id);
+
         if (category == null) throw new ApiException("category not found");
 
-        return productRepository.findProductsByCategory(category);
+        List<Product> products = productRepository.findProductsByCategory(category);
+
+        if (products.contains(user))
+            return products;
+        else throw new ApiException("you don't have products of this category yet");
     }
 
 
