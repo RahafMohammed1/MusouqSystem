@@ -26,10 +26,12 @@ public class MarketerService {
         return marketerRepository.findAll();
     }
 
-    public void completeProfile(Integer marketer_id ,MarketerDTO marketerDTO) {
-        User user=authRepository.findUserById(marketer_id);
-        Marketer marketer = new Marketer(null, marketerDTO.getName(), marketerDTO.getPhone(),null,null,null,null,user,null,null,null,null,null,null,null);
-        marketerRepository.save(marketer);
+    public void completeProfile(Integer user_id ,MarketerDTO marketerDTO) {
+        User user=authRepository.findUserById(user_id);
+        Marketer marketer=marketerRepository.findMarketerById(user_id);
+        if (marketer!=null) throw new ApiException("you already complete your profile");
+        Marketer marketer1 = new Marketer(null, marketerDTO.getName(), marketerDTO.getPhone(),null,null,null,null,user,null,null,null,null,null,null,null);
+        marketerRepository.save(marketer1);
     }
 
     public void updateProfile(Integer marketer_id, MarketerDTO marketerDTO) {
