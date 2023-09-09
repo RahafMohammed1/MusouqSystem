@@ -46,6 +46,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/shopper/updateProfile/{shopper_id}").hasAuthority("SHOPPER")
                 .requestMatchers("/api/v1/shopper/deleteAccount/{shopper_id}").hasAuthority("SHOPPER")
                 .requestMatchers("/api/v1/shopper/selectMarketer/{shopper_id}/{marketer_id}").hasAuthority("SHOPPER")
+
                 .requestMatchers("/api/v1/order/get").hasAuthority("SHOPPER")
                 .requestMatchers("/api/v1/order/makeOrder/{shopper_id}").hasAuthority("SHOPPER")
                 .requestMatchers("/api/v1/order/addProduct/{shopper_id}/{product_id}/{order_id}").hasAuthority("SHOPPER")
@@ -63,11 +64,21 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/marketer/select/supplier/{supplier_id}").hasAuthority("MARKETER")
                 .requestMatchers("/api/v1/marketer/delete-supplier").hasAuthority("MARKETER")
 
+
+                .requestMatchers("/api/v1/request/get-marketer-request").hasAuthority("MARKETER")
+                .requestMatchers("/api/v1/request/get-supplier-request").hasAuthority("SUPPLIER")
+                .requestMatchers("/api/v1/request/send-request").hasAuthority("MARKETER")
+                .requestMatchers("/api/v1/request/update-request/{request_id}").hasAuthority("MARKETER")
+                .requestMatchers("/api/v1/request/delete-request/{request_id}").hasAuthority("MARKETER")
+                .requestMatchers("/api/v1/request/accept-request/{request_id}").hasAuthority("SUPPLIER")
+                .requestMatchers("/api/v1/request/reject-request/{request_id}").hasAuthority("SUPPLIER")
+
+
                 .requestMatchers("/api/v1/supplier/getAllSuppliers","/api/v1/product/marketerGetAllProductsOfSupplier","/api/v1/product/getAllProductsByCategory/{category_id}").hasAuthority("MARKETER")
                 .requestMatchers("/api/v1/supplier/completeProfile","/api/v1/supplier/updateProfile","/api/v1/supplier/shipOrder/{order_id}","/api/v1/supplier/deleteAccount","/api/v1/product/getAllProductsOfSupplier","/api/v1/product/getAllProductsByCategory/{category_id}").hasAuthority("SUPPLIER")
                 .requestMatchers("/api/v1/product/getAllProductsByCategory/{category_id}").hasAuthority("SHOPPER")
+                
 
-//                .requestMatchers("/api/v1/marketer/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .logout().logoutUrl("/api/v1/auth/logout")
