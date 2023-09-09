@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class SupplierController {
     private final SupplierService supplierService;
 
-    @GetMapping("/getAllSupplier")
+    @GetMapping("/getAllSuppliers")
     public ResponseEntity marketerGetAllSuppliers() {
         return ResponseEntity.status(200).body(supplierService.marketerGetAllSuppliers());
     }

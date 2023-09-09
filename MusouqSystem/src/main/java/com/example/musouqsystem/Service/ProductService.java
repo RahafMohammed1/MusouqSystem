@@ -16,29 +16,29 @@ public class ProductService {
     private final SupplierRepository supplierRepository;
     private final MarketerRepository marketerRepository;
     private final CategoryRepository categoryRepository;
-    private final ShopperRepository shopperRepository;
-    private final OrdersRepository ordersRepository;
+    private final AuthRepository authRepository;
 
 
 //    supplier get all
     public List<Product> getAllProductsOfSupplier(Integer supplier_id) {
-        return productRepository.findProductsBySupplierId(supplier_id);
+        User user = authRepository.findUserById(supplier_id);
+        return productRepository.findProductsBySupplierId(user.getId());
     }
 
-    public Set<Product> marketerGetAllProductsOfSupplier(Integer marketer_id, Integer supplier_id) {
-        Marketer marketer = marketerRepository.findMarketerById(marketer_id);
+    public Set<Product> marketerGetAllProductsOfSupplier(Integer marketer_id) {
+        User user = authRepository.findUserById(marketer_id);
 
-        if (marketer == null) throw new ApiException("you don't have supplier, select one first");
+        if (user.getMarketer().getSupplier() == null) throw new ApiException("you don't have supplier, select one first");
 
-        return marketer.getSupplier().getProducts();
+        return user.getMarketer().getSupplier().getProducts();
     }
 
 
 //    shopper
-    public List<Product> getAllProductsOfMarketer(Integer marketer_id) {
-        Marketer marketer = marketerRepository.findMarketerById(marketer_id);
-        if (marketer == null) throw new ApiException("marketer not found");
-        return productRepository.findAllByMarketersContains(marketer);
+    public List<Product> getAllProductsOfMarketer(Integer shopper_id) {
+        User user = authRepository.findUserById(shopper_id);
+
+        return productRepository.findAllByMarketersContains(user.getShopper().getMarketer());
     }
 
 
@@ -108,7 +108,7 @@ public class ProductService {
         Product product = productRepository.findProductByIdAndSupplierId(product_id, supplier_id);
 
         if (product == null) throw new ApiException("supplier or product not exist");
-
+        // TODO: 9/8/2023   
         productRepository.delete(product);
     }
 
