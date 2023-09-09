@@ -66,7 +66,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/reviewMarketer/addReviewMarketer/{order_id}").hasAuthority("SHOPPER")
                 .requestMatchers("/api/v1/reviewMarketer/updateReviewMarketer/{reviewMarketer_id}").hasAuthority("SHOPPER")
                 .requestMatchers("/api/v1/reviewMarketer/deleteReviewMarketer/{reviewMarketer}").hasAuthority("SHOPPER")
-                .requestMatchers("/api/v1/reviewMarketer/rateMarketer/{marketer_id}").hasAuthority("MARKETER")
+                .requestMatchers("/api/v1/reviewMarketer/rateMarketer").hasAuthority("MARKETER")
 
                 .requestMatchers("/api/v1/marketer/get-all-marketer").hasAuthority("SHOPPER")
                 .requestMatchers("/api/v1/marketer/complete-profile").hasAuthority("MARKETER")

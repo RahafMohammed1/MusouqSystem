@@ -40,8 +40,8 @@ public class ReviewMarketerController {
     }
 
 
-    @PutMapping("/rateMarketer/{marketer_id}")
-    public ResponseEntity calculateMarketerRateController(@AuthenticationPrincipal User user,@PathVariable Integer marketer_id){
-        return ResponseEntity.status(200).body(reviewMarketerService.calculateMarketerRate(user.getId(),marketer_id));
+    @PutMapping("/rateMarketer")
+    public ResponseEntity calculateMarketerRateController(@AuthenticationPrincipal User user){
+        return ResponseEntity.status(200).body(reviewMarketerService.calculateMarketerRate(user.getId()));
     }
 }

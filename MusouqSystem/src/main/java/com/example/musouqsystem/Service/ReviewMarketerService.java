@@ -84,16 +84,13 @@ public class ReviewMarketerService {
         reviewMarketerRepository.delete(reviewMarketer);
     }
 
-    public Marketer calculateMarketerRate(Integer user_id,Integer marketer_id){
-        User user = authRepository.findUserById(user_id);
-        Marketer marketer = marketerRepository.findMarketerById(marketer_id);
+    public Marketer calculateMarketerRate(Integer user_id){
+        Marketer marketer = marketerRepository.findMarketerById(user_id);
 
         if (marketer == null)
             throw new ApiException("Sorry the marketer id is wrong");
-        else if (user.getMarketer().getId() != marketer_id)
-            throw new ApiException("Sorry you can't see this page");
 
-        Integer result_rate = reviewMarketerRepository.calculateRateToMarketer(marketer_id);
+        Integer result_rate = reviewMarketerRepository.calculateRateToMarketer(marketer.getId());
         marketer.setMarketer_rate(result_rate);
         marketerRepository.save(marketer);
 
