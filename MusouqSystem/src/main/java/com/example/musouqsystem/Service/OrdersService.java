@@ -27,11 +27,11 @@ public class OrdersService {
         Shopper shopper = shopperRepository.findShopperById(user_id);
         return ordersRepository.findAllByShopperId(shopper.getId());
     }
-    public void ShopperMakeOrder(Integer user_id,Integer shopper_id,Orders orders){
+    public void ShopperMakeOrder(Integer user_id,Orders orders){
         User user = authRepository.findUserById(user_id);
-        Shopper shopper = shopperRepository.findShopperById(shopper_id);
+        Shopper shopper = shopperRepository.findShopperById(user.getShopper().getId());
         if (shopper == null)
-            throw new ApiException("Sorry the shopper id is wrong");
+            throw new ApiException("Sorry can't create the order until complete your profile");
 
         if (shopper.getId() != user.getShopper().getId())
             throw new ApiException("Sorry you can't create order for this shopper");

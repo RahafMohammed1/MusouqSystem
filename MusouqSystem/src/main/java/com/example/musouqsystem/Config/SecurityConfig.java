@@ -48,7 +48,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/shopper/selectMarketer/{shopper_id}/{marketer_id}").hasAuthority("SHOPPER")
 
                 .requestMatchers("/api/v1/order/get").hasAuthority("SHOPPER")
-                .requestMatchers("/api/v1/order/makeOrder/{shopper_id}").hasAuthority("SHOPPER")
+                .requestMatchers("/api/v1/order/makeOrder").hasAuthority("SHOPPER")
                 .requestMatchers("/api/v1/order/addProduct/{shopper_id}/{product_id}/{order_id}").hasAuthority("SHOPPER")
                 .requestMatchers("/api/v1/order/calcAmount/{order_id}/{product_id}").hasAuthority("SHOPPER")
                 .requestMatchers("/api/v1/order/SelectshippingCompany/{order_id}/{shippingCompany_id}").hasAuthority("SHOPPER")
