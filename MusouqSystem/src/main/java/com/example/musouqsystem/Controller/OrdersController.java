@@ -29,9 +29,9 @@ public class OrdersController {
         return ResponseEntity.status(200).body(new ApiResponse("You created the order successfully"));
     }
 
-    @PostMapping("/addProduct/{shopper_id}/{product_id}/{order_id}")
-    public ResponseEntity shopperAddProductToOrder(@AuthenticationPrincipal User user,@PathVariable Integer shopper_id, @PathVariable Integer product_id , @PathVariable Integer order_id){
-        ordersService.ShopperAddProductToOrder(user.getId(), shopper_id, product_id, order_id);
+    @PostMapping("/addProduct/{product_id}/{order_id}")
+    public ResponseEntity shopperAddProductToOrder(@AuthenticationPrincipal User user, @PathVariable Integer product_id , @PathVariable Integer order_id){
+        ordersService.ShopperAddProductToOrder(user.getId(), product_id, order_id);
         return ResponseEntity.status(200).body(new ApiResponse("The product added successfully to order"));
     }
 

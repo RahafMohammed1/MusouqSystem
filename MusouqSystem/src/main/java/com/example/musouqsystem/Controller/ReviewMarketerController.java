@@ -29,7 +29,7 @@ public class ReviewMarketerController {
 
     @PutMapping("/updateReviewMarketer/{reviewMarketer_id}")
     public ResponseEntity updateReviewMarketerController(@AuthenticationPrincipal User user,@PathVariable Integer reviewMarketer_id,@RequestBody @Valid ReviewMarketer reviewMarketer) {
-        reviewMarketerService.updateReviewMarketer(user.getId(), reviewMarketer_id, reviewMarketer);
+        reviewMarketerService.updateReviewMarketer(user.getId(),reviewMarketer_id,reviewMarketer);
         return ResponseEntity.status(200).body(new ApiResponse("your review marketer updated successfully"));
     }
 
@@ -40,8 +40,8 @@ public class ReviewMarketerController {
     }
 
 
-    @PutMapping("/rateMarketer/{marketer_id}")
-    public ResponseEntity calculateMarketerRateController(@AuthenticationPrincipal User user,@PathVariable Integer marketer_id){
-        return ResponseEntity.status(200).body(reviewMarketerService.calculateMarketerRate(user.getId(),marketer_id));
+    @PutMapping("/rateMarketer")
+    public ResponseEntity calculateMarketerRateController(@AuthenticationPrincipal User user){
+        return ResponseEntity.status(200).body(reviewMarketerService.calculateMarketerRate(user.getId()));
     }
 }

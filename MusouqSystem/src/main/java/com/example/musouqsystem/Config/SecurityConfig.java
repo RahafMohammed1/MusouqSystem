@@ -45,26 +45,28 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/shopper/completeProfile").hasAuthority("SHOPPER")
                 .requestMatchers("/api/v1/shopper/updateProfile/{shopper_id}").hasAuthority("SHOPPER")
                 .requestMatchers("/api/v1/shopper/deleteAccount/{shopper_id}").hasAuthority("SHOPPER")
-                .requestMatchers("/api/v1/shopper/selectMarketer/{shopper_id}/{marketer_id}").hasAuthority("SHOPPER")
+                .requestMatchers("/api/v1/shopper/selectMarketer/{marketer_id}").hasAuthority("SHOPPER")
 
                 .requestMatchers("/api/v1/order/get").hasAuthority("SHOPPER")
                 .requestMatchers("/api/v1/order/makeOrder").hasAuthority("SHOPPER")
-                .requestMatchers("/api/v1/order/addProduct/{shopper_id}/{product_id}/{order_id}").hasAuthority("SHOPPER")
+                .requestMatchers("/api/v1/order/addProduct/{product_id}/{order_id}").hasAuthority("SHOPPER")
                 .requestMatchers("/api/v1/order/calcAmount/{order_id}/{product_id}").hasAuthority("SHOPPER")
                 .requestMatchers("/api/v1/order/SelectshippingCompany/{order_id}/{shippingCompany_id}").hasAuthority("SHOPPER")
                 .requestMatchers("/api/v1/order/completeOrder/{order_id}").hasAuthority("SHOPPER")
                 .requestMatchers("/api/v1/order/deleviredOrder/{order_id}").hasAuthority("ADMIN")
                 .requestMatchers("/api/v1/order/deleteOrder/{order_id}").hasAuthority("SHOPPER")
+
                 .requestMatchers("api/v1/reviewOrder/get").hasAuthority("SHOPPER")
-                .requestMatchers("api/v1/reviewOrder/addReviewOrder/{shopper_id}").hasAuthority("SHOPPER")
+                .requestMatchers("api/v1/reviewOrder/addReviewOrder").hasAuthority("SHOPPER")
                 .requestMatchers("api/v1/reviewOrder/updateReviewOrder").hasAuthority("SHOPPER")
                 .requestMatchers("api/v1/reviewOrder/deleteReviewOrder/{reviewOrder}").hasAuthority("SHOPPER")
                 .requestMatchers("api/v1/reviewOrder/deleteReviewOrder/{reviewOrder}").hasAuthority("SHOPPER")
+
                 .requestMatchers("/api/v1/reviewMarketer/get").hasAuthority("SHOPPER")
                 .requestMatchers("/api/v1/reviewMarketer/addReviewMarketer/{order_id}").hasAuthority("SHOPPER")
                 .requestMatchers("/api/v1/reviewMarketer/updateReviewMarketer/{reviewMarketer_id}").hasAuthority("SHOPPER")
                 .requestMatchers("/api/v1/reviewMarketer/deleteReviewMarketer/{reviewMarketer}").hasAuthority("SHOPPER")
-                .requestMatchers("/api/v1/reviewMarketer/rateMarketer/{marketer_id}").hasAuthority("MARKETER")
+                .requestMatchers("/api/v1/reviewMarketer/rateMarketer").hasAuthority("MARKETER")
 
                 .requestMatchers("/api/v1/marketer/get-all-marketer").hasAuthority("SHOPPER")
                 .requestMatchers("/api/v1/marketer/complete-profile").hasAuthority("MARKETER")
@@ -97,7 +99,8 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/shipping/update/{shippingCompany_id}").hasAuthority("ADMIN")
                 .requestMatchers("/api/v1/shipping/delete/{shippingCompany_id}").hasAuthority("ADMIN")
 
-                .requestMatchers("/api/v1/category/addCategory","/api/v1/category/updateCategory/{category_id}","/api/v1/category/deleteCategory/{category_id}").hasAuthority("ADMIN")
+                .requestMatchers("/api/v1/category/addCategory","/api/v1/category/updateCategory/{category_id}","/api/v1/category/deleteCategory/{category_id}"
+                        ,"/api/v1/image/getAllImage").hasAuthority("ADMIN")
 
                 .requestMatchers("/api/v1/supplier/getAllSuppliers","/api/v1/product/marketerGetAllProductsOfSupplier"
                         ,"/api/v1/product/marketerAddProduct/{product_id}/{supplier_id}","/api/v1/product/marketerApplyDiscount/{product_id}/{discount}"

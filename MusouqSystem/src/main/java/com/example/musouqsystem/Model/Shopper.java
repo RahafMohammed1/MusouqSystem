@@ -19,7 +19,6 @@ import java.util.Set;
 @NoArgsConstructor
 public class Shopper {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotEmpty(message = "The shopper name must not empty")

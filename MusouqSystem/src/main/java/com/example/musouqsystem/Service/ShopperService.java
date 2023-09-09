@@ -22,17 +22,9 @@ public class ShopperService {
     private final MarketerRepository marketerRepository;
 
 
-    public List<Shopper> getAllShopper(Integer user_id, Integer marketer_id){
-        User user = authRepository.findUserById(user_id);
-        Marketer marketer = marketerRepository.findMarketerById(marketer_id);
+    public List<Shopper> getAllShopper(Integer user_id){
 
-        if (marketer == null)
-            throw new ApiException("marketer id is wrong");
-        else if (user.getMarketer().getId() != marketer_id) {
-            throw new ApiException("Sorry you can't see this shoppers");
-        }
-
-        return shopperRepository.findShoppersByMarketerId(marketer_id);
+        return shopperRepository.findShoppersByMarketerId(user_id);
     }
 
     public void completeShopperProfile(Integer user_id,ShopperDTO shopperDTO){
@@ -82,18 +74,15 @@ public class ShopperService {
             throw new ApiException("Sorry you can't delete your profile");
     }
 
-    public void ShopperSelectMarketer(Integer user_id,Integer shopper_id, Integer marketer_id){
-        Shopper shopper = shopperRepository.findShopperById(shopper_id);
+    public void ShopperSelectMarketer(Integer user_id, Integer marketer_id){
+        Shopper shopper = shopperRepository.findShopperById(user_id);
         Marketer marketer = marketerRepository.findMarketerById(marketer_id);
-        User user = authRepository.findUserById(user_id);
 
         if (shopper == null)
             throw new ApiException("Sorry the shopper id is wrong");
         else if (marketer == null)
             throw new ApiException("Sorry the marketer id is wrong");
 
-        if (user.getShopper().getId() != shopper_id)
-            throw new ApiException("Sorry you can't select the marketer for this shopper");
 
         shopper.setMarketer(marketer);
 

@@ -21,8 +21,8 @@ public class ShopperController {
 
     // marketer view all his shopper
     @GetMapping("/marketerGetShoppers")
-    public ResponseEntity getAllShoppers(@AuthenticationPrincipal User user,@PathVariable Integer marketer_id) {
-        return ResponseEntity.status(200).body(shopperService.getAllShopper(user.getId(), marketer_id));
+    public ResponseEntity getAllShoppers(@AuthenticationPrincipal User user) {
+        return ResponseEntity.status(200).body(shopperService.getAllShopper(user.getId()));
     }
 
     @PostMapping("/completeProfile")
@@ -42,9 +42,9 @@ public class ShopperController {
         shopperService.deleteShopperAccount(user.getId(),shopper_id);
         return ResponseEntity.status(200).body(new ApiResponse("your account deleted successfully"));
     }
-    @PutMapping("/selectMarketer/{shopper_id}/{marketer_id}")
-    public ResponseEntity shopperSelectMarketerController(@AuthenticationPrincipal User user,@PathVariable Integer shopper_id , @PathVariable Integer marketer_id){
-        shopperService.ShopperSelectMarketer(user.getId(), shopper_id, marketer_id);
+    @PutMapping("/selectMarketer/{marketer_id}")
+    public ResponseEntity shopperSelectMarketerController(@AuthenticationPrincipal User user, @PathVariable Integer marketer_id){
+        shopperService.ShopperSelectMarketer(user.getId(), marketer_id);
         return ResponseEntity.status(200).body(new ApiResponse("the marketer selected successfully"));
     }
 }

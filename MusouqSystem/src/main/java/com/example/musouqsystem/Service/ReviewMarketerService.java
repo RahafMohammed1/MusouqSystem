@@ -45,6 +45,8 @@ public class ReviewMarketerService {
         if (user.getShopper().getId() != shopper.getId())
             throw new ApiException("Sorry you can't add review marketer");
 
+
+
         if (!(orders.getOrder_status().equalsIgnoreCase("delivered")))
             throw new ApiException("You can't rate becuase the order does not delivered");
 
@@ -58,12 +60,14 @@ public class ReviewMarketerService {
 
         if (oldReviewMarketer == null)
             throw new ApiException("Sorry the review marketer id is wrong");
-        else if (user.getShopper().getId() != oldReviewMarketer.getShopper().getId())
+
+        if (user.getShopper().getId() != oldReviewMarketer.getShopper().getId())
             throw new ApiException("Sorry you can't update oon this review marketer");
+
 
         oldReviewMarketer.setReview_marketer(reviewMarketer.getReview_marketer());
         oldReviewMarketer.setRate_marketer(reviewMarketer.getRate_marketer());
-        reviewMarketerRepository.save(reviewMarketer);
+        reviewMarketerRepository.save(oldReviewMarketer);
     }
 
     public void deleteReviewMarketer(Integer user_id,Integer reviewMarketer_id){
@@ -80,16 +84,13 @@ public class ReviewMarketerService {
         reviewMarketerRepository.delete(reviewMarketer);
     }
 
-    public Marketer calculateMarketerRate(Integer user_id,Integer marketer_id){
-        User user = authRepository.findUserById(user_id);
-        Marketer marketer = marketerRepository.findMarketerById(marketer_id);
+    public Marketer calculateMarketerRate(Integer user_id){
+        Marketer marketer = marketerRepository.findMarketerById(user_id);
 
         if (marketer == null)
             throw new ApiException("Sorry the marketer id is wrong");
-        else if (user.getMarketer().getId() != marketer_id)
-            throw new ApiException("Sorry you can't see this page");
 
-        Integer result_rate = reviewMarketerRepository.calculateRateToMarketer(marketer_id);
+        Integer result_rate = reviewMarketerRepository.calculateRateToMarketer(marketer.getId());
         marketer.setMarketer_rate(result_rate);
         marketerRepository.save(marketer);
 
