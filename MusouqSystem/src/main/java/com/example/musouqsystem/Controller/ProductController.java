@@ -44,9 +44,9 @@ public class ProductController {
         return ResponseEntity.status(200).body(new ApiResponse("product added successfully"));
     }
 
-    @PutMapping("/marketerAddProduct/{marketer_id}/{product_id}/{supplier_id}")
-    public ResponseEntity marketerAddProduct(@PathVariable Integer marketer_id, @PathVariable Integer product_id, @PathVariable Integer supplier_id) {
-        productService.marketerAddProduct(marketer_id, product_id, supplier_id);
+    @PutMapping("/marketerAddProduct/{product_id}/{supplier_id}")
+    public ResponseEntity marketerAddProduct(@AuthenticationPrincipal User user, @PathVariable Integer product_id, @PathVariable Integer supplier_id) {
+        productService.marketerAddProduct(user.getId(), product_id, supplier_id);
         return ResponseEntity.status(200).body(new ApiResponse("product added successfully"));
     }
 

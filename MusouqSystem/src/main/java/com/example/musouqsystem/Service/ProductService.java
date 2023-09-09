@@ -69,15 +69,15 @@ public class ProductService {
     }
 
     public void marketerAddProduct(Integer marketer_id, Integer product_id, Integer supplier_id ) {
-        Marketer marketer = marketerRepository.findMarketerById(marketer_id);
+        User user = authRepository.findUserById(marketer_id);
         Product product = productRepository.findProductByIdAndSupplierId(product_id, supplier_id);
 
-        if (marketer == null || product == null) throw new ApiException("cannot add product to marketer");
+        if (product == null) throw new ApiException("cannot add product to marketer");
 
-        if (marketer.getSupplier().getId().equals(supplier_id)) {
-            product.getMarketers().add(marketer);
-            marketer.getProducts().add(product);
-            marketerRepository.save(marketer);
+        if (user.getMarketer().getSupplier().getId().equals(supplier_id)) {
+            product.getMarketers().add(user.getMarketer());
+            user.getMarketer().getProducts().add(product);
+            marketerRepository.save(user.getMarketer());
             productRepository.save(product);
         }else throw new ApiException("you cannot add this product");
 
