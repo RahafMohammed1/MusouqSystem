@@ -2,10 +2,12 @@ package com.example.musouqsystem.Controller;
 
 import com.example.musouqsystem.Api.ApiResponse;
 import com.example.musouqsystem.Model.Product;
+import com.example.musouqsystem.Model.User;
 import com.example.musouqsystem.Service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -15,19 +17,19 @@ import org.springframework.web.bind.annotation.*;
 public class ProductController {
     private final ProductService productService;
 
-    @GetMapping("/getAllProductsOfSupplier/{supplier_id}")
-    public ResponseEntity getAllProductsOfSupplier(@PathVariable Integer supplier_id) {
-        return ResponseEntity.status(200).body(productService.getAllProductsOfSupplier(supplier_id));
+    @GetMapping("/getAllProductsOfSupplier")
+    public ResponseEntity getAllProductsOfSupplier(@AuthenticationPrincipal User user) {
+        return ResponseEntity.status(200).body(productService.getAllProductsOfSupplier(user.getId()));
     }
 
-    @GetMapping("/marketerGetAllProductsOfSupplier/{marketer_id}/{supplier_id}")
-    public ResponseEntity marketerGetAllProductsOfSupplier(@PathVariable Integer marketer_id, @PathVariable Integer supplier_id) {
-        return ResponseEntity.status(200).body(productService.marketerGetAllProductsOfSupplier(marketer_id, supplier_id));
+    @GetMapping("/marketerGetAllProductsOfSupplier")
+    public ResponseEntity marketerGetAllProductsOfSupplier(@AuthenticationPrincipal User user) {
+        return ResponseEntity.status(200).body(productService.marketerGetAllProductsOfSupplier(user.getId()));
     }
 
-    @GetMapping("/getAllProductsOfMarketer/{marketer_id}")
-    public ResponseEntity getAllProductsOfMarketer(@PathVariable Integer marketer_id) {
-        return ResponseEntity.status(200).body(productService.getAllProductsOfMarketer(marketer_id));
+    @GetMapping("/getAllProductsOfMarketer")
+    public ResponseEntity getAllProductsOfMarketer(@AuthenticationPrincipal User user) {
+        return ResponseEntity.status(200).body(productService.getAllProductsOfMarketer(user.getId()));
     }
 
 
