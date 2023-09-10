@@ -169,7 +169,7 @@ public class OrdersService {
 
     }
 // Admin role
-    public void deliveredOrder(Integer user_id,Integer order_id){
+    public Orders deliveredOrder(Integer user_id,Integer order_id){
         Orders confirmOrder = ordersRepository.findOrdersById(order_id);
         User user = authRepository.findUserById(user_id);
         if (confirmOrder == null)
@@ -184,6 +184,7 @@ public class OrdersService {
         confirmOrder.setOrder_status("delivered");
 
         ordersRepository.save(confirmOrder);
+        return confirmOrder;
     }
 
 

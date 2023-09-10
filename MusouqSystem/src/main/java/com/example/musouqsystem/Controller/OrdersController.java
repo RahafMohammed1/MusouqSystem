@@ -53,8 +53,7 @@ public class OrdersController {
 
     @PutMapping("/deleviredOrder/{order_id}")
     public ResponseEntity deliveredOrderedController(@AuthenticationPrincipal User user,@PathVariable Integer order_id){
-        ordersService.deliveredOrder(user.getId(),order_id);
-     return ResponseEntity.status(200).body(new ApiResponse("The order status changed to delivered successfully"));
+     return ResponseEntity.status(200).body( ordersService.deliveredOrder(user.getId(),order_id));
     }
 
     @DeleteMapping("/deleteOrder/{order_id}")
