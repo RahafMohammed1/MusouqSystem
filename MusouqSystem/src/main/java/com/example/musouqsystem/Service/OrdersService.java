@@ -188,63 +188,6 @@ public class OrdersService {
     }
 
 
-    // auth by shopper
-//    public void ShopperAddOrder(Integer shopper_id, Integer marketer_id,Integer shippingCompany_id,ProductListDto productListDto){
-//
-//        // initialize a new order
-//        Orders orders = new Orders();
-//
-//        Shopper shopper = shopperRepository.findShopperById(shopper_id);
-//        Marketer marketer = marketerRepository.findMarketerById(marketer_id);
-//        List<Product> productList = new ArrayList<>();
-//        ArrayList<Integer> products = productListDto.getProducts();
-//
-//        List<Product> marketerProducts = productRepository.findAllByMarketersContains(marketer);
-//
-//        Double total_price = 0.0;
-//
-//        if (shopper == null)
-//            throw new ApiException("Sorry the shopper id is wrong");
-//
-//        if (marketer.getId() != shopper.getMarketer().getId())
-//            throw new ApiException("the wrong marketer");
-//
-//
-//        for (int i = 0; i < products.size(); i++) {
-//            Product checkProduct = productRepository.findProductById(products.get(i));
-//            if (checkProduct == null)
-//                throw new ApiException("Sorry the product id is wrong");
-//
-//            if (marketerProducts.get(i).getId() == checkProduct.getId()){
-//                total_price += checkProduct.getPrice();
-//                productList.add(checkProduct);
-//            }
-//        }
-//
-//        Double shipPrice = assignOrderToShippingCompany(orders.getId(), shippingCompany_id);
-//
-//        orders.setOrder_date(LocalDate.now());
-//        orders.setOrder_status("processing");
-//        orders.setReview_status(false);
-//        orders.setTotal_amount((total_price+shipPrice));
-//        orders.getProducts().addAll(productList);
-//
-//        orders.setShopper(shopper);
-//        orders.setSupplier(productList.get(0).getSupplier());
-//        orders.setMarketer(shopper.getMarketer());
-//
-//
-//        ordersRepository.save(orders);
-//
-//        // count completed order
-//        shopper.setNum_of_orders((shopper.getNum_of_orders() + 1));
-//        marketer.setNumber_of_product_sold((marketer.getNumber_of_product_sold() +1));
-//        shopperRepository.save(shopper);
-//        marketerRepository.save(marketer);
-//    }
-
-
-
     public void deleteOrder(Integer user_id,Integer order_id){
         Orders deleteOrder = ordersRepository.findOrdersById(order_id);
         User user = authRepository.findUserById(user_id);
