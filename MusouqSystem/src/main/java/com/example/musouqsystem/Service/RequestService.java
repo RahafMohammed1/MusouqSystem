@@ -23,25 +23,24 @@ public class RequestService {
     private final MarketerRepository marketerRepository;
 
 
-    public Set<Request> marketerViewAllHisRequest(Integer marketer_id)
+    public List<Request> marketerViewAllHisRequest(Integer marketer_id)
     {
         Marketer marketer=marketerRepository.findMarketerById(marketer_id);
         if (marketer==null)
             throw new ApiException("you should complete your profile first");
         if(marketer.getRequests().isEmpty())
             throw new ApiException("You haven't sent any marketing requests yet");
-        return marketer.getRequests();
+        return requestRepository.findRequestsByMarketer(marketer);
     }
 
-    public Set<Request> supplierViewAllHisRequest(Integer supplier_id)
+    public List<Request> supplierViewAllHisRequest(Integer supplier_id)
     {
-
         Supplier supplier=supplierRepository.findSupplierById(supplier_id);
         if (supplier==null)
             throw new ApiException("you should complete your profile first");
         if(supplier.getRequests().isEmpty())
             throw new ApiException("You do not have any marketing requests yet");
-        return supplier.getRequests();
+        return requestRepository.findRequestsBySupplier(supplier);
     }
 
     public void marketerSendRequest(Integer marketer_id, RequestDTO requestDTO)

@@ -13,6 +13,7 @@ import com.example.musouqsystem.Repository.ShopperRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -23,13 +24,13 @@ public class CouponsService {
     private final OrdersRepository ordersRepository;
     private final ShopperRepository shopperRepository;
 
-    public Set<Coupons> MarketerViewHisCoupons(Integer marketer_id) {
+    public List<Coupons> MarketerViewHisCoupons(Integer marketer_id) {
         Marketer marketer = marketerRepository.findMarketerById(marketer_id);
         if (marketer == null)
             throw new ApiException("you should complete your profile first");
         if (marketer.getCoupons().isEmpty())
             throw new ApiException("you have not any coupon yet");
-        return marketer.getCoupons();
+        return couponsRepository.findCouponsByMarketer(marketer);
     }
 
     public void marketerAddCouponForAllUsers(Integer marketer_id, CouponsDTO couponsDTO) {
