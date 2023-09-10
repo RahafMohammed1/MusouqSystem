@@ -66,6 +66,7 @@ public class OrdersService {
             product.setOrders(orders);
             orders.setSupplier(product.getSupplier());
             orders.setMarketer(shopper.getMarketer());
+            orders.setTotal_amount(orders.getTotal_amount() + product.getPrice());
             product.setStock(product.getStock() -1);
             ordersRepository.save(orders);
         }else throw new ApiException("Sorry the product id does not match the prodcut in marketer store");

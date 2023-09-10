@@ -29,7 +29,7 @@ public class Orders {
     private String order_status;
 
     @Column(columnDefinition = "double default 0")
-    private Double total_amount ;
+    private Double total_amount =0.0;
 
     @Column(columnDefinition = "boolean default false")
     private boolean isAppliedCoupon;
