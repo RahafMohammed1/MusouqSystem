@@ -16,10 +16,16 @@ import org.springframework.web.bind.annotation.*;
 public class MarketerController {
     private final MarketerService marketerService;
 
-    @GetMapping("/get-all-marketer")
+    @GetMapping("/shopper-get-all-marketer")
     public ResponseEntity shopperGetAllMarketer() {
         return ResponseEntity.status(200).body(marketerService.shopperGetAllMarketer());
     }
+
+    @GetMapping("/supplier-get-all-marketer")
+    public ResponseEntity supplierGetAllHisMarketers(@AuthenticationPrincipal User user) {
+        return ResponseEntity.status(200).body(marketerService.supplierGetAllHisMarketers(user.getId()));
+    }
+
 
     @PostMapping("/complete-profile")
     public ResponseEntity completeProfile(@AuthenticationPrincipal User user ,@RequestBody@Valid MarketerDTO marketerDTO ) {

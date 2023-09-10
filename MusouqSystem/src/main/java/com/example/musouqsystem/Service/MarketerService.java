@@ -26,6 +26,17 @@ public class MarketerService {
         return marketerRepository.findAll();
     }
 
+    public List<Marketer> supplierGetAllHisMarketers(Integer supplier_id)
+    {
+        Supplier supplier = supplierRepository.findSupplierById(supplier_id);
+        if (supplier == null)
+            throw new ApiException("you should complete your profile first");
+        List<Marketer> marketers=marketerRepository.findMarketersBySupplier(supplier);
+        if(marketers.isEmpty())
+            throw new ApiException("you don't have any marketers yet");
+        return marketers;
+    }
+
     public void completeProfile(Integer user_id ,MarketerDTO marketerDTO) {
         User user=authRepository.findUserById(user_id);
         Marketer marketer=marketerRepository.findMarketerById(user_id);
