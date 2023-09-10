@@ -16,7 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoryService {
     private final CategoryRepository categoryRepository;
-    private final AuthRepository authRepository;
 
 
     public List<Category> supplierGetAllCategories() {
