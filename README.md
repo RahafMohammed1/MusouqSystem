@@ -171,7 +171,9 @@ So the benefit that each of these users will get is :
 - build spring boot project structure with many dependices & database configration.
 - work on the following classes and its relations:
   * User class
+    - class built to manage registeration and authintication of defferent user's role.
   * Supplier class
+   - one of systeem users, business owner or product owner.
   * Product class
   * Image class
   * Category class
