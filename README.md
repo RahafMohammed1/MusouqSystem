@@ -186,7 +186,73 @@ So the benefit that each of these users will get is :
 - make Repository Testing using jUnit test.
 
 
-## My endpoints is:
+
+## Endpoints worked on 
+     
+
+* Users registration  (Auth)
+
+    1- Admin register
+    2- supplier register
+    3- marketer register
+    4- shopper register
+
+    - methods above, allowed user to register in the system, encrypt the password, and assign the appropriate role to user between ADMIN , SUPPLIER , SHOPPER , and MARKETER.
+
+* Supplier Class:
+
+    5- Marketer get all supplier
+        - they can view all registered supplier in the system, to select one.
+    6- Complete profile
+        - suppliers must to complete their profile and personal info to use the system.
+    7- Update profile
+    8- Supplier shipping order
+        - after supplier view all orders that related to their products, they can shipping the order and update order status to shipped.
+    9- Delete account
+        - supplier can delete his account only when there is no orders or marketing requests related to.
+
+* Category Class: 
+
+    10- Supplier get all categories
+        - supplier view all categories as list to select appropriate category to a product.
+    11- Admin Add category
+        - admin add all categories to the system, then suppliers can select category of product from list.
+    12- Admin Update category 
+    13- Supplier update marketer percent
+        - supplier can set a specific marketing percent depent on the category.
+    14- Admin Delete category
+        - can delete a category when there is no products belong to the category.
+
+* Product Class:
+
+    15- get all products of supplier 
+        - suppliers get their own products.
+    16- Marketer get all product of supplier 
+        - marketers view all products of only a supplier they send request to, and the request accepted.
+    17- Shopper Get all products of marketer
+        - they can view all product of one selected marketer.
+    18- User Get all products by category
+        - filter products by the category.
+    19- Supplier add product
+        - they can add their products.
+    20- Marketer add product
+        - they add their supplier's product to their market, (select and display on the market)
+    21- Supplier update product 
+    22- Marketer apply discount
+        - have the ability to apply discount on every product that marketers added before to them market from supplier's products.
+    23- Supplier delete product 
+        - supplier can delete any product only when the product does not belong to any marketer.
+    24- Marketer delete product 
+        - marketers delete the product from their market only.
+
+* Image Class: 
+
+    25- get all image
+    26- Supplier Add image to product 
+        - supplier can attach image to added product.
+    27- Supplier Change image
+        - supplier can modify the image of a product.
+    28- Supplier Delete image
      
 
 
