@@ -32,7 +32,7 @@ So the benefit that each of these users will get is :
 
 
 
-##LOGO
+## LOGO
 
 [Logo](https://app.gemoo.com/share/image-annotation/559539705626505216?codeId=vJ9lLwN5xNLmg&origin=imageurlgenerator)
 
