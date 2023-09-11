@@ -4,7 +4,6 @@ import com.example.musouqsystem.Service.MyUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -50,7 +49,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/order/get").hasAuthority("SHOPPER")
                 .requestMatchers("/api/v1/order/makeOrder").hasAuthority("SHOPPER")
                 .requestMatchers("/api/v1/order/addProduct/{product_id}/{order_id}").hasAuthority("SHOPPER")
-                .requestMatchers("/api/v1/order/calcAmount/{order_id}/{product_id}").hasAuthority("SHOPPER")
+                .requestMatchers("/api/v1/order/displayTotalAmount/{order_id}").hasAuthority("SHOPPER")
                 .requestMatchers("/api/v1/order/SelectshippingCompany/{order_id}/{shippingCompany_id}").hasAuthority("SHOPPER")
                 .requestMatchers("/api/v1/order/completeOrder/{order_id}").hasAuthority("SHOPPER")
                 .requestMatchers("/api/v1/order/deleviredOrder/{order_id}").hasAuthority("ADMIN")

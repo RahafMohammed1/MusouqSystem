@@ -4,13 +4,10 @@ import com.example.musouqsystem.Api.ApiResponse;
 import com.example.musouqsystem.Model.Orders;
 import com.example.musouqsystem.Model.User;
 import com.example.musouqsystem.Service.OrdersService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/api/v1/order")
@@ -35,10 +32,10 @@ public class OrdersController {
         return ResponseEntity.status(200).body(new ApiResponse("The product added successfully to order"));
     }
 
-    @PutMapping ("/calcAmount/{order_id}/{product_id}")
-    public ResponseEntity calculateProductsAmountControlller(@AuthenticationPrincipal User user,@PathVariable Integer order_id, @PathVariable Integer product_id){
+    @PutMapping ("/displayTotalAmount/{order_id}")
+    public ResponseEntity displayTotalAmountControlller(@AuthenticationPrincipal User user,@PathVariable Integer order_id){
 
-        return ResponseEntity.status(200).body(new ApiResponse("The order total amount = "+ ordersService.calculateProductsAmount(user.getId(), order_id, product_id)));
+        return ResponseEntity.status(200).body(new ApiResponse("The order total amount = "+ ordersService.displayTotalAmount(user.getId(), order_id)));
     }
     @PutMapping("/SelectshippingCompany/{order_id}/{shippingCompany_id}")
     public ResponseEntity selectShippingCompanyController(@AuthenticationPrincipal User user,@PathVariable Integer order_id, @PathVariable Integer shippingCompany_id){

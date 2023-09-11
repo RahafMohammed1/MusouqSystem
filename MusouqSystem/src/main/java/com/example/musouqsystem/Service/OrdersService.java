@@ -4,10 +4,8 @@ import com.example.musouqsystem.Api.ApiException;
 import com.example.musouqsystem.Model.*;
 import com.example.musouqsystem.Repository.*;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 import java.util.List;
 
@@ -39,7 +37,7 @@ public class OrdersService {
         Shopper shopper = shopperRepository.findShopperById(user_id);
         Product product = productRepository.findProductById(product_id);
         Orders orders = ordersRepository.findOrdersById(order_id);
-
+        Double total = 0.0;
         if (shopper == null)
             throw new ApiException("shopper id is wrong");
         else if (product == null)
@@ -66,43 +64,32 @@ public class OrdersService {
             product.setOrders(orders);
             orders.setSupplier(product.getSupplier());
             orders.setMarketer(shopper.getMarketer());
-            orders.setTotal_amount(orders.getTotal_amount() + product.getPrice());
+
+            if (product.getPrice_after_discount() != null) {
+                total = orders.getTotal_amount()+ product.getPrice_after_discount();
+            }else {
+                total = orders.getTotal_amount()+ product.getPrice();
+            }
+
+            orders.setTotal_amount(total);
             product.setStock(product.getStock() -1);
             ordersRepository.save(orders);
         }else throw new ApiException("Sorry the product id does not match the prodcut in marketer store");
     }
-    public Double calculateProductsAmount(Integer user_id,Integer order_id, Integer product_id){
+    public Double displayTotalAmount(Integer user_id, Integer order_id){
         Orders orders = ordersRepository.findOrdersById(order_id);
-        Product product = productRepository.findProductById(product_id);
         User user = authRepository.findUserById(user_id);
-        Double total = 0.0;
 
         if (orders == null)
             throw new ApiException("order id is wrong");
-        else if (product == null){
-            throw new ApiException("product id is wrong");
-        }
+
         if (user.getShopper().getId() != orders.getShopper().getId())
             throw new ApiException("Sorry you can't see this page");
-
 
         if (orders.getProducts().isEmpty())
             throw new ApiException("You must add product to calculate amount");
 
-        if (!(orders.getShopper().getMarketer().getProducts().contains(product)))
-            throw new ApiException("Sorry the product not found in the marketer store");
-
-        if (orders.getTotal_amount() == null)
-            orders.setTotal_amount(0.0);
-
-        if (product.getPrice_after_discount() != null) {
-            total = orders.getTotal_amount().doubleValue() + product.getPrice_after_discount();
-        }else {
-            total = orders.getTotal_amount() .doubleValue()+ product.getPrice();
-        }
-        orders.setTotal_amount(total);
-        ordersRepository.save(orders);
-        return total;
+        return orders.getTotal_amount();
     }
 
     public Double selectShippingCompany(Integer user_id,Integer order_id, Integer shippingCompany_id){
@@ -191,6 +178,7 @@ public class OrdersService {
     public void deleteOrder(Integer user_id,Integer order_id){
         Orders deleteOrder = ordersRepository.findOrdersById(order_id);
         User user = authRepository.findUserById(user_id);
+        Product products = productRepository.findProductById(user_id);
 
         if (deleteOrder == null)
             throw new ApiException("Sorry the order is is wrong");
@@ -200,7 +188,9 @@ public class OrdersService {
 
         if (deleteOrder.getOrder_status()!= null)
             throw new ApiException("Sorry, you can't cancel your order");
-
+        if (!(deleteOrder.getProducts().isEmpty()))
+            throw new ApiException("Sorry the order have a product, make sure you delete product first ");
+        
         ordersRepository.delete(deleteOrder);
     }
 
