@@ -144,7 +144,7 @@ So the benefit that each of these users will get is :
 - design the logo.
 - select color of logo and website.
 - working on figma to design pages, the following pages designed:
-  * registeration page.
+  * registration page.
   * all supplier profile pages:
     - supplier profile page / my information -1
     - supplier profile page / add product
@@ -164,22 +164,27 @@ So the benefit that each of these users will get is :
   * make different relations (m:n) (1:n) (1:1).
 - working on Usecase diagram:
   * draw Shopper actor & its functions in the system.
-- create github repo with contributes.
+- create GitHub repo with contributes.
+- working on GitHub desktop with team.
+- postman test & documentation.
+
 
 ## the technical work
 
-- build spring boot project structure with many dependices & database configration.
+- build spring boot project structure with many dependencies & database configuration.
 - work on the following classes and its relations:
   * User class
-    - class built to manage registeration and authintication of defferent user's role.
+    - class built to manage registration and authentication of different user's role.
   * Supplier class
-    - one of systeem users, business owner or product owner.
+    - one of the system users, business owner or product owner.
   * Product class
   * Image class
   * Category class
 - create Model, Repository layer, Service layer, and Controller layer of all class list above.
 - create all type of relations m:n, 1:n, 1:1 with DTO.
 - build Auth repo, Auth service, Auth Controller for User class, and set the 1:1 relation with all system's 3 actors.
+- make Repository Testing using jUnit test.
+
 
 ## My endpoints is:
      
