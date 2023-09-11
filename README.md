@@ -140,10 +140,44 @@ So the benefit that each of these users will get is :
 
 ## the non - technical work
 
-
+- improving exist idea.
+- design the logo.
+- select color of logo and website.
+- working on figma to design pages, the following pages designed:
+  * registeration page.
+  * all supplier profile pages:
+    - supplier profile page / my information -1
+    - supplier profile page / add product
+    - supplier profile page / add product / select category
+    - supplier profile page / view my products
+    - supplier profile page / view marketers requests
+    - supplier profile page / view my marketers
+    - supplier profile page / view orders
+    - supplier profile page / view orders -3 (shipping order)
+    - supplier profile page / view orders -2 (display message)
+- working on class diagram, draw the following classes with its relations:
+  * Request class
+  * Category class
+  * Product class
+  * Image class
+  * Order class
+  * make different relations (m:n) (1:n) (1:1).
+- working on Usecase diagram:
+  * draw Shopper actor & its functions in the system.
+- create github repo with contributes.
 
 ## the technical work
 
+- build spring boot project structure with many dependices & database configration.
+- work on the following classes and its relations:
+  * User class
+  * Supplier class
+  * Product class
+  * Image class
+  * Category class
+- create Model, Repository layer, Service layer, and Controller layer of all class list above.
+- create all type of relations m:n, 1:n, 1:1 with DTO.
+- build Auth repo, Auth service, Auth Controller for User class, and set the 1:1 relation with all system's 3 actors.
 
 ## My endpoints is:
      
