@@ -173,7 +173,7 @@ So the benefit that each of these users will get is :
   * User class
     - class built to manage registeration and authintication of defferent user's role.
   * Supplier class
-   - one of systeem users, business owner or product owner.
+    - one of systeem users, business owner or product owner.
   * Product class
   * Image class
   * Category class
