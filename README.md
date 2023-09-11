@@ -1,4 +1,5 @@
-# Musouq  (مُسوق)
+
+# Musouk  (مُسوق)
 
 A brief description of what this project does and who it's for
 
@@ -90,3 +91,41 @@ So the benefit that each of these users will get is :
 - Spring Secuirty
 - Spring Data JPA
 - Mysql Driver
+
+
+##  Project Presentation
+[Project Presentation](https://www.canva.com/design/DAFt-RjJPRg/IViq2TcqG7FPyrOiw3kDjQ/edit?utm_content=DAFt-RjJPRg&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+
+
+## API Documentation (postman)
+[API Documentation (postman)](https://documenter.getpostman.com/view/28984368/2s9YC1XETh)
+
+
+## Figma
+[Figma](https://www.figma.com/proto/29jAKsedWTK1xrg2r6RjYM/%D9%85%D9%8F%D8%B3%D9%88%D9%82?type=design&node-id=38-240&t=5DlmXUWUksbPqiwl-0&scaling=min-zoom&page-id=0%3A1)
+
+
+
+# Individual work
+
+# the non - technical work
+
+
+
+# the technical work
+
+
+##My endpoints is:
+     
+
+
+
+
+
+
+
+
+
+
+
+ 
