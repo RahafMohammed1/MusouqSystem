@@ -106,7 +106,7 @@ public class ProductService {
         if (product == null) throw new ApiException("product not exist");
 
         if (product.getMarketers().contains(user.getMarketer())){
-            product.setPrice_after_discount(product.getPrice() * (discount / 100.0));
+            product.setPrice_after_discount(product.getPrice() - (product.getPrice() * (discount / 100.0)));
             productRepository.save(product);
         }else throw new ApiException("you cannot apply discount on this product");
     }
