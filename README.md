@@ -103,7 +103,7 @@ So the benefit that each of these users will get is :
 
 
 
-##Springboot Dependency
+## Springboot Dependency
 
 - Spring Web
 - Lombok
@@ -138,14 +138,14 @@ So the benefit that each of these users will get is :
 
 # Individual work
 
-# the non - technical work
+## the non - technical work
 
 
 
-# the technical work
+## the technical work
 
 
-##My endpoints is:
+## My endpoints is:
      
 
 
