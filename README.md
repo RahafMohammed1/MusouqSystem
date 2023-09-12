@@ -143,6 +143,17 @@ So the benefit that each of these users will get is :
 - improving exist idea.
 - design the logo.
 - select color of logo and website.
+
+   | Color             | Hex                                                                |
+   | ----------------- | ------------------------------------------------------------------ |
+   | dark blue     | ![#0F4C5C](https://via.placeholder.com/10/0F4C5C?text=+) #0F4C5C |
+   | dark orange   | ![#E36414](https://via.placeholder.com/10/E36414?text=+) #E36414 |
+   | light orange  | ![#F7A072](https://via.placeholder.com/10/F7A072?text=+) #F7A072 |
+   | grey text     | ![#707070](https://via.placeholder.com/10/707070?text=+) #707070 |
+   | light grey    | ![#EFEFEF](https://via.placeholder.com/10/EFEFEF?text=+) #EFEFEF |
+   | Black Text    | ![#323031](https://via.placeholder.com/10/323031?text=+) #323031 |
+
+
 - working on figma to design pages, the following pages designed:
   * registration page.
   * all supplier profile pages:
