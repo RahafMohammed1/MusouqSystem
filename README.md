@@ -19,16 +19,11 @@ So the benefit that each of these users will get is :
 
 
 
+## 🔗 Authors
+[![@AmalGho](https://img.shields.io/badge/@AmalGho-F7A072?style=for-the-badge&logo=ko-fi&logoColor=white)](https://www.github.com/RahafMohammed1)
+[![@RehamS21](https://img.shields.io/badge/@RehamS21-F7A072?style=for-the-badge&logo=ko-fi&logoColor=white)](https://www.github.com/RahafMohammed1)
+[![@RahafMohammed1](https://img.shields.io/badge/@RahafMohammed1-F7A072?style=for-the-badge&logo=ko-fi&logoColor=white)](https://www.github.com/RahafMohammed1)
 
-
-
-## Authors
-
-- [@RahafMohammed1](https://www.github.com/RahafMohammed1)
-
-- [@RehamS21](https://github.com/RehamS21/Portfolio)
-
-- [@AmalGho](https://github.com/AmalGho)
 
 
 
