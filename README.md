@@ -142,6 +142,9 @@ So the benefit that each of these users will get is :
 
 - improving exist idea.
 - design the logo.
+
+  ![Logo](https://drive.google.com/file/d/1ooHNZOPb4fOBVw25raTFINjwEjYqbSUl/view?usp=sharing)
+  
 - select color of logo and website.
 
    | Color             | Hex                                                                |
